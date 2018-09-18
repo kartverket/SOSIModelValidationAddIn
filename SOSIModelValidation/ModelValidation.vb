@@ -10,10 +10,11 @@
     Dim theRepository As EA.Repository
 
     Dim validationWindow As SOSIModelValidationWindow
+
     Dim thePackage As EA.Package
 
-    Dim globalPackageIDList As New System.Collections.ArrayList
-    Dim globalListAllClassifierIDsInApplicationSchema As New System.Collections.ArrayList
+    Dim packageIDList As New System.Collections.ArrayList
+    Dim classifierIDList As New System.Collections.ArrayList
 
     ' Sub ModelValidation
     ' Check that the selected object is a package
@@ -85,6 +86,9 @@
         errorCounter = 0
         warningCounter = 0
         startTime = Timer
+        packageIDList.Clear()
+        classifierIDList.Clear()
+
 
 
         'set log level
@@ -112,6 +116,19 @@
             Call PopulatePackageIDList(thePackage)
             Call PopulateClassifierIDList(thePackage)
 
+            ' THESE SUBS MUST BE DECLARED AND NAME CHANGED TO NEW NAMING SCHEMES
+            ' Subs below are for tests that are not recursively performed in sub packages
+            'Call findPackageDependencies(thePackage.Element)
+            'Call getElementIDsOfExternalReferencedElements(thePackage)
+            'Call findPackagesToBeReferenced()
+            'Call checkPackageDependency(thePackage)
+            'Call dependencyLoop(thePackage.Element)
+            'check if there are packages with stereotype "applicationSchema"in package hierarchy upwards from start package
+            'CheckParentPackageStereotype(thePackage)
+
+
+            ' Tests that should be done recursivly on subpackages should called in FindInvalidElementsInPackage
+            Call FindInvalidElementsInPackage(thePackage)
 
 
 
@@ -122,5 +139,48 @@
         elapsedTime = endTime - startTime
         ReportFooter()
     End Sub
+
+    Sub FindInvalidElementsInPackage(thePackage As EA.Package)
+        'test functions that should be done recursivly in all subpackages
+
+        Dim elements As EA.Collection
+        Dim packages As EA.Collection
+        elements = thePackage.Elements
+        packages = thePackage.Packages
+        ' Call to tests
+        ' Call to tests
+        ' Call to tests
+        'CheckDefinition(thePackage)
+        'Requirement15(thePackage)
+        '	call checkEndingOfPackageName(package)
+        '   Call checkUtkast(Package)
+        '   Call checkSubPackageStereotype(Package)
+        '
+
+        'recursive call to subpackages
+        Dim p
+        For p = 0 To packages.Count - 1
+            Dim currentPackage As EA.Package
+            currentPackage = packages.GetAt(p)
+            FindInvalidElementsInPackage(currentPackage)
+
+            ' Skal denne kalles her?
+            Dim constraintPCollection As EA.Collection
+            constraintPCollection = currentPackage.Element.Constraints
+            If constraintPCollection.Count > 0 Then
+                Dim q
+                For q = 0 To constraintPCollection.Count - 1
+                    Dim currentPConstraint As EA.Constraint
+                    currentPConstraint = constraintPCollection.GetAt(q)
+                    'Call checkConstraint(currentPConstraint, currentPackage)
+                Next
+            End If
+
+        Next
+
+
+
+    End Sub
+
 
 End Class
