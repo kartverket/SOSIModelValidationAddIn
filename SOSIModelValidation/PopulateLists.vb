@@ -13,7 +13,7 @@
         Dim subPackage As EA.Package
         subPackageList = rootPackage.Packages
 
-        globalPackageIDList.Add(rootPackage.PackageID)
+        packageIDList.Add(rootPackage.PackageID)
         For Each subPackage In subPackageList
             PopulatePackageIDList(subPackage)
         Next
@@ -36,7 +36,7 @@
         subPackageList = rootPackage.Packages
 
         For Each containedElement In containedElementList
-            globalListAllClassifierIDsInApplicationSchema.Add(containedElement.ElementID)
+            classifierIDList.Add(containedElement.ElementID)
         Next
         For Each subPackage In subPackageList
             PopulateClassifierIDList(subPackage)
