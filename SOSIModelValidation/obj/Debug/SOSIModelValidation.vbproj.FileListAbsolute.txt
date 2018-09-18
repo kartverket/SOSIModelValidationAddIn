@@ -1,0 +1,24 @@
+\\statkart.no\ri_data\brukerdata\tjoaas\visual studio 2015\Projects\SOSIModelValidation\SOSIModelValidation\bin\Debug\SOSIModelValidation.dll
+\\statkart.no\ri_data\brukerdata\tjoaas\visual studio 2015\Projects\SOSIModelValidation\SOSIModelValidation\bin\Debug\SOSIModelValidation.pdb
+\\statkart.no\ri_data\brukerdata\tjoaas\visual studio 2015\Projects\SOSIModelValidation\SOSIModelValidation\bin\Debug\SOSIModelValidation.xml
+\\statkart.no\ri_data\brukerdata\tjoaas\visual studio 2015\Projects\SOSIModelValidation\SOSIModelValidation\bin\Debug\SOSIModelValidation.tlb
+\\statkart.no\ri_data\brukerdata\tjoaas\visual studio 2015\Projects\SOSIModelValidation\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbprojResolveAssemblyReference.cache
+\\statkart.no\ri_data\brukerdata\tjoaas\visual studio 2015\Projects\SOSIModelValidation\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbproj.ResolveComReference.cache
+\\statkart.no\ri_data\brukerdata\tjoaas\visual studio 2015\Projects\SOSIModelValidation\SOSIModelValidation\obj\Debug\SOSIModelValidation.Resources.resources
+\\statkart.no\ri_data\brukerdata\tjoaas\visual studio 2015\Projects\SOSIModelValidation\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbproj.GenerateResource.Cache
+\\statkart.no\ri_data\brukerdata\tjoaas\visual studio 2015\Projects\SOSIModelValidation\SOSIModelValidation\obj\Debug\SOSIModelValidation.dll
+\\statkart.no\ri_data\brukerdata\tjoaas\visual studio 2015\Projects\SOSIModelValidation\SOSIModelValidation\obj\Debug\SOSIModelValidation.xml
+\\statkart.no\ri_data\brukerdata\tjoaas\visual studio 2015\Projects\SOSIModelValidation\SOSIModelValidation\obj\Debug\SOSIModelValidation.pdb
+\\statkart.no\ri_data\brukerdata\tjoaas\visual studio 2015\Projects\SOSIModelValidation\SOSIModelValidation\obj\Debug\SOSIModelValidation.SOSIModelValidationWindow.resources
+C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\bin\Debug\SOSIModelValidation.dll
+C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\bin\Debug\SOSIModelValidation.pdb
+C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\bin\Debug\SOSIModelValidation.xml
+C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbprojResolveAssemblyReference.cache
+C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbproj.ResolveComReference.cache
+C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\obj\Debug\SOSIModelValidation.Resources.resources
+C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\obj\Debug\SOSIModelValidation.SOSIModelValidationWindow.resources
+C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbproj.GenerateResource.Cache
+C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\obj\Debug\SOSIModelValidation.dll
+C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\obj\Debug\SOSIModelValidation.xml
+C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\obj\Debug\SOSIModelValidation.pdb
+C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\bin\Debug\SOSIModelValidation.tlb
