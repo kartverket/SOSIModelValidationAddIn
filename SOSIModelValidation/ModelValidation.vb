@@ -11,7 +11,7 @@
     Dim validationWindow As SOSIModelValidationWindow
     Dim thePackage As EA.Package
 
-    ' Sub ModelValidation
+    ' Sub ModelValidation TJ was here test2
     ' Check that the selected object is a package
     ' Check that the selected package has stereotype applicationSchema
     ' Start the model validation window
