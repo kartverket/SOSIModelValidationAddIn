@@ -4,6 +4,7 @@
     Dim errorCounter As Integer
     Dim warningCounter As Integer
     Dim logLevel = "Warning"
+    Dim ruleSet = "SOSI"
     Dim startTime, endTime, elapsedTime
 
     Dim theRepository As EA.Repository
@@ -11,10 +12,14 @@
     Dim validationWindow As SOSIModelValidationWindow
     Dim thePackage As EA.Package
 
+    Dim globalPackageIDList As New System.Collections.ArrayList
+    Dim globalListAllClassifierIDsInApplicationSchema As New System.Collections.ArrayList
+
     ' Sub ModelValidation
     ' Check that the selected object is a package
     ' Check that the selected package has stereotype applicationSchema
     ' Start the model validation window
+
     ' this is a test
     ' and another test
     Public Sub ModelValidationStartWindow(startRepository As EA.Repository)
@@ -102,6 +107,10 @@
             Output("Aborting Script.")
         Else
             'rest of the calls
+
+            ' populate lists that will be used in the validation checks
+            Call PopulatePackageIDList(thePackage)
+            Call PopulateClassifierIDList(thePackage)
 
 
 
