@@ -149,11 +149,15 @@
 
         Dim elements As EA.Collection
         Dim packages As EA.Collection
+        Dim attributes As EA.Collection
+        Dim connectors As EA.Collection
+        Dim operations As EA.Collection
         Dim currentPackage As EA.Package
         Dim currentPConstraint As EA.Constraint
         Dim currentElement As EA.Element
-        Dim attribute As EA.Attribute
-        Dim attributes As EA.Collection
+        Dim currentAttribute As EA.Attribute
+        Dim currentConnector As EA.Connector
+        Dim currentOperation As EA.Method
 
         elements = thePackage.Elements
         packages = thePackage.Packages
@@ -205,15 +209,39 @@
 
                 End If
 
-                attributes = currentElement.Attributes
-                For Each attribute In attributes
 
-                    Output("Debug Attribute " + attribute.Name)
+
+                attributes = currentElement.Attributes
+                For Each currentAttribute In attributes
+
+                    Output("Debug Attribute " + currentAttribute.Name)
                     ' Call attribute checks
 
                 Next
-            End If
 
+
+
+                connectors = currentElement.Connectors
+                For Each currentConnector In connectors
+
+                    Output("Debug Connector " + currentConnector.Name)
+                    ' call connector checks
+
+                Next
+
+
+
+
+                operations = currentElement.Methods
+                For Each currentOperation In operations
+
+                    Output("Debug Operation" + currentOperation.Name)
+                    'call operation checks
+
+                Next
+
+
+            End If
 
         Next
 
