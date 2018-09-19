@@ -16,6 +16,10 @@
     Dim packageIDList As New System.Collections.ArrayList
     Dim classifierIDList As New System.Collections.ArrayList
 
+    'KODEOPPRYDDING:  Må følgende variable være på klassenivå?
+    Dim ClassNames As New System.Collections.ArrayList
+    Dim PackageNames As New System.Collections.ArrayList
+
     ' Sub ModelValidation
     ' Check that the selected object is a package
     ' Check that the selected package has stereotype applicationSchema
@@ -145,8 +149,17 @@
 
         Dim elements As EA.Collection
         Dim packages As EA.Collection
+        Dim currentPackage As EA.Package
+        Dim currentPConstraint As EA.Constraint
+        Dim currentElement As EA.Element
+        Dim attribute As EA.Attribute
+        Dim attributes As EA.Collection
+
         elements = thePackage.Elements
         packages = thePackage.Packages
+
+
+        Output("Debug Package " + thePackage.Name)
         ' Call to tests
         ' Call to tests
         ' Call to tests
@@ -158,25 +171,53 @@
         '
 
         'recursive call to subpackages
-        Dim p
-        For p = 0 To packages.Count - 1
-            Dim currentPackage As EA.Package
-            currentPackage = packages.GetAt(p)
-            FindInvalidElementsInPackage(currentPackage)
 
+        For Each currentPackage In packages
+
+            FindInvalidElementsInPackage(currentPackage)
             ' Skal denne kalles her?
             Dim constraintPCollection As EA.Collection
             constraintPCollection = currentPackage.Element.Constraints
-            If constraintPCollection.Count > 0 Then
-                Dim q
-                For q = 0 To constraintPCollection.Count - 1
-                    Dim currentPConstraint As EA.Constraint
-                    currentPConstraint = constraintPCollection.GetAt(q)
-                    'Call checkConstraint(currentPConstraint, currentPackage)
+            For Each currentPConstraint In currentPackage.Element.Constraints
+                'call checConstriant
+            Next
+
+        Next
+
+        ClassNames.Clear()
+
+        For Each currentElement In elements
+
+            Output("Debug Element " + currentElement.Name)
+
+            ' Call element subs for all classifiers
+
+            If currentElement.Type = "Class" Or currentElement.Type = "Enumeration" Or currentElement.Type = "DataType" Then
+                ' Call element subs for all class types
+
+                If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
+                    ' Call element subs for codelists and enumerations
+
+                End If
+
+                If UCase(currentElement.Stereotype) = "FEATURETYPE" Then
+                    ' Call element subs for feature types
+
+                End If
+
+                attributes = currentElement.Attributes
+                For Each attribute In attributes
+
+                    Output("Debug Attribute " + attribute.Name)
+                    ' Call attribute checks
+
                 Next
             End If
 
+
         Next
+
+
 
 
 
