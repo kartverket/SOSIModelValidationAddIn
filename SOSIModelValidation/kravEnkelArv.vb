@@ -1,7 +1,7 @@
 ﻿Partial Public Class ModelValidation
 
     ' sub name kravEnkelArv
-    ' Author: Åsmund Tjora, based on modelvalidation script code by Sara Henriksen
+    ' Author: Åsmund Tjora, based on modelvalidation script code (sub findMultipleInheritance) by Sara Henriksen
     ' Date:  2018-09-19
     ' Ruleset:  SOSI
     ' Requirement: /krav/enkelArv

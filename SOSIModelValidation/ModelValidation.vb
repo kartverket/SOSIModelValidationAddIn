@@ -38,7 +38,7 @@
                 thePackage = theRepository.GetTreeSelectedObject()
                 If Not thePackage.IsModel Then
                     If UCase(thePackage.Element.Stereotype) = UCase("applicationSchema") Then
-                        Dim messageText = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket" + versionYear + vbCrLf + vbCrLf
+                        Dim messageText = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear + vbCrLf + vbCrLf
                         messageText = messageText + "Model validation based on requirements and recommendations in SOSI standard 'Regler for UML-modellering 5.0'" + vbCrLf + vbCrLf
                         messageText = messageText + "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
                         validationWindow.Label1.Text() = messageText
@@ -208,6 +208,7 @@
 
                 If UCase(currentElement.Stereotype) = "FEATURETYPE" Then
                     ' Call element subs for feature types
+                    Call kravFlerspråklighetElement(currentElement)
 
                 End If
 
@@ -217,6 +218,7 @@
                 For Each currentAttribute In attributes
 
                     Output("Debug Attribute " + currentAttribute.Name)
+                    Call kravFlerspråklighetElement(currentAttribute)
                     ' Call attribute checks
 
                 Next
@@ -229,6 +231,11 @@
                     Output("Debug Connector " + currentConnector.Name)
                     ' call connector checks
 
+                    If currentConnector.Type = "Aggregation" Or currentConnector.Type = "Assosiation" Then
+                        kravFlerspråklighetElement(currentConnector.SupplierEnd)
+                        kravFlerspråklighetElement(currentConnector.ClientEnd)
+                    End If
+
                 Next
 
 
@@ -239,6 +246,7 @@
 
                     Output("Debug Operation" + currentOperation.Name)
                     'call operation checks
+                    kravFlerspråklighetElement(currentOperation)
 
                 Next
 
