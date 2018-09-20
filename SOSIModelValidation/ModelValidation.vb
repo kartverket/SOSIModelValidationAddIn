@@ -13,6 +13,13 @@
 
     Dim thePackage As EA.Package
 
+    'For reqUMLProfile:
+    Dim ProfileTypes As New System.Collections.ArrayList
+    Dim ExtensionTypes As New System.Collections.ArrayList
+    Dim CoreTypes As New System.Collections.ArrayList
+    'reqUmlProfileLoad()
+
+
     Dim packageIDList As New System.Collections.ArrayList
     Dim classifierIDList As New System.Collections.ArrayList
 
@@ -129,7 +136,7 @@
             'Call dependencyLoop(thePackage.Element)
             'check if there are packages with stereotype "applicationSchema"in package hierarchy upwards from start package
             'CheckParentPackageStereotype(thePackage)
-
+            Call reqUMLProfileLoad()
 
             ' Tests that should be done recursivly on subpackages should called in FindInvalidElementsInPackage
             Call FindInvalidElementsInPackage(thePackage)
@@ -216,7 +223,7 @@
 
                     Output("Debug Attribute " + currentAttribute.Name)
                     ' Call attribute checks
-
+                    reqUMLProfile(currentElement, currentAttribute)
                 Next
 
 
