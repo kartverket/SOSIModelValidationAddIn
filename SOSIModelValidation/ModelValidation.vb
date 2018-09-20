@@ -70,6 +70,14 @@
         Output("-----------------------------------")
         Output("Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name)
         Output("Selected log level: " + logLevel)
+        Select Case ruleSet
+            Case "SOSI"
+                Output("Selected rule set: SOSI Generell del - Regler for UML modellering - versjon 5.0")
+            Case "19103"
+                Output("Selected rule set: ISO 19103:2015 - Geographic information - Conceptual schema language")
+            Case "19109"
+                Output("Selected rule set: ISO 19109:2015 - Geographic information - Rules for application schema")
+        End Select
         Output("-----------------------------------")
     End Sub
 
@@ -93,8 +101,6 @@
         packageIDList.Clear()
         classifierIDList.Clear()
 
-
-
         'set log level
         If validationWindow.RadioButtonW.Checked Then
             logLevel = "Warning"
@@ -103,6 +109,17 @@
         Else
             'this should not happen if all radio buttons are checked...
             logLevel = "Unknown"
+        End If
+
+        'set rule set
+        If validationWindow.RadioButtonSOSI.Checked Then
+            ruleSet = "SOSI"
+        ElseIf validationWindow.RadioButtonISO19103.Checked Then
+            ruleSet = "19103"
+        ElseIf validationWindow.RadioButtonISO19109.Checked Then
+            ruleSet = "19109"
+        Else
+            ruleSet = "SOSI"
         End If
 
         'start of report: Show header
