@@ -86,6 +86,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="PopulateLists.vb" />
+    <Compile Include="requirement15.vb" />
     <Compile Include="scriptBreakingStructures.vb" />
     <Compile Include="SOSIModelValidationWindow.Designer.vb">
       <DependentUpon>SOSIModelValidationWindow.vb</DependentUpon>

@@ -173,6 +173,7 @@
         '   Call checkUtkast(Package)
         '   Call checkSubPackageStereotype(Package)
         '
+        Call requirement15onPackage(thePackage)
 
         'recursive call to subpackages
 
@@ -192,12 +193,14 @@
 
         For Each currentElement In elements
 
-            Output("Debug Element " + currentElement.Name)
+            Output("Debug Element " + currentElement.Name + " " + currentElement.Type)
 
             ' Call element subs for all classifiers
 
+
             If currentElement.Type = "Class" Or currentElement.Type = "Enumeration" Or currentElement.Type = "DataType" Then
                 ' Call element subs for all class types
+                Call requirement15onClass(currentElement)
 
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
                     ' Call element subs for codelists and enumerations
@@ -216,7 +219,7 @@
 
                     Output("Debug Attribute " + currentAttribute.Name)
                     ' Call attribute checks
-
+                    Call requirement15onAttr(currentElement, currentAttribute)
                 Next
 
 
@@ -224,8 +227,9 @@
                 connectors = currentElement.Connectors
                 For Each currentConnector In connectors
 
-                    Output("Debug Connector " + currentConnector.Name)
+                    Output("Debug Connector " + currentConnector.Name + " " + currentConnector.Stereotype)
                     ' call connector checks
+                    Call requirement15onRole(currentElement, currentConnector)
 
                 Next
 
