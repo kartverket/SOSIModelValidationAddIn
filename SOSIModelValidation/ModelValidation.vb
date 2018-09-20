@@ -105,6 +105,17 @@
             logLevel = "Unknown"
         End If
 
+        'set rule set
+        If validationWindow.RadioButtonSOSI.Checked Then
+            ruleSet = "SOSI"
+        ElseIf validationWindow.RadioButtonISO19103.Checked Then
+            ruleSet = "19103"
+        ElseIf validationWindow.RadioButtonISO19109.Checked Then
+            ruleSet = "19109"
+        Else
+            ruleSet = "SOSI"
+        End If
+
         'start of report: Show header
         ReportHeader()
 

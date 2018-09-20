@@ -6,7 +6,7 @@
         OwnerObject = OwnerO
     End Sub
 
-    Private Sub SOSIModelVlaidationWindow_Load(sender As Object, e As System.EventArgs) Handles MyBase.Load
+    Private Sub SOSIModelValidationWindow_Load(sender As Object, e As System.EventArgs) Handles MyBase.Load
         Dim toolTips As New System.Windows.Forms.ToolTip()
 
         toolTips.AutoPopDelay = 5000
@@ -21,6 +21,9 @@
         toolTips.SetToolTip(Me.ButtonRun, "Run SOSI Model Validation on selected package")
         toolTips.SetToolTip(Me.RadioButtonE, "Show Errors only")
         toolTips.SetToolTip(Me.RadioButtonW, "Show Errors and Warnings")
+        toolTips.SetToolTip(Me.RadioButtonSOSI, "SOSI Generell del - Regler for UML-modellering - versjon 5.0")
+        toolTips.SetToolTip(Me.RadioButtonISO19103, "ISO 19103:2015 - Geographic information - Conceptual schema language")
+        toolTips.SetToolTip(Me.RadioButtonISO19109, "ISO 19109:2015 - Geographic information - Rules for application schema")
 
     End Sub
 
