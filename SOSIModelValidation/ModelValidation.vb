@@ -70,6 +70,14 @@
         Output("-----------------------------------")
         Output("Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name)
         Output("Selected log level: " + logLevel)
+        Select Case ruleSet
+            Case "SOSI"
+                Output("Selected rule set: SOSI Generell del - Regler for UML modellering - versjon 5.0")
+            Case "19103"
+                Output("Selected rule set: ISO 19103:2015 - Geographic information - Conceptual schema language")
+            Case "19109"
+                Output("Selected rule set: ISO 19109:2015 - Geographic information - Rules for application schema")
+        End Select
         Output("-----------------------------------")
     End Sub
 
@@ -92,8 +100,6 @@
         startTime = Timer
         packageIDList.Clear()
         classifierIDList.Clear()
-
-
 
         'set log level
         If validationWindow.RadioButtonW.Checked Then
