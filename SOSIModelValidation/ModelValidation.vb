@@ -164,6 +164,8 @@
 
 
         Output("Debug Package " + thePackage.Name)
+
+        anbefalingStyleGuide(thePackage)
         ' Call to tests
         ' Call to tests
         ' Call to tests
@@ -193,6 +195,8 @@
         For Each currentElement In elements
 
             Output("Debug Element " + currentElement.Name)
+
+            anbefalingStyleGuide(currentElement)
 
             ' Call element subs for all classifiers
 
