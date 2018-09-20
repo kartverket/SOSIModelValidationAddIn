@@ -206,6 +206,8 @@
 
                 If UCase(currentElement.Stereotype) = "FEATURETYPE" Then
                     ' Call element subs for feature types
+                    Call reqGeneralFeature(currentElement, currentElement)
+
 
                 End If
 
