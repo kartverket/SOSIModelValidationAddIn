@@ -68,6 +68,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="kravEnkelArv.vb" />
+    <Compile Include="kravFlerspråklighetElement.vb" />
     <Compile Include="Main.vb" />
     <Compile Include="ModelValidation.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
