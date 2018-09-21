@@ -232,6 +232,8 @@
                 kravEnkelArv(currentElement)
 
 
+                Call requirement14(currentElement)
+
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
                     ' Call element subs for codelists and enumerations
 
