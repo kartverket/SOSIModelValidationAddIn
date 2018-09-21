@@ -13,6 +13,13 @@
 
     Dim thePackage As EA.Package
 
+    'For reqUMLProfile:
+    Dim ProfileTypes As New System.Collections.ArrayList
+    Dim ExtensionTypes As New System.Collections.ArrayList
+    Dim CoreTypes As New System.Collections.ArrayList
+    'reqUmlProfileLoad()
+
+
     Dim packageIDList As New System.Collections.ArrayList
     Dim classifierIDList As New System.Collections.ArrayList
 
@@ -38,7 +45,7 @@
                 thePackage = theRepository.GetTreeSelectedObject()
                 If Not thePackage.IsModel Then
                     If UCase(thePackage.Element.Stereotype) = UCase("applicationSchema") Then
-                        Dim messageText = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket" + versionYear + vbCrLf + vbCrLf
+                        Dim messageText = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear + vbCrLf + vbCrLf
                         messageText = messageText + "Model validation based on requirements and recommendations in SOSI standard 'Regler for UML-modellering 5.0'" + vbCrLf + vbCrLf
                         messageText = messageText + "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
                         validationWindow.Label1.Text() = messageText
@@ -70,6 +77,14 @@
         Output("-----------------------------------")
         Output("Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name)
         Output("Selected log level: " + logLevel)
+        Select Case ruleSet
+            Case "SOSI"
+                Output("Selected rule set: SOSI Generell del - Regler for UML modellering - versjon 5.0")
+            Case "19103"
+                Output("Selected rule set: ISO 19103:2015 - Geographic information - Conceptual schema language")
+            Case "19109"
+                Output("Selected rule set: ISO 19109:2015 - Geographic information - Rules for application schema")
+        End Select
         Output("-----------------------------------")
     End Sub
 
@@ -93,8 +108,6 @@
         packageIDList.Clear()
         classifierIDList.Clear()
 
-
-
         'set log level
         If validationWindow.RadioButtonW.Checked Then
             logLevel = "Warning"
@@ -103,6 +116,17 @@
         Else
             'this should not happen if all radio buttons are checked...
             logLevel = "Unknown"
+        End If
+
+        'set rule set
+        If validationWindow.RadioButtonSOSI.Checked Then
+            ruleSet = "SOSI"
+        ElseIf validationWindow.RadioButtonISO19103.Checked Then
+            ruleSet = "19103"
+        ElseIf validationWindow.RadioButtonISO19109.Checked Then
+            ruleSet = "19109"
+        Else
+            ruleSet = "SOSI"
         End If
 
         'start of report: Show header
@@ -129,7 +153,7 @@
             'Call dependencyLoop(thePackage.Element)
             'check if there are packages with stereotype "applicationSchema"in package hierarchy upwards from start package
             'CheckParentPackageStereotype(thePackage)
-
+            Call reqUMLProfileLoad()
 
             ' Tests that should be done recursivly on subpackages should called in FindInvalidElementsInPackage
             Call FindInvalidElementsInPackage(thePackage)
@@ -202,6 +226,8 @@
 
             If currentElement.Type = "Class" Or currentElement.Type = "Enumeration" Or currentElement.Type = "DataType" Then
                 ' Call element subs for all class types
+                kravEnkelArv(currentElement)
+
 
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
                     ' Call element subs for codelists and enumerations
@@ -210,6 +236,7 @@
 
                 If UCase(currentElement.Stereotype) = "FEATURETYPE" Then
                     ' Call element subs for feature types
+                    Call kravFlerspråklighetElement(currentElement)
 
                 End If
 
@@ -219,8 +246,9 @@
                 For Each currentAttribute In attributes
 
                     Output("Debug Attribute " + currentAttribute.Name)
+                    Call kravFlerspråklighetElement(currentAttribute)
                     ' Call attribute checks
-
+                    reqUMLProfile(currentElement, currentAttribute)
                 Next
 
 
@@ -230,6 +258,11 @@
 
                     Output("Debug Connector " + currentConnector.Name)
                     ' call connector checks
+
+                    If currentConnector.Type = "Aggregation" Or currentConnector.Type = "Assosiation" Then
+                        kravFlerspråklighetElement(currentConnector.SupplierEnd)
+                        kravFlerspråklighetElement(currentConnector.ClientEnd)
+                    End If
 
                 Next
 
@@ -241,6 +274,7 @@
 
                     Output("Debug Operation" + currentOperation.Name)
                     'call operation checks
+                    kravFlerspråklighetElement(currentOperation)
 
                 Next
 

@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="anbefalingStyleGuide.vb" />
+    <Compile Include="kravEnkelArv.vb" />
+    <Compile Include="kravFlerspråklighetElement.vb" />
     <Compile Include="Main.vb" />
     <Compile Include="ModelValidation.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -87,6 +89,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="PopulateLists.vb" />
+    <Compile Include="reqUMLProfile.vb" />
     <Compile Include="scriptBreakingStructures.vb" />
     <Compile Include="SOSIModelValidationWindow.Designer.vb">
       <DependentUpon>SOSIModelValidationWindow.vb</DependentUpon>
