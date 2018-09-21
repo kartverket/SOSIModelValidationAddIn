@@ -199,6 +199,7 @@
         '   Call checkUtkast(Package)
         '   Call checkSubPackageStereotype(Package)
         '
+        Call requirement15onPackage(thePackage)
 
         'recursive call to subpackages
 
@@ -218,14 +219,16 @@
 
         For Each currentElement In elements
 
-            Output("Debug Element " + currentElement.Name)
+            Output("Debug Element " + currentElement.Name + " " + currentElement.Type)
 
             anbefalingStyleGuide(currentElement)
 
             ' Call element subs for all classifiers
 
+
             If currentElement.Type = "Class" Or currentElement.Type = "Enumeration" Or currentElement.Type = "DataType" Then
                 ' Call element subs for all class types
+                Call requirement15onClass(currentElement)
                 kravEnkelArv(currentElement)
 
 
@@ -248,6 +251,7 @@
                     Output("Debug Attribute " + currentAttribute.Name)
                     Call kravFlerspråklighetElement(currentAttribute)
                     ' Call attribute checks
+                    Call requirement15onAttr(currentElement, currentAttribute)
                     reqUMLProfile(currentElement, currentAttribute)
                 Next
 
@@ -256,8 +260,9 @@
                 connectors = currentElement.Connectors
                 For Each currentConnector In connectors
 
-                    Output("Debug Connector " + currentConnector.Name)
+                    Output("Debug Connector " + currentConnector.Name + " " + currentConnector.Stereotype)
                     ' call connector checks
+                    Call requirement15onRole(currentElement, currentConnector)
 
                     If currentConnector.Type = "Aggregation" Or currentConnector.Type = "Assosiation" Then
                         kravFlerspråklighetElement(currentConnector.SupplierEnd)
