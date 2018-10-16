@@ -190,6 +190,7 @@
         Output("Debug Package " + thePackage.Name)
 
         anbefalingStyleGuide(thePackage)
+        kravOversiktsdiagram(thePackage)
         ' Call to tests
         ' Call to tests
         ' Call to tests
