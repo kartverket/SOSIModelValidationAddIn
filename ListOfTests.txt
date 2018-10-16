@@ -25,7 +25,7 @@ recommendation1
 
 ISO 19109:2015
 reqUMLConstraint
-reqUMLPackaging
+X reqUMLPackaging -Tore
 reqUMLStructure
 X reqUMLProfile -Kent
 reqUMLFeature
