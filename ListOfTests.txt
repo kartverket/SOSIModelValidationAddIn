@@ -37,7 +37,7 @@ kravDefinisjoner
 kravEksternKodeliste -Kent
 X KravEnkelArv -Åsmund
 X kravFlerspråklighetElement -Åsmund
-kravFlerspråklighetPakke -Tore
+X kravFlerspråklighetPakke -Tore
 kravHoveddiagramDetaljeringNavning
 kravHoveddiagramNavning
 kravOversiktsdiagram
@@ -45,5 +45,5 @@ kravNavning
 kravSOSIModellregisterApplikasjonsskjemaStatus
 kravSOSIModellregisterApplikasjonskjemaVersjonsnummer
 kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast
-kravTaggedValueSpråk -Tore
+X kravTaggedValueSpråk -Tore
 X anbefalingStyleGuide -Åsmund
