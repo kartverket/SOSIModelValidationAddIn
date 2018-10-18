@@ -92,6 +92,7 @@
     <Compile Include="requirement14.vb" />
     <Compile Include="reqGeneralFeature.vb" />
     <Compile Include="requirement15.vb" />
+    <Compile Include="reqUMLIntegration.vb" />
     <Compile Include="reqUMLProfile.vb" />
     <Compile Include="scriptBreakingStructures.vb" />
     <Compile Include="SOSIModelValidationWindow.Designer.vb">
