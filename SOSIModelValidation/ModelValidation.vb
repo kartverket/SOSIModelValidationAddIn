@@ -201,7 +201,7 @@
         '
         Call requirement15onPackage(thePackage)
 
-        reqUmlPackaging(thePackage.Element, "version")
+        reqUmlPackaging(thePackage)
 
         'recursive call to subpackages
 

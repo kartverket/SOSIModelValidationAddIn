@@ -1,13 +1,19 @@
 ﻿Partial Public Class ModelValidation
 
-    ' Script Name: checkValueOfTVVersion
+    ' Script Name: reqUmlPackaging
     ' Author: Sara Henriksen, Tore Johnsen
     ' Date: 25.07.16 - Enhanced 23.08.18
     ' Purpose: To check if the value of the version-tag (tagged values) for an ApplicationSchema-package is empty or not. 
     ' req/uml/packaging
     ' sub procedure to check if the tagged value with the provided name exist in the ApplicationSchema, and if the value is emty it returns an Error-message. 
-    ' @param[in]: theElement (Element Class) and TaggedValueName (String) 
-    Sub reqUmlPackaging(theElement, taggedValueName)
+    ' @param[in]: thePackage (Package)
+    ' Conformity class: UML-applikasjonsskjema
+
+    Sub reqUmlPackaging(thePackage)
+        Dim theElement
+        theElement = thePackage.Element
+        Dim taggedValueName
+        taggedValueName = "version"
 
         If UCase(theElement.stereotype) = UCase("applicationSchema") Then
 
@@ -30,7 +36,7 @@
                         currentExistingTaggedValue.Value = Trim(currentExistingTaggedValue.Value)
                         If Len(currentExistingTaggedValue.Value) = 0 Then
                             Output("Error: Package [«" & theElement.Stereotype & "» " & theElement.Name & "] \ tag [version] is missing a value. [req/uml/packaging]")
-                            errorCounter = errorCounter + 1
+                            errorCounter += 1
                             taggedValueVersionMissing = False
                         Else
                             taggedValueVersionMissing = False
@@ -41,7 +47,7 @@
                 'if tagged value version lacks for the package, return an error 
                 If taggedValueVersionMissing Then
                     Output("Error: Package [«" & theElement.Stereotype & "» " & theElement.Name & "] is missing a [version] tag. [req/uml/packaging]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
             End If
         End If
