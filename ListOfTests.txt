@@ -26,10 +26,10 @@ recommendation1
 ISO 19109:2015
 reqUMLConstraint -Tore
 X reqUMLPackaging -Tore
-reqUMLStructure
+X reqUMLStructure -Åsmund
 X reqUMLProfile -Kent
 reqUMLFeature
-reqUMLIntegration
+x reqUMLIntegration -Åsmund (test on package dependencies not implemented yet)
 X reqGeneralFeature -Tore
 
 SOSI 5.0
@@ -40,10 +40,10 @@ X kravFlerspråklighetElement -Åsmund
 X kravFlerspråklighetPakke -Tore
 kravHoveddiagramDetaljeringNavning
 kravHoveddiagramNavning
-kravOversiktsdiagram
+X kravOversiktsdiagram -Åsmund
 kravNavning
 kravSOSIModellregisterApplikasjonsskjemaStatus
 kravSOSIModellregisterApplikasjonskjemaVersjonsnummer
-kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast
+X kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast -Åsmund
 X kravTaggedValueSpråk -Tore
 X anbefalingStyleGuide -Åsmund
