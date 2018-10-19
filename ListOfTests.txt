@@ -42,8 +42,8 @@ kravHoveddiagramDetaljeringNavning
 kravHoveddiagramNavning
 X kravOversiktsdiagram -Åsmund
 kravNavning
-kravSOSIModellregisterApplikasjonsskjemaStatus -Tore
-kravSOSIModellregisterApplikasjonskjemaVersjonsnummer
+X kravSOSIModellregisterApplikasjonsskjemaStatus -Tore
+kravSOSIModellregisterApplikasjonskjemaVersjonsnummer -Tore
 X kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast -Åsmund
 X kravTaggedValueSpråk -Tore
 X anbefalingStyleGuide -Åsmund
