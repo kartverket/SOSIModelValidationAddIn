@@ -236,6 +236,7 @@
 
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
                     ' Call element subs for codelists and enumerations
+                    anbefaling1(currentElement)
 
                 End If
 
