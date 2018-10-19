@@ -35,7 +35,7 @@ GitHub-klient - Sync - Committ (kommentar) - Pull request (rare N!)
 
 GitHub-webklient - Felles Merge
 
-GitHub-webklient - Synk from Master ??? eller ny Branch (din lokale kopi blir overskrevet)
+GitHub-webklient - 1) Bytt til master i GitHub-klient, kompiler og kjør i EA for testing; 2) Lag ny Branch fra master, produser ny kode i denne branchen (til videre utvikling) 
 
 Visual Studio - Build - Build Solution (for å få nytt felles startpunkt for testing)
 
