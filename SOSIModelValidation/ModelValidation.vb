@@ -253,6 +253,7 @@
 
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
                     ' Call element subs for codelists and enumerations
+                    recommendation1(currentElement)
 
                     Call requirement6(currentElement)
                     Call requirement7(currentElement)
