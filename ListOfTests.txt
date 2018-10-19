@@ -1,5 +1,6 @@
 List of tests from original SOSI Model Validation script
 Put an X in front of test name when test is transferred to Add-in
+lower case 'x' means partially completed
 
 Script tests
 X Main loops -Åsmund
@@ -7,20 +8,20 @@ X Inheritance loop detection -Åsmund
 
 ISO 19103:2015
 requirement3 -Magnus
-requirement6 -Kent
-requirement7 -Kent
+X requirement6 -Kent
+X requirement7 -Kent
 requirement10
 requirement11
 requirement12
 X requirement14 -Tore
 X requirement15 -Kent
-requirement16 -Kent
-requirement17
+X requirement16 -Kent
+requirement17 -Åsmund
 requirement18 -Kent
 requirement19 -Magnus
-requirement21
-requirement22
-requirement25
+requirement21 -Åsmund
+X requirement22 -Kent
+X requirement25 -Kent
 X recommendation1 -Tore
 
 ISO 19109:2015
