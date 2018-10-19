@@ -68,7 +68,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="anbefaling1.vb" />
+    <Compile Include="recommendation1.vb" />
     <Compile Include="anbefalingStyleGuide.vb" />
     <Compile Include="kravEnkelArv.vb" />
     <Compile Include="kravFlerspråklighetElement.vb" />
