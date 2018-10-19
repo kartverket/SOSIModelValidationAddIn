@@ -72,6 +72,8 @@
     <Compile Include="kravEnkelArv.vb" />
     <Compile Include="kravFlerspråklighetElement.vb" />
 
+    <Compile Include="kravSOSIModellregisterApplikasjonsskjemaStatus.vb" />
+
     <Compile Include="kravFlerspråklighetPakke.vb" />
     <Compile Include="kravTaggedValueSpråk.vb" />
 
