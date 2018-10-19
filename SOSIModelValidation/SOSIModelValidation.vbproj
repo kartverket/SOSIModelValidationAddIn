@@ -101,6 +101,11 @@
     <Compile Include="reqGeneralFeature.vb" />
     <Compile Include="requirement15.vb" />
 
+    <Compile Include="requirement16.vb" />
+    <Compile Include="requirement6.vb" />
+    <Compile Include="requirement7.vb" />
+
+
     <Compile Include="reqUMLIntegration.vb" />
 
     <Compile Include="reqUmlPackaging.vb" />
