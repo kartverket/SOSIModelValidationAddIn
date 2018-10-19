@@ -226,6 +226,8 @@
 
             anbefalingStyleGuide(currentElement)
 
+            reqUMLStructure(currentElement)
+
             ' Call element subs for all classifiers
 
 
@@ -239,7 +241,8 @@
 
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
                     ' Call element subs for codelists and enumerations
-
+                Else
+                    ' Call element subs for classes that are NOT codelists or enumerations
                 End If
 
                 If UCase(currentElement.Stereotype) = "FEATURETYPE" Then
