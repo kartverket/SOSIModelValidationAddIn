@@ -2,11 +2,28 @@
 
     'Sub name:      reqUMLProfile
     'Author: 		Kent Jonsrud
-    'Date: 			2018-09-20
+    'Date: 			2018-09-20, 10-18
     'Purpose: 		/req/uml/profile from iso 19109 - check for valid well known types for all attributes (GM_Surface etc.), builds on iso 19103 Requirement 22 and 25.
     'Parameter: 	the property element that uses a type
     'Requirement class:     /req/uml/profile (and 25 and 22)
     'Conformance class:     from iso 19109 part nnn
+    Sub reqUMLProfileNorsk(theElement, attr)
+
+        If attr.ClassifierID = 0 Then
+            'Attribute not connected to a datatype class, check if the attribute has a iso TC 211 well known type
+            If NationalTypes.IndexOf(attr.Type, 0) = -1 Then
+                If ProfileTypes.IndexOf(attr.Type, 0) = -1 Then
+                    If ExtensionTypes.IndexOf(attr.Type, 0) = -1 Then
+                        If CoreTypes.IndexOf(attr.Type, 0) = -1 Then
+                            Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown type for attribute [" & attr.Name & " : " & attr.Type & "]. [norsk /req/uml/profile]")
+                            errorCounter += 1
+                        End If
+                    End If
+                End If
+            End If
+        End If
+
+    End Sub
     Sub reqUMLProfile(theElement, attr)
 
         If attr.ClassifierID = 0 Then
@@ -14,8 +31,8 @@
             If ProfileTypes.IndexOf(attr.Type, 0) = -1 Then
                 If ExtensionTypes.IndexOf(attr.Type, 0) = -1 Then
                     If CoreTypes.IndexOf(attr.Type, 0) = -1 Then
-                        Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown type for attribute [" & attr.Name & " : " & attr.Type & "]. [/req/uml/profile & krav/25 & krav/22]")
-                        errorCounter = errorCounter + 1
+                        Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown type for attribute [" & attr.Name & " : " & attr.Type & "]. [/req/uml/profile]")
+                        errorCounter += 1
                     End If
                 End If
             End If
@@ -29,8 +46,8 @@
             'If ProfileTypes.IndexOf(attr.Type, 0) = -1 Then
             If ExtensionTypes.IndexOf(attr.Type, 0) = -1 Then
                 If CoreTypes.IndexOf(attr.Type, 0) = -1 Then
-                    Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown type for attribute [" & attr.Name & " : " & attr.Type & "]. [requirement25 & requirement22]")
-                    errorCounter = errorCounter + 1
+                    Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown type for attribute [" & attr.Name & " : " & attr.Type & "]. [requirement25]")
+                    errorCounter += 1
                 End If
             End If
             'End If
@@ -45,7 +62,7 @@
             '   If ExtensionTypes.IndexOf(attr.Type, 0) = -1 Then
             If CoreTypes.IndexOf(attr.Type, 0) = -1 Then
                 Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown type for attribute [" & attr.Name & " : " & attr.Type & "]. [requirement22]")
-                errorCounter = errorCounter + 1
+                errorCounter += 1
             End If
             '   End If
             'End If
@@ -208,11 +225,11 @@
         'ProfileTypes.Add("CI_Citation")
         'ProfileTypes.Add("CI_Date")
 
-        'other less known Norwegian geometry types
-        ProfileTypes.Add("Punkt")
-        ProfileTypes.Add("Kurve")
-        ProfileTypes.Add("Flate")
-        ProfileTypes.Add("Sverm")
+        'other lesser known Norwegian legacy geometry types
+        NationalTypes.Add("Punkt")
+        NationalTypes.Add("Kurve")
+        NationalTypes.Add("Flate")
+        NationalTypes.Add("Sverm")
 
 
     End Sub

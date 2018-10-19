@@ -3,6 +3,7 @@
     Dim versionYear = "2018"
     Dim errorCounter As Integer
     Dim warningCounter As Integer
+    Dim omittedCounter As Integer
     Dim logLevel = "Warning"
     Dim ruleSet = "SOSI"
     Dim startTime, endTime, elapsedTime
@@ -14,6 +15,7 @@
     Dim thePackage As EA.Package
 
     'For reqUMLProfile:
+    Dim NationalTypes As New System.Collections.ArrayList
     Dim ProfileTypes As New System.Collections.ArrayList
     Dim ExtensionTypes As New System.Collections.ArrayList
     Dim CoreTypes As New System.Collections.ArrayList
@@ -23,17 +25,13 @@
     Dim packageIDList As New System.Collections.ArrayList
     Dim classifierIDList As New System.Collections.ArrayList
 
-    'KODEOPPRYDDING:  Må følgende variable være på klassenivå?
-    Dim ClassNames As New System.Collections.ArrayList
-    Dim PackageNames As New System.Collections.ArrayList
+
 
     ' Sub ModelValidation
     ' Check that the selected object is a package
     ' Check that the selected package has stereotype applicationSchema
     ' Start the model validation window
 
-    ' this is a test
-    ' and another test
     Public Sub ModelValidationStartWindow(startRepository As EA.Repository)
         theRepository = startRepository
         validationWindow = New SOSIModelValidationWindow
@@ -44,20 +42,16 @@
             Case EA.ObjectType.otPackage
                 thePackage = theRepository.GetTreeSelectedObject()
                 If Not thePackage.IsModel Then
-                    If UCase(thePackage.Element.Stereotype) = UCase("applicationSchema") Then
-                        Dim messageText = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear + vbCrLf + vbCrLf
-                        messageText = messageText + "Model validation based on requirements and recommendations in SOSI standard 'Regler for UML-modellering 5.0'" + vbCrLf + vbCrLf
-                        messageText = messageText + "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
-                        validationWindow.Label1.Text() = messageText
-                        validationWindow.Show()
-                    Else
-                        System.Windows.Forms.MessageBox.Show("Please select a package with stereotype «applicationSchema».")
-                    End If
+                    Dim messageText = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear + vbCrLf + vbCrLf
+                    messageText = messageText + "Model validation based on requirements and recommendations in SOSI standard 'Regler for UML-modellering 5.0'" + vbCrLf + vbCrLf
+                    messageText = messageText + "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
+                    validationWindow.Label1.Text() = messageText
+                    validationWindow.Show()
                 Else
-                    System.Windows.Forms.MessageBox.Show("Please select a package with stereotype «applicationSchema».")
+                    System.Windows.Forms.MessageBox.Show("Please select a package in the project browser.")
                 End If
             Case Else
-                System.Windows.Forms.MessageBox.Show("Please select a package with stereotype «applicationSchema».")
+                System.Windows.Forms.MessageBox.Show("Please select a package in the project browser.")
         End Select
     End Sub
 
@@ -95,6 +89,9 @@
         If logLevel = "Warning" Then
             Output("Number of warnings found: " & warningCounter)
         End If
+        If omittedCounter > 0 Then
+            Output("Number of omitted tests:" & omittedCounter)
+        End If
         Output("Time used: " & FormatNumber(elapsedTime, 2))
         Output("-----------------------------------")
     End Sub
@@ -104,6 +101,7 @@
         'initialize variables
         errorCounter = 0
         warningCounter = 0
+        omittedCounter = 0
         startTime = Timer
         packageIDList.Clear()
         classifierIDList.Clear()
@@ -155,6 +153,8 @@
             'CheckParentPackageStereotype(thePackage)
             Call reqUMLProfileLoad()
 
+            Call reqUMLIntegration(thePackage)
+
             ' Tests that should be done recursivly on subpackages should called in FindInvalidElementsInPackage
             Call FindInvalidElementsInPackage(thePackage)
 
@@ -190,6 +190,11 @@
         Output("Debug Package " + thePackage.Name)
 
         anbefalingStyleGuide(thePackage)
+
+        kravOversiktsdiagram(thePackage)
+
+        kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast(thePackage)
+
         ' Call to tests
         ' Call to tests
         ' Call to tests
@@ -199,17 +204,21 @@
         '   Call checkUtkast(Package)
         '   Call checkSubPackageStereotype(Package)
         '
-        Call requirement15onPackage(thePackage)
+        Call requirement15(thePackage)
 
-
+        reqUmlPackaging(thePackage)
 
 
         kravSOSIModellregisterApplikasjonskjemaVersjonsnummer(thePackage)
+
+
+        kravSOSIModellregisterApplikasjonsskjemaStatus(thePackage)
 
         'recursive call to subpackages
 
         For Each currentPackage In packages
 
+            Call requirement16(currentPackage)
             FindInvalidElementsInPackage(currentPackage)
             ' Skal denne kalles her?
             Dim constraintPCollection As EA.Collection
@@ -220,20 +229,23 @@
 
         Next
 
-        ClassNames.Clear()
+        'ClassNames.Clear()
 
         For Each currentElement In elements
 
-            Output("Debug Element " + currentElement.Name + " " + currentElement.Type)
+            Output("Debug --- Element " + currentElement.Name + " Type " + currentElement.Type)
 
             anbefalingStyleGuide(currentElement)
+
+            reqUMLStructure(currentElement)
 
             ' Call element subs for all classifiers
 
 
             If currentElement.Type = "Class" Or currentElement.Type = "Enumeration" Or currentElement.Type = "DataType" Then
                 ' Call element subs for all class types
-                Call requirement15onClass(currentElement)
+                Call requirement15(currentElement)
+                Call requirement16(currentElement)
                 kravEnkelArv(currentElement)
 
 
@@ -241,6 +253,23 @@
 
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
                     ' Call element subs for codelists and enumerations
+
+                    Call requirement6(currentElement)
+                    Call requirement7(currentElement)
+
+                Else
+                    attributes = currentElement.Attributes
+                    For Each currentAttribute In attributes
+                        Select Case ruleSet
+                            Case "SOSI"
+                                reqUMLProfileNorsk(currentElement, currentAttribute)
+                            Case "19109"
+                                reqUMLProfile(currentElement, currentAttribute)
+                            Case "19103"
+                                requirement25(currentElement, currentAttribute)
+                        End Select
+                        Call requirement16(currentAttribute)
+                    Next
 
                 End If
 
@@ -261,8 +290,8 @@
                     Output("Debug Attribute " + currentAttribute.Name)
                     Call kravFlerspråklighetElement(currentAttribute)
                     ' Call attribute checks
-                    Call requirement15onAttr(currentElement, currentAttribute)
-                    reqUMLProfile(currentElement, currentAttribute)
+                    Call requirement15(currentElement, currentAttribute)
+                    'flyttet vekk fra kodelister reqUMLProfile(currentElement, currentAttribute)
                 Next
 
 
@@ -272,11 +301,16 @@
 
                     Output("Debug Connector " + currentConnector.Name + " " + currentConnector.Stereotype)
                     ' call connector checks
-                    Call requirement15onRole(currentElement, currentConnector)
+                    Call requirement15(currentElement, currentConnector)
+                    Call requirement16(currentConnector)
 
                     If currentConnector.Type = "Aggregation" Or currentConnector.Type = "Assosiation" Then
                         kravFlerspråklighetElement(currentConnector.SupplierEnd)
                         kravFlerspråklighetElement(currentConnector.ClientEnd)
+                        Call requirement15(currentElement, currentConnector.SupplierEnd)
+                        Call requirement15(currentElement, currentConnector.ClientEnd)
+                        Call requirement16(currentConnector.SupplierEnd)
+                        Call requirement16(currentConnector.ClientEnd)
                     End If
 
                 Next

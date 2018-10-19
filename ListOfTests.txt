@@ -21,7 +21,7 @@ requirement19 -Magnus
 requirement21
 requirement22
 requirement25
-recommendation1
+X recommendation1 -Tore
 
 ISO 19109:2015
 reqUMLConstraint -Tore
@@ -42,8 +42,8 @@ kravHoveddiagramDetaljeringNavning
 kravHoveddiagramNavning
 X kravOversiktsdiagram -Åsmund
 kravNavning
-kravSOSIModellregisterApplikasjonsskjemaStatus -Tore
-kravSOSIModellregisterApplikasjonskjemaVersjonsnummer
+X kravSOSIModellregisterApplikasjonsskjemaStatus -Tore
+X kravSOSIModellregisterApplikasjonskjemaVersjonsnummer -Tore
 X kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast -Åsmund
 X kravTaggedValueSpråk -Tore
 X anbefalingStyleGuide -Åsmund
