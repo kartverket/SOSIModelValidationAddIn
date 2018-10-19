@@ -71,6 +71,14 @@
     <Compile Include="anbefalingStyleGuide.vb" />
     <Compile Include="kravEnkelArv.vb" />
     <Compile Include="kravFlerspråklighetElement.vb" />
+
+    <Compile Include="kravFlerspråklighetPakke.vb" />
+    <Compile Include="kravTaggedValueSpråk.vb" />
+
+    <Compile Include="kravOversiktsdiagram.vb" />
+
+    <Compile Include="kravSOSIModellregisterApplikasjonsskjemaStandardPakkenavnUtkast.vb" />
+
     <Compile Include="Main.vb" />
     <Compile Include="ModelValidation.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -92,8 +100,13 @@
     <Compile Include="requirement14.vb" />
     <Compile Include="reqGeneralFeature.vb" />
     <Compile Include="requirement15.vb" />
+
     <Compile Include="reqUMLIntegration.vb" />
+
+    <Compile Include="reqUmlPackaging.vb" />
+
     <Compile Include="reqUMLProfile.vb" />
+    <Compile Include="reqUMLStructure.vb" />
     <Compile Include="scriptBreakingStructures.vb" />
     <Compile Include="SOSIModelValidationWindow.Designer.vb">
       <DependentUpon>SOSIModelValidationWindow.vb</DependentUpon>
@@ -135,6 +148,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
