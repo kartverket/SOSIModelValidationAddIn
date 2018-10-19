@@ -72,6 +72,9 @@
     <Compile Include="kravEnkelArv.vb" />
     <Compile Include="kravFlerspråklighetElement.vb" />
 
+    <Compile Include="kravFlerspråklighetPakke.vb" />
+    <Compile Include="kravTaggedValueSpråk.vb" />
+
     <Compile Include="kravOversiktsdiagram.vb" />
 
     <Compile Include="kravSOSIModellregisterApplikasjonsskjemaStandardPakkenavnUtkast.vb" />
@@ -140,6 +143,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
