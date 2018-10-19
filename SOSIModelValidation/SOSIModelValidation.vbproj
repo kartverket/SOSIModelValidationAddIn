@@ -100,6 +100,7 @@
     <Compile Include="requirement14.vb" />
     <Compile Include="reqGeneralFeature.vb" />
     <Compile Include="requirement15.vb" />
+    <Compile Include="reqUmlPackaging.vb" />
     <Compile Include="reqUMLProfile.vb" />
     <Compile Include="reqUMLStructure.vb" />
     <Compile Include="scriptBreakingStructures.vb" />

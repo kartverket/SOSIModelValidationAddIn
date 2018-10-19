@@ -204,6 +204,8 @@
         '
         Call requirement15onPackage(thePackage)
 
+        reqUmlPackaging(thePackage)
+
         'recursive call to subpackages
 
         For Each currentPackage In packages
