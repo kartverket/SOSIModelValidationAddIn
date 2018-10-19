@@ -32,8 +32,6 @@
     ' Check that the selected package has stereotype applicationSchema
     ' Start the model validation window
 
-    ' this is a test
-    ' and another test
     Public Sub ModelValidationStartWindow(startRepository As EA.Repository)
         theRepository = startRepository
         validationWindow = New SOSIModelValidationWindow
@@ -190,6 +188,11 @@
         Output("Debug Package " + thePackage.Name)
 
         anbefalingStyleGuide(thePackage)
+
+        kravOversiktsdiagram(thePackage)
+
+        kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast(thePackage)
+
         ' Call to tests
         ' Call to tests
         ' Call to tests
@@ -223,6 +226,8 @@
 
             anbefalingStyleGuide(currentElement)
 
+            reqUMLStructure(currentElement)
+
             ' Call element subs for all classifiers
 
 
@@ -236,7 +241,8 @@
 
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
                     ' Call element subs for codelists and enumerations
-
+                Else
+                    ' Call element subs for classes that are NOT codelists or enumerations
                 End If
 
                 If UCase(currentElement.Stereotype) = "FEATURETYPE" Then
