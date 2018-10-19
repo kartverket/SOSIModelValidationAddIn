@@ -72,6 +72,9 @@
     <Compile Include="kravEnkelArv.vb" />
     <Compile Include="kravFlerspråklighetElement.vb" />
 
+    <Compile Include="kravSOSIModellregisterApplikasjonsskjemaVersjonsnummer.vb" />
+
+
     <Compile Include="kravSOSIModellregisterApplikasjonsskjemaStatus.vb" />
 
     <Compile Include="kravFlerspråklighetPakke.vb" />
@@ -80,6 +83,7 @@
     <Compile Include="kravOversiktsdiagram.vb" />
 
     <Compile Include="kravSOSIModellregisterApplikasjonsskjemaStandardPakkenavnUtkast.vb" />
+
 
     <Compile Include="Main.vb" />
     <Compile Include="ModelValidation.vb" />

@@ -208,7 +208,12 @@
 
         reqUmlPackaging(thePackage)
 
+
+        kravSOSIModellregisterApplikasjonskjemaVersjonsnummer(thePackage)
+
+
         kravSOSIModellregisterApplikasjonsskjemaStatus(thePackage)
+
         'recursive call to subpackages
 
         For Each currentPackage In packages
