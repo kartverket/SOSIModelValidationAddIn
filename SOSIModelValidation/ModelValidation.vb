@@ -32,8 +32,6 @@
     ' Check that the selected package has stereotype applicationSchema
     ' Start the model validation window
 
-    ' this is a test
-    ' and another test
     Public Sub ModelValidationStartWindow(startRepository As EA.Repository)
         theRepository = startRepository
         validationWindow = New SOSIModelValidationWindow
@@ -190,6 +188,7 @@
         Output("Debug Package " + thePackage.Name)
 
         anbefalingStyleGuide(thePackage)
+        kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast(thePackage)
         ' Call to tests
         ' Call to tests
         ' Call to tests
