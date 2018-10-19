@@ -188,7 +188,11 @@
         Output("Debug Package " + thePackage.Name)
 
         anbefalingStyleGuide(thePackage)
+
+        kravOversiktsdiagram(thePackage)
+
         kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast(thePackage)
+
         ' Call to tests
         ' Call to tests
         ' Call to tests
