@@ -201,6 +201,11 @@
         '
         Call requirement15onPackage(thePackage)
 
+
+
+
+        kravSOSIModellregisterApplikasjonskjemaVersjonsnummer(thePackage)
+
         'recursive call to subpackages
 
         For Each currentPackage In packages
