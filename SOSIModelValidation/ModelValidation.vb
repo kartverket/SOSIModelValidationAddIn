@@ -193,6 +193,7 @@
         ' Call to tests
         ' Call to tests
         ' Call to tests
+        checkDefinitionOfElement(thePackage)
         'CheckDefinition(thePackage)
         'Requirement15(thePackage)
         '	call checkEndingOfPackageName(package)
@@ -230,6 +231,7 @@
                 ' Call element subs for all class types
                 Call requirement15onClass(currentElement)
                 kravEnkelArv(currentElement)
+                Call checkDefinitionOfElement(currentElement)
 
 
                 Call requirement14(currentElement)
@@ -256,6 +258,8 @@
                     Output("Debug Attribute " + currentAttribute.Name)
                     Call kravFlerspråklighetElement(currentAttribute)
                     ' Call attribute checks
+                    Call checkDefinitionOfElement(currentAttribute)
+
                     Call requirement15onAttr(currentElement, currentAttribute)
                     reqUMLProfile(currentElement, currentAttribute)
                 Next
@@ -267,6 +271,7 @@
 
                     Output("Debug Connector " + currentConnector.Name + " " + currentConnector.Stereotype)
                     ' call connector checks
+                    Call checkDefinitionOfElement(currentConnector)
                     Call requirement15onRole(currentElement, currentConnector)
 
                     If currentConnector.Type = "Aggregation" Or currentConnector.Type = "Assosiation" Then
@@ -284,6 +289,7 @@
 
                     Output("Debug Operation" + currentOperation.Name)
                     'call operation checks
+                    checkDefinitionOfElement(currentOperation)
                     kravFlerspråklighetElement(currentOperation)
 
                 Next
