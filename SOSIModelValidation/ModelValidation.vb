@@ -97,6 +97,9 @@
     End Sub
 
     Public Sub RunValidation()
+        'Initialization of variables common to several tests should be done from this sub.
+        'Tests that are run only on the start package should be called from this sub.
+        'Tests that are run on all start packages should be called from sub findInvalidElementsInPackage
 
         'initialize variables
         errorCounter = 0
@@ -112,7 +115,7 @@
         ElseIf validationWindow.RadioButtonE.Checked Then
             logLevel = "Error"
         Else
-            'this should not happen if all radio buttons are checked...
+            'this should not happen if radio buttons are checked...
             logLevel = "Unknown"
         End If
 
@@ -130,13 +133,11 @@
         'start of report: Show header
         ReportHeader()
 
-        ' calls to actual work
         'Check model for script breaking structures
         If scriptBreakingStructuresInModel(thePackage) Then
-            Output("Critical Errors: The errors listed above must be corrected before the script can validate the model.")
-            Output("Aborting Script.")
+            Output("Critical Errors: The errors listed above must be corrected before the program can validate the model.")
+            Output("Aborting Test.")
         Else
-            'rest of the calls
 
             ' populate lists that will be used in the validation checks
             Call PopulatePackageIDList(thePackage)
@@ -149,17 +150,20 @@
             'Call findPackagesToBeReferenced()
             'Call checkPackageDependency(thePackage)
             'Call dependencyLoop(thePackage.Element)
-            'check if there are packages with stereotype "applicationSchema"in package hierarchy upwards from start package
-            'CheckParentPackageStereotype(thePackage)
-            Call reqUMLProfileLoad()
 
+            Select Case ruleSet
+                Case "SOSI", "19109"
+                    If UCase(thePackage.Element.Stereotype) <> "APPLICATIONSCHEMA" Then
+                        Output("Error: Selected package does not have stereotype ApplicationSchema.  The selected rule set is intended for Application Schema packages.")
+                        errorCounter += 1
+                    End If
+            End Select
+
+            Call reqUMLProfileLoad()
             Call reqUMLIntegration(thePackage)
 
             ' Tests that should be done recursivly on subpackages should called in FindInvalidElementsInPackage
             Call FindInvalidElementsInPackage(thePackage)
-
-
-
 
         End If
         ' end of report: Show footer with results
@@ -171,47 +175,21 @@
     Sub FindInvalidElementsInPackage(thePackage As EA.Package)
         'test functions that should be done recursivly in all subpackages
 
-        Dim elements As EA.Collection
         Dim packages As EA.Collection
-        Dim attributes As EA.Collection
-        Dim connectors As EA.Collection
-        Dim operations As EA.Collection
         Dim currentPackage As EA.Package
         Dim currentPConstraint As EA.Constraint
-        Dim currentElement As EA.Element
-        Dim currentAttribute As EA.Attribute
-        Dim currentConnector As EA.Connector
-        Dim currentOperation As EA.Method
 
-        elements = thePackage.Elements
         packages = thePackage.Packages
 
 
         Output("Debug Package " + thePackage.Name)
 
         anbefalingStyleGuide(thePackage)
-
         kravOversiktsdiagram(thePackage)
-
         kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast(thePackage)
-
-        ' Call to tests
-        ' Call to tests
-        ' Call to tests
-        'CheckDefinition(thePackage)
-        'Requirement15(thePackage)
-        '	call checkEndingOfPackageName(package)
-        '   Call checkUtkast(Package)
-        '   Call checkSubPackageStereotype(Package)
-        '
-        Call requirement15(thePackage)
-
+        requirement15(thePackage)
         reqUmlPackaging(thePackage)
-
-
         kravSOSIModellregisterApplikasjonskjemaVersjonsnummer(thePackage)
-
-
         kravSOSIModellregisterApplikasjonsskjemaStatus(thePackage)
 
         'recursive call to subpackages
@@ -226,39 +204,55 @@
             For Each currentPConstraint In currentPackage.Element.Constraints
                 'call checConstriant
             Next
-
         Next
+
+        findinvalidElementsInClassifiers(thePackage)
+
+    End Sub
+
+    Sub findinvalidElementsInClassifiers(thePackage As EA.Package)
+        Dim elements As EA.Collection
+        Dim attributes As EA.Collection
+        Dim connectors As EA.Collection
+        Dim operations As EA.Collection
+        Dim currentElement As EA.Element
+        Dim currentAttribute As EA.Attribute
+        Dim currentConnector As EA.Connector
+        Dim currentOperation As EA.Method
+
+        elements = thePackage.Elements
 
         'ClassNames.Clear()
 
         For Each currentElement In elements
-
             Output("Debug --- Element " + currentElement.Name + " Type " + currentElement.Type)
 
+            ' All classifiers
+
             anbefalingStyleGuide(currentElement)
-
             reqUMLStructure(currentElement)
-
-            ' Call element subs for all classifiers
 
 
             If currentElement.Type = "Class" Or currentElement.Type = "Enumeration" Or currentElement.Type = "DataType" Then
+
                 ' Call element subs for all class types
+
+                Call requirement14(currentElement)
                 Call requirement15(currentElement)
                 Call requirement16(currentElement)
                 kravEnkelArv(currentElement)
 
-
-                Call requirement14(currentElement)
-
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
-                    ' Call element subs for codelists and enumerations
-                    recommendation1(currentElement)
 
+                    ' Call element subs for codelists and enumerations
+
+                    recommendation1(currentElement)
                     Call requirement6(currentElement)
                     Call requirement7(currentElement)
-
                 Else
+
+                    ' Call element subs for classes that are not codelists or enumerations
+
                     attributes = currentElement.Attributes
                     For Each currentAttribute In attributes
                         Select Case ruleSet
@@ -275,14 +269,12 @@
                 End If
 
                 If UCase(currentElement.Stereotype) = "FEATURETYPE" Then
+
                     ' Call element subs for feature types
+
                     Call reqGeneralFeature(currentElement, currentElement)
-
                     Call kravFlerspråklighetElement(currentElement)
-
-
                 End If
-
 
 
                 attributes = currentElement.Attributes
@@ -316,9 +308,6 @@
 
                 Next
 
-
-
-
                 operations = currentElement.Methods
                 For Each currentOperation In operations
 
@@ -327,15 +316,8 @@
                     kravFlerspråklighetElement(currentOperation)
 
                 Next
-
-
             End If
-
         Next
-
-
-
-
 
     End Sub
 
