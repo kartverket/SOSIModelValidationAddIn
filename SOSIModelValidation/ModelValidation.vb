@@ -1,17 +1,28 @@
 ﻿Public Class ModelValidation
+    ' Version and year
     Dim versionNumber = "1.0.0"
     Dim versionYear = "2018"
+    ' Counters
     Dim errorCounter As Integer
     Dim warningCounter As Integer
     Dim omittedCounter As Integer
+    ' Log level, rule set and options from radiobuttons and checkboxes
     Dim logLevel = "Warning"
     Dim ruleSet = "SOSI"
+
+    ' Option to avoid naming checks on certain codelists.
+    Dim checkAllCodeNames = True
+    Dim avoidableCodeLists() = New String() {"Kommunenummer", "Fylkesnummer"}
+
+
+    ' Time variables for report statistics
     Dim startTime, endTime, elapsedTime
 
+    ' Repository object
     Dim theRepository As EA.Repository
-
+    ' Validation window object
     Dim validationWindow As SOSIModelValidationWindow
-
+    ' Package object
     Dim thePackage As EA.Package
 
     'For reqUMLProfile:
@@ -29,7 +40,6 @@
 
     ' Sub ModelValidation
     ' Check that the selected object is a package
-    ' Check that the selected package has stereotype applicationSchema
     ' Start the model validation window
 
     Public Sub ModelValidationStartWindow(startRepository As EA.Repository)
@@ -46,6 +56,14 @@
                     messageText = messageText + "Model validation based on requirements and recommendations in SOSI standard 'Regler for UML-modellering 5.0'" + vbCrLf + vbCrLf
                     messageText = messageText + "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
                     validationWindow.Label1.Text() = messageText
+                    'generate text list for tool tip on avoidable code lists 
+                    Dim avoidableCodeListsText As String = ""
+                    Dim avoidableCodeList As String
+                    For Each avoidableCodeList In avoidableCodeLists
+                        If Not avoidableCodeListsText = "" Then avoidableCodeListsText = avoidableCodeListsText + ", "
+                        avoidableCodeListsText = avoidableCodeListsText + avoidableCodeList
+                    Next
+                    validationWindow.setAvoidableCodeListsText(avoidableCodeListsText)
                     validationWindow.Show()
                 Else
                     System.Windows.Forms.MessageBox.Show("Please select a package in the project browser.")
@@ -115,8 +133,8 @@
         ElseIf validationWindow.RadioButtonE.Checked Then
             logLevel = "Error"
         Else
-            'this should not happen if radio buttons are checked...
-            logLevel = "Unknown"
+            ' Default value in case no radiobutton is checked
+            logLevel = "Warning"
         End If
 
         'set rule set
@@ -127,7 +145,14 @@
         ElseIf validationWindow.RadioButtonISO19109.Checked Then
             ruleSet = "19109"
         Else
+            ' Default value in case no radiobutton is checked
             ruleSet = "SOSI"
+        End If
+
+        If validationWindow.CheckAllCodeNames.Checked Then
+            checkAllCodeNames = True
+        Else
+            checkAllCodeNames = False
         End If
 
         'start of report: Show header
@@ -154,7 +179,7 @@
             Select Case ruleSet
                 Case "SOSI", "19109"
                     If UCase(thePackage.Element.Stereotype) <> "APPLICATIONSCHEMA" Then
-                        Output("Error: Selected package does not have stereotype ApplicationSchema.  The selected rule set is intended for Application Schema packages.")
+                        Output("Error: Selected package does not have stereotype ApplicationSchema.  The selected rule set is for Application Schema packages.")
                         errorCounter += 1
                     End If
             End Select
@@ -243,14 +268,12 @@
                 kravEnkelArv(currentElement)
 
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
-
                     ' Call element subs for codelists and enumerations
 
                     recommendation1(currentElement)
                     Call requirement6(currentElement)
                     Call requirement7(currentElement)
                 Else
-
                     ' Call element subs for classes that are not codelists or enumerations
 
                     attributes = currentElement.Attributes
