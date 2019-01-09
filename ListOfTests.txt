@@ -25,7 +25,7 @@ X requirement25 -Kent
 X recommendation1 -Tore
 
 ISO 19109:2015
-reqUMLConstraint -Tore
+x reqUMLConstraint -Tore
 X reqUMLPackaging -Tore
 X reqUMLStructure -Åsmund
 X reqUMLProfile -Kent
