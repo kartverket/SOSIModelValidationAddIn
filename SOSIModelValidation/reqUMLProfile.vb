@@ -3,7 +3,7 @@
     'Sub name:      reqUMLProfile
     'Author: 		Kent Jonsrud
     'Date: 			2018-09-20
-    'Purpose: 		/req/uml/profile from iso 19109 - check for valid well known types for all attributes (GM_Surface etc.), builds on iso 19103 Requirement 22 and 25.
+    'Purpose: 		/req/uml/profile from iso 19109 - check for valid well known types for all attributes (GM_Surface etc.), builds on iso 19103 Requirement 22 and 25. Some norwegian types also added
     'Parameter: 	the property element that uses a type
     'Requirement class:     /req/uml/profile (and 25 and 22)
     'Conformance class:     from iso 19109 part nnn
@@ -160,7 +160,7 @@
         ProfileTypes.Add("GM_OrientableCurve")
         ProfileTypes.Add("GM_OrientableSurface")
         ProfileTypes.Add("GM_PolyhedralSurface")
-        ProfileTypes.Add("GM_triangulatedSurface")
+        ProfileTypes.Add("GM_TriangulatedSurface")
         ProfileTypes.Add("GM_Tin")
 
         'well known and often used coverage types from iso 19123:2007
@@ -208,7 +208,7 @@
         'ProfileTypes.Add("CI_Citation")
         'ProfileTypes.Add("CI_Date")
 
-        'other less known Norwegian geometry types
+        'other lesser known Norwegian geometry types
         ProfileTypes.Add("Punkt")
         ProfileTypes.Add("Kurve")
         ProfileTypes.Add("Flate")

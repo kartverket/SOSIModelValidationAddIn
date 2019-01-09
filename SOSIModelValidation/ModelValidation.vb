@@ -210,7 +210,7 @@
             Dim constraintPCollection As EA.Collection
             constraintPCollection = currentPackage.Element.Constraints
             For Each currentPConstraint In currentPackage.Element.Constraints
-                'call checConstriant
+                'call checkConstriant
             Next
 
         Next
@@ -236,7 +236,7 @@
 
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
                     ' Call element subs for codelists and enumerations
-
+                    Call kravEksternKodeliste(currentElement)
                 End If
 
                 If UCase(currentElement.Stereotype) = "FEATURETYPE" Then
@@ -257,7 +257,11 @@
                     Call kravFlerspråklighetElement(currentAttribute)
                     ' Call attribute checks
                     Call requirement15onAttr(currentElement, currentAttribute)
-                    reqUMLProfile(currentElement, currentAttribute)
+                    If UCase(currentElement.Stereotype) = "FEATURETYPE" Or UCase(currentElement.Stereotype) = "DATATYPE" Or UCase(currentElement.Stereotype) = "UNION" Then
+                        Call reqUMLProfile(currentElement, currentAttribute)
+                    Else
+                        ' bør også teste om koder i kodelister har type i det hele tatt, og eventuelt anbefale disse slettet
+                    End If
                 Next
 
 

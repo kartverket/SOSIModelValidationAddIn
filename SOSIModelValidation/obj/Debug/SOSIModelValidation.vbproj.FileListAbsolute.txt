@@ -22,3 +22,16 @@ C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation
 C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\obj\Debug\SOSIModelValidation.xml
 C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\obj\Debug\SOSIModelValidation.pdb
 C:\Magnus\SOSI\verktøy\Modellvalidering\VisualStudioProject\SOSIModelValidation\bin\Debug\SOSIModelValidation.tlb
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbprojAssemblyReference.cache
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbproj.ResolveComReference.cache
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.Resources.resources
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.SOSIModelValidationWindow.resources
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbproj.GenerateResource.cache
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbproj.CoreCompileInputs.cache
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.dll
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.xml
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.pdb
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\bin\Debug\SOSIModelValidation.dll
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\bin\Debug\SOSIModelValidation.pdb
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\bin\Debug\SOSIModelValidation.xml
+C:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\bin\Debug\SOSIModelValidation.tlb
