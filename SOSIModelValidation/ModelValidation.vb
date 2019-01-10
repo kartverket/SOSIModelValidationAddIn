@@ -192,22 +192,20 @@
         kravSOSIModellregisterApplikasjonskjemaVersjonsnummer(thePackage)
         kravSOSIModellregisterApplikasjonsskjemaStatus(thePackage)
 
-        'recursive call to subpackages
+        'do checks for all elements in package
+        findinvalidElementsInClassifiers(thePackage)
 
         For Each currentPackage In packages
-
             Call requirement16(currentPackage)
-            FindInvalidElementsInPackage(currentPackage)
             ' Skal denne kalles her?
             Dim constraintPCollection As EA.Collection
             constraintPCollection = currentPackage.Element.Constraints
             For Each currentPConstraint In currentPackage.Element.Constraints
                 'call checConstriant
             Next
+            'recursively call FindInvalidElementsInPackage for subpackages
+            FindInvalidElementsInPackage(currentPackage)
         Next
-
-        findinvalidElementsInClassifiers(thePackage)
-
     End Sub
 
     Sub findinvalidElementsInClassifiers(thePackage As EA.Package)
