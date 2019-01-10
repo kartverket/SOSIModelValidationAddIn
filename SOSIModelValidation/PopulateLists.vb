@@ -5,7 +5,7 @@
     'Sub name: 		PopulatePackageIDList
     'Author: 		Åsmund Tjora
     'Date: 			20170223
-    'Purpose: 		Populate the globalPackageIDList variable. 
+    'Purpose: 		Populate the packageIDList variable. 
     'Parameters:	rootPackage  The package to be added to the list and investigated for subpackages
     ' 
     Sub PopulatePackageIDList(rootPackage)
@@ -24,7 +24,7 @@
     'Sub name: 		PopulateClassifierIDList
     'Author: 		Åsmund Tjora
     'Date: 			20170228
-    'Purpose: 		Populate the globalListAllClassifierIDsInApplicationSchema variable. 
+    'Purpose: 		Populate the classifierIDList variable. 
     'Parameters:	rootPackage  The package to be added to the list and investigated for subpackages
 
     Sub PopulateClassifierIDList(rootPackage)
@@ -44,4 +44,23 @@
     End Sub
     '-------------------------------------------------------------END--------------------------------------------------------------------------------------------
 
+
+    'Sub name:  PopulatePackageDependenciesElementIDList
+    'Author:    Åsmund Tjora
+    'Date:      20190109 (date of original sub in script is unknown)
+    'Purpose:   Populate the packageDependenciesElementIDList
+    Sub PopulatePackageDependenciesElementIDList(thePackageElement)
+        Dim connectorList As EA.Collection
+        Dim packageConnector As EA.Connector
+        Dim dependee As EA.Element
+        connectorList = thePackageElement.Connectors
+        For Each packageConnector In connectorList
+            If packageConnector.Type = "Usage" Or packageConnector.Type = "Package" Or packageConnector.Type = "Dependency" Then
+                If thePackageElement.ElementID = packageConnector.ClientID Then
+                    dependee = theRepository.GetElementByID(packageConnector.SupplierID)
+                    packageDependenciesElementIDList.Add(dependee.ElementID)
+                End If
+            End If
+        Next
+    End Sub
 End Class

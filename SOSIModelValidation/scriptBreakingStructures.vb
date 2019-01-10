@@ -30,65 +30,6 @@
         scriptBreakingStructuresInModel = retVal
     End Function
 
-    'Function name: dependencyLoop
-    'Author: 		Åsmund Tjora
-    'Date: 			20170511 
-    'Purpose: 		Check that dependency structure does not form loops.  Return true if no loops are found, return false if loops are found
-    'Parameter: 	Package element where check originates
-    'Return value:	false if no loops are found, true if loops are found.
-    Function dependencyLoop(thePackageElement)
-        Dim retVal
-        Dim checkedPackagesList
-        checkedPackagesList = CreateObject("System.Collections.ArrayList")
-        retVal = dependencyLoopCheck(thePackageElement, checkedPackagesList)
-        If retVal Then
-            Output("Error:  The dependency structure originating in [«" & thePackageElement.StereoType & "» " & thePackageElement.name & "] contains dependency loops [/req/uml/integration]")
-            Output("          See the list above for the packages that are part of a loop.")
-            Output("          Ignore this error for dependencies between packages outside the control of the current project.")
-            errorCounter = errorCounter + 1
-        End If
-        dependencyLoop = retVal
-    End Function
-
-    Function dependencyLoopCheck(thePackageElement, dependantCheckedPackagesList)
-        Dim retVal
-        Dim localRetVal
-        Dim dependee As EA.Element
-        Dim connector As EA.Connector
-
-        ' Generate a copy of the input list.  
-        ' The operations done on the list should not be visible by the dependant in order to avoid false positive when there are common dependees.
-        Dim checkedPackagesList
-        checkedPackagesList = CreateObject("System.Collections.ArrayList")
-        Dim ElementID
-        For Each ElementID In dependantCheckedPackagesList
-            checkedPackagesList.Add(ElementID)
-        Next
-
-        retVal = False
-        checkedPackagesList.Add(thePackageElement.ElementID)
-        For Each connector In thePackageElement.Connectors
-            localRetVal = False
-            If connector.Type = "Usage" Or connector.Type = "Package" Or connector.Type = "Dependency" Then
-                If thePackageElement.ElementID = connector.ClientID Then
-                    dependee = theRepository.GetElementByID(connector.SupplierID)
-                    Dim checkedPackageID
-                    For Each checkedPackageID In checkedPackagesList
-                        If checkedPackageID = dependee.ElementID Then localRetVal = True
-                    Next
-                    If localRetVal Then
-                        Output("         Package [«" & dependee.Stereotype & "» " & dependee.Name & "] is part of a dependency loop")
-                    Else
-                        localRetVal = dependencyLoopCheck(dependee, checkedPackagesList)
-                    End If
-                    retVal = retVal Or localRetVal
-                End If
-            End If
-        Next
-
-        dependencyLoopCheck = retVal
-    End Function
-
     'Function name: inheritanceLoop
     'Author: 		Åsmund Tjora
     'Date: 			20170221 
