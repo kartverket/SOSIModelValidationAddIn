@@ -35,7 +35,7 @@ X reqGeneralFeature -Tore
 
 SOSI 5.0
 kravDefinisjoner -Magnus
-kravEksternKodeliste -Kent
+X kravEksternKodeliste -Kent
 X KravEnkelArv -Åsmund
 X kravFlerspråklighetElement -Åsmund
 X kravFlerspråklighetPakke -Tore
