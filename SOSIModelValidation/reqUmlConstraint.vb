@@ -24,13 +24,13 @@
 
                 'if the current constraint lacks definition, then return an error
                 If currentConstraint.Notes = "" Then
-                    Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] \ constraint [" & currentConstraint.Name & "] lacks definition. [/req/uml/constraint] & [krav/definisjoner]")
+                    Output("Error: Class [«" & currentElement.Stereotype & "» " & currentElement.Name & "] \ constraint [" & currentConstraint.Name & "] has no OCL expression. [/req/uml/constraint]")
                     errorCounter = errorCounter + 1
                 End If
 
                 'if the current constraint lacks a name, then return an error 
                 If currentConstraint.Name = "" Then
-                    Output("Error: Class [«" & theElement.Stereotype & "» " & currentElement.Name & "] has a constraint without a name. [/req/uml/constraint]")
+                    Output("Error: Class [«" & currentElement.Stereotype & "» " & currentElement.Name & "] has a constraint without a name. [/req/uml/constraint]")
                     errorCounter = errorCounter + 1
                 End If
 
@@ -44,13 +44,13 @@
                 Dim parentElementOfAttribute As EA.Element
                 parentElementOfAttribute = theRepository.GetElementByID(parentElementID)
                 If currentConstraint.Notes = "" Then
-                    Output("Error: Class [" & parentElementOfAttribute.Name & "] \ attribute [" & theElement.Name & "] \ constraint [" & currentConstraint.Name & "] lacks definition. [/req/uml/constraint] & [krav/definisjoner]")
+                    Output("Error: Class [" & parentElementOfAttribute.Name & "] \ attribute [" & currentAttribute.Name & "] \ constraint [" & currentConstraint.Name & "] has no OCL expression. [/req/uml/constraint]")
                     errorCounter = errorCounter + 1
                 End If
 
                 'if the current constraint lacks a name, then return an error 	
                 If currentConstraint.Name = "" Then
-                    Output("Error: Attribute [" & theElement.Name & "] has a constraint without a name. [/req/uml/constraint]")
+                    Output("Error: Attribute [" & currentAttribute.Name & "] has a constraint without a name. [/req/uml/constraint]")
                     errorCounter = errorCounter + 1
                 End If
 
@@ -59,13 +59,13 @@
 
                 'if the current constraint lacks definition, then return an error message
                 If currentConstraint.Notes = "" Then
-                    Output("Error: Package [«" & theElement.Element.Stereotype & "» " & theElement.Name & "] \ constraint [" & currentConstraint.Name & "] lacks definition. [/req/uml/constraint] & [krav/definisjoner]")
+                    Output("Error: Package [«" & currentPackage.Element.Stereotype & "» " & currentPackage.Name & "] \ constraint [" & currentConstraint.Name & "] has no OCL expression. [/req/uml/constraint]")
                     errorCounter = errorCounter + 1
                 End If
 
                 'if the current constraint lacks a name, then return an error meessage		
                 If currentConstraint.Name = "" Then
-                    Output("Error: Package [«" & theElement.Element.Stereotype & "» " & currentElement.Name & "] has a constraint without a name. [/req/uml/constraint]")
+                    Output("Error: Package [«" & currentPackage.Element.Stereotype & "» " & currentPackage.Name & "] has a constraint without a name. [/req/uml/constraint]")
                     errorCounter = errorCounter + 1
                 End If
 
@@ -85,13 +85,13 @@
                     Dim targetElementOfConnector As EA.Element
                     targetElementOfConnector = theRepository.GetElementByID(targetElementID)
 
-                    Output("Error: Constraint [" & currentConstraint.Name & "] owned by connector [ " & theElement.Name & "] between class [" & sourceElementOfConnector.Name & "] and class [" & targetElementOfConnector.Name & "] lacks definition. [/req/uml/constraint] & [krav/definisjoner]")
+                    Output("Error: Constraint [" & currentConstraint.Name & "] owned by connector [ " & currentConnector.Name & "] between class [" & sourceElementOfConnector.Name & "] and class [" & targetElementOfConnector.Name & "] has no OCL expression. [/req/uml/constraint]")
                     errorCounter = errorCounter + 1
                 End If
 
                 'if the current constraint lacks a name, then return an error message		
                 If currentConstraint.Name = "" Then
-                    Output("Error: Connector [" & theElement.Name & "] has a constraint without a name. [/req/uml/constraint]")
+                    Output("Error: Connector [" & currentConnector.Name & "] has a constraint without a name. [/req/uml/constraint]")
                     errorCounter = errorCounter + 1
 
                 End If
