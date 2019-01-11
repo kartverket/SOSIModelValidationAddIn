@@ -63,7 +63,20 @@
             rolename = conn.SupplierEnd.Role
         End If
         If theElement.ElementID = conn.SupplierID Then
-            rolename = conn.ClientEnd.Role
+
+            roleName = conn.ClientEnd.Role
+            badStereotype = conn.ClientEnd.Stereotype
+        End If
+        '(ignoring all association roles without name!)
+        If roleName <> "" Then
+            If badStereotype <> "" And LCase(badStereotype) <> "estimated" And LCase(badStereotype) <> "propertytype" Then
+                'INSPIRE:		if badStereotype <> "" and LCase(badStereotype) <> "estimated" and LCase(badStereotype) <> "propertytype" and LCase(badStereotype) <> "voidable" then
+                If logLevel = "Warning" Then
+                    Output("Warning: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown stereotype «" & badStereotype & "» on role name [" & roleName & "]. [/krav/15]")
+                    warningCounter = warningCounter + 1
+                End If
+            End If
+
         End If
         If conn.Stereotype <> "" Then
             If LCase(conn.Stereotype) = "topo" And ruleSet = "SOSI" Then

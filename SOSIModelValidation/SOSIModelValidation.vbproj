@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="recommendation1.vb" />
     <Compile Include="anbefalingStyleGuide.vb" />
+    <Compile Include="kravEksternKodeliste.vb" />
     <Compile Include="kravEnkelArv.vb" />
     <Compile Include="kravFlerspråklighetElement.vb" />
     <Compile Include="kravSOSIModellregisterApplikasjonsskjemaVersjonsnummer.vb" />

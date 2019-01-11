@@ -280,6 +280,8 @@
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
                     ' Call element subs for codelists and enumerations
 
+                    Call kravEksternKodeliste(currentElement)
+
                     recommendation1(currentElement)
                     Call requirement6(currentElement)
                     Call requirement7(currentElement)
@@ -316,6 +318,13 @@
                     Output("Debug Attribute " + currentAttribute.Name)
                     Call kravFlerspråklighetElement(currentAttribute)
                     ' Call attribute checks
+
+                    If UCase(currentElement.Stereotype) = "FEATURETYPE" Or UCase(currentElement.Stereotype) = "DATATYPE" Or UCase(currentElement.Stereotype) = "UNION" Then
+                        Call reqUMLProfile(currentElement, currentAttribute)
+                    Else
+                        ' bør også teste om koder i kodelister har type i det hele tatt, og eventuelt anbefale disse slettet
+                    End If
+
                     Call requirement15(currentElement, currentAttribute)
                     'flyttet vekk fra kodelister reqUMLProfile(currentElement, currentAttribute)
 
