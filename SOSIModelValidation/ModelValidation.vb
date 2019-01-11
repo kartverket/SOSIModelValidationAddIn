@@ -1,17 +1,28 @@
 ﻿Public Class ModelValidation
+    ' Version and year
     Dim versionNumber = "1.0.0"
     Dim versionYear = "2018"
+    ' Counters
     Dim errorCounter As Integer
     Dim warningCounter As Integer
     Dim omittedCounter As Integer
+    ' Log level, rule set and options from radiobuttons and checkboxes
     Dim logLevel = "Warning"
     Dim ruleSet = "SOSI"
+
+    ' Option to avoid naming checks on certain codelists.
+    Dim checkAllCodeNames = True
+    Dim avoidableCodeLists() = New String() {"Kommunenummer", "Fylkesnummer"}
+
+
+    ' Time variables for report statistics
     Dim startTime, endTime, elapsedTime
 
+    ' Repository object
     Dim theRepository As EA.Repository
-
+    ' Validation window object
     Dim validationWindow As SOSIModelValidationWindow
-
+    ' Package object
     Dim thePackage As EA.Package
 
     'For reqUMLProfile:
@@ -24,12 +35,12 @@
 
     Dim packageIDList As New System.Collections.ArrayList
     Dim classifierIDList As New System.Collections.ArrayList
-
+    Dim packageIDToBeReferencedList As New System.Collections.ArrayList
+    Dim packageDependenciesElementIDList As New System.Collections.ArrayList
 
 
     ' Sub ModelValidation
     ' Check that the selected object is a package
-    ' Check that the selected package has stereotype applicationSchema
     ' Start the model validation window
 
     Public Sub ModelValidationStartWindow(startRepository As EA.Repository)
@@ -46,6 +57,14 @@
                     messageText = messageText + "Model validation based on requirements and recommendations in SOSI standard 'Regler for UML-modellering 5.0'" + vbCrLf + vbCrLf
                     messageText = messageText + "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
                     validationWindow.Label1.Text() = messageText
+                    'generate text list for tool tip on avoidable code lists 
+                    Dim avoidableCodeListsText As String = ""
+                    Dim avoidableCodeList As String
+                    For Each avoidableCodeList In avoidableCodeLists
+                        If Not avoidableCodeListsText = "" Then avoidableCodeListsText = avoidableCodeListsText + ", "
+                        avoidableCodeListsText = avoidableCodeListsText + avoidableCodeList
+                    Next
+                    validationWindow.setAvoidableCodeListsText(avoidableCodeListsText)
                     validationWindow.Show()
                 Else
                     System.Windows.Forms.MessageBox.Show("Please select a package in the project browser.")
@@ -108,6 +127,7 @@
         startTime = Timer
         packageIDList.Clear()
         classifierIDList.Clear()
+        packageDependenciesElementIDList.Clear()
 
         'set log level
         If validationWindow.RadioButtonW.Checked Then
@@ -115,8 +135,8 @@
         ElseIf validationWindow.RadioButtonE.Checked Then
             logLevel = "Error"
         Else
-            'this should not happen if radio buttons are checked...
-            logLevel = "Unknown"
+            ' Default value in case no radiobutton is checked
+            logLevel = "Warning"
         End If
 
         'set rule set
@@ -127,7 +147,14 @@
         ElseIf validationWindow.RadioButtonISO19109.Checked Then
             ruleSet = "19109"
         Else
+            ' Default value in case no radiobutton is checked
             ruleSet = "SOSI"
+        End If
+
+        If validationWindow.CheckAllCodeNames.Checked Then
+            checkAllCodeNames = True
+        Else
+            checkAllCodeNames = False
         End If
 
         'start of report: Show header
@@ -142,10 +169,10 @@
             ' populate lists that will be used in the validation checks
             Call PopulatePackageIDList(thePackage)
             Call PopulateClassifierIDList(thePackage)
+            Call PopulatePackageDependenciesElementIDList(thePackage.Element)
 
             ' THESE SUBS MUST BE DECLARED AND NAME CHANGED TO NEW NAMING SCHEMES
             ' Subs below are for tests that are not recursively performed in sub packages
-            'Call findPackageDependencies(thePackage.Element)
             'Call getElementIDsOfExternalReferencedElements(thePackage)
             'Call findPackagesToBeReferenced()
             'Call checkPackageDependency(thePackage)
@@ -154,7 +181,7 @@
             Select Case ruleSet
                 Case "SOSI", "19109"
                     If UCase(thePackage.Element.Stereotype) <> "APPLICATIONSCHEMA" Then
-                        Output("Error: Selected package does not have stereotype ApplicationSchema.  The selected rule set is intended for Application Schema packages.")
+                        Output("Error: Selected package does not have stereotype ApplicationSchema.  The selected rule set is for Application Schema packages.")
                         errorCounter += 1
                     End If
             End Select
@@ -176,6 +203,7 @@
         'test functions that should be done recursivly in all subpackages
 
         Dim packages As EA.Collection
+        Dim constraintPCollection As EA.Collection
         Dim currentPackage As EA.Package
         Dim currentPConstraint As EA.Constraint
 
@@ -191,20 +219,25 @@
         reqUmlPackaging(thePackage)
         kravSOSIModellregisterApplikasjonskjemaVersjonsnummer(thePackage)
         kravSOSIModellregisterApplikasjonsskjemaStatus(thePackage)
-
+        
+    
         'do checks for all elements in package
         findinvalidElementsInClassifiers(thePackage)
 
+
+        constraintPCollection = thePackage.Element.Constraints
+        For Each currentPConstraint In constraintPCollection
+            'call package constraint checks
+            reqUmlConstraint(currentPConstraint, thePackage)
+        Next
+
+        'recursive call to subpackages
+
         For Each currentPackage In packages
             Call requirement16(currentPackage)
-            ' Skal denne kalles her?
-            Dim constraintPCollection As EA.Collection
-            constraintPCollection = currentPackage.Element.Constraints
-            For Each currentPConstraint In currentPackage.Element.Constraints
-                'call checConstriant
-            Next
-            'recursively call FindInvalidElementsInPackage for subpackages
+
             FindInvalidElementsInPackage(currentPackage)
+
         Next
     End Sub
 
@@ -213,10 +246,14 @@
         Dim attributes As EA.Collection
         Dim connectors As EA.Collection
         Dim operations As EA.Collection
+        Dim constraints As EA.Collection
         Dim currentElement As EA.Element
         Dim currentAttribute As EA.Attribute
         Dim currentConnector As EA.Connector
         Dim currentOperation As EA.Method
+        Dim currentConstraint As EA.Constraint
+        Dim currentConConstraint As EA.ConnectorConstraint
+        Dim currentAttConstraint As EA.AttributeConstraint
 
         elements = thePackage.Elements
 
@@ -241,14 +278,12 @@
                 kravEnkelArv(currentElement)
 
                 If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
-
                     ' Call element subs for codelists and enumerations
 
                     recommendation1(currentElement)
                     Call requirement6(currentElement)
                     Call requirement7(currentElement)
                 Else
-
                     ' Call element subs for classes that are not codelists or enumerations
 
                     attributes = currentElement.Attributes
@@ -283,6 +318,12 @@
                     ' Call attribute checks
                     Call requirement15(currentElement, currentAttribute)
                     'flyttet vekk fra kodelister reqUMLProfile(currentElement, currentAttribute)
+
+                    constraints = currentAttribute.Constraints
+                    For Each currentAttConstraint In constraints
+                        'call attribute constraint checks
+                        reqUmlConstraint(currentAttConstraint, currentAttribute)
+                    Next
                 Next
 
 
@@ -304,6 +345,11 @@
                         Call requirement16(currentConnector.ClientEnd)
                     End If
 
+                    constraints = currentConnector.Constraints
+                    For Each currentConConstraint In constraints
+                        'call connector constraint checks
+                        reqUmlConstraint(currentConConstraint, currentConnector)
+                    Next
                 Next
 
                 operations = currentElement.Methods
@@ -314,6 +360,14 @@
                     kravFlerspråklighetElement(currentOperation)
 
                 Next
+
+                constraints = currentElement.Constraints
+                For Each currentConstraint In constraints
+                    Output("Debug Constraint " + currentConstraint.Name)
+                    'call element constraint checks
+                    reqUmlConstraint(currentConstraint, currentElement)
+                Next
+
             End If
         Next
 
