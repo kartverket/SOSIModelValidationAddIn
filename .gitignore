@@ -240,11 +240,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-SOSIModelValidation/bin/Debug/SOSIModelValidation.dll
-.vs/SOSIModelValidation/v14/.suo
-SOSIModelValidation/bin/Debug/SOSIModelValidation.dll
-*.pdb
-*.dll
-*.tlb
+
 *.cache
-*.txt
+SOSIModelValidation/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
