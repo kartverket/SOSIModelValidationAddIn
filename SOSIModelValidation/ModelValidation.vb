@@ -296,8 +296,8 @@
                 Call requirement16(currentElement)
                 kravEnkelArv(currentElement)
 
-                    If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
-                        ' Call element subs for codelists and enumerations
+                If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
+                    ' Call element subs for codelists and enumerations
 
 
                     Call kravEksternKodeliste(currentElement)
@@ -353,49 +353,44 @@
                         'call attribute constraint checks
                         reqUmlConstraint(currentAttConstraint, currentAttribute)
                     Next
+
+                    'SOSI ruleset
+                    If ruleSet = "SOSI" Then
+                        Call kravDefinisjoner(currentAttribute)
+                        Call krav3(currentAttribute)
+                    End If
+
+                    '19103 ruleset
+                    If ruleSet = "19103" Then
+                        Call requirement3(currentAttribute)
+                    End If
+
+                    '19109 ruleset
+                    If ruleSet = "19109" Then
+                        Call reqUMLDocumentation(currentAttribute)
+                    End If
+
                 Next
 
+                connectors = currentElement.Connectors
+                For Each currentConnector In connectors
+                    Output("Debug Connector " + currentConnector.Name + " " + currentConnector.Stereotype)
+                    ' call connector checks
+                    'SOSI ruleset
+                    If ruleSet = "SOSI" Then
+                        Call kravDefinisjoner(currentConnector)
+                        Call krav3(currentConnector)
+                    End If
 
-                        'SOSI ruleset
-                        If ruleSet = "SOSI" Then
-                            Call kravDefinisjoner(currentAttribute)
-                            Call krav3(currentAttribute)
-                        End If
+                    '19103 ruleset
+                    If ruleSet = "19103" Then
+                        Call requirement3(currentConnector)
+                    End If
 
-                        '19103 ruleset
-                        If ruleSet = "19103" Then
-                            Call requirement3(currentAttribute)
-                        End If
-
-                        '19109 ruleset
-                        If ruleSet = "19109" Then
-                            Call reqUMLDocumentation(currentAttribute)
-                        End If
-
-                        Call requirement15onAttr(currentElement, currentAttribute)
-                        reqUMLProfile(currentElement, currentAttribute)
-                    Next
-
-                    connectors = currentElement.Connectors
-                    For Each currentConnector In connectors
-
-                        Output("Debug Connector " + currentConnector.Name + " " + currentConnector.Stereotype)
-                        ' call connector checks
-                        'SOSI ruleset
-                        If ruleSet = "SOSI" Then
-                            Call kravDefinisjoner(currentConnector)
-                            Call krav3(currentConnector)
-                        End If
-
-                        '19103 ruleset
-                        If ruleSet = "19103" Then
-                            Call requirement3(currentConnector)
-                        End If
-
-                        '19109 ruleset
-                        If ruleSet = "19109" Then
-                            Call reqUMLDocumentation(currentConnector)
-                        End If
+                    '19109 ruleset
+                    If ruleSet = "19109" Then
+                        Call reqUMLDocumentation(currentConnector)
+                    End If
 
                     Call requirement15(currentElement, currentConnector)
                     Call requirement16(currentConnector)
@@ -417,10 +412,11 @@
                 Next
 
 
-                    operations = currentElement.Methods
-                    For Each currentOperation In operations
 
-                        Output("Debug Operation" + currentOperation.Name)
+                operations = currentElement.Methods
+                For Each currentOperation In operations
+
+                    Output("Debug Operation" + currentOperation.Name)
                     'call operation checks
                     If ruleSet = "SOSI" Then
                         kravDefinisjoner(currentOperation)
@@ -428,7 +424,7 @@
 
                     kravFlerspråklighetElement(currentOperation)
 
-                    Next
+                Next
 
                 constraints = currentElement.Constraints
                 For Each currentConstraint In constraints

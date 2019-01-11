@@ -58,6 +58,7 @@
     Sub requirement15onAssoc(theElement, conn)
         'Associations with unknown stereotypes, especially the old norse style «topo»
         Dim rolename
+        Dim badStereotype = ""
         rolename = ""
         If theElement.ElementID = conn.ClientID Then
             rolename = conn.SupplierEnd.Role
