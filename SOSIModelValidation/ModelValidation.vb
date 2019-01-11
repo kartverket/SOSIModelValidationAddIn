@@ -35,7 +35,8 @@
 
     Dim packageIDList As New System.Collections.ArrayList
     Dim classifierIDList As New System.Collections.ArrayList
-
+    Dim packageIDToBeReferencedList As New System.Collections.ArrayList
+    Dim packageDependenciesElementIDList As New System.Collections.ArrayList
 
 
     ' Sub ModelValidation
@@ -126,6 +127,7 @@
         startTime = Timer
         packageIDList.Clear()
         classifierIDList.Clear()
+        packageDependenciesElementIDList.Clear()
 
         'set log level
         If validationWindow.RadioButtonW.Checked Then
@@ -167,10 +169,10 @@
             ' populate lists that will be used in the validation checks
             Call PopulatePackageIDList(thePackage)
             Call PopulateClassifierIDList(thePackage)
+            Call PopulatePackageDependenciesElementIDList(thePackage.Element)
 
             ' THESE SUBS MUST BE DECLARED AND NAME CHANGED TO NEW NAMING SCHEMES
             ' Subs below are for tests that are not recursively performed in sub packages
-            'Call findPackageDependencies(thePackage.Element)
             'Call getElementIDsOfExternalReferencedElements(thePackage)
             'Call findPackagesToBeReferenced()
             'Call checkPackageDependency(thePackage)
@@ -201,6 +203,7 @@
         'test functions that should be done recursivly in all subpackages
 
         Dim packages As EA.Collection
+        Dim constraintPCollection As EA.Collection
         Dim currentPackage As EA.Package
         Dim currentPConstraint As EA.Constraint
 
@@ -210,29 +213,35 @@
         Output("Debug Package " + thePackage.Name)
 
         anbefalingStyleGuide(thePackage)
+
+        Call kravDefinisjoner(thePackage)
+
         kravOversiktsdiagram(thePackage)
         kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast(thePackage)
         requirement15(thePackage)
         reqUmlPackaging(thePackage)
         kravSOSIModellregisterApplikasjonskjemaVersjonsnummer(thePackage)
         kravSOSIModellregisterApplikasjonsskjemaStatus(thePackage)
+        
+    
+        'do checks for all elements in package
+        findinvalidElementsInClassifiers(thePackage)
+
+
+        constraintPCollection = thePackage.Element.Constraints
+        For Each currentPConstraint In constraintPCollection
+            'call package constraint checks
+            reqUmlConstraint(currentPConstraint, thePackage)
+        Next
 
         'recursive call to subpackages
 
         For Each currentPackage In packages
-
             Call requirement16(currentPackage)
+
             FindInvalidElementsInPackage(currentPackage)
-            ' Skal denne kalles her?
-            Dim constraintPCollection As EA.Collection
-            constraintPCollection = currentPackage.Element.Constraints
-            For Each currentPConstraint In currentPackage.Element.Constraints
-                'call checConstriant
-            Next
+
         Next
-
-        findinvalidElementsInClassifiers(thePackage)
-
     End Sub
 
     Sub findinvalidElementsInClassifiers(thePackage As EA.Package)
@@ -240,10 +249,14 @@
         Dim attributes As EA.Collection
         Dim connectors As EA.Collection
         Dim operations As EA.Collection
+        Dim constraints As EA.Collection
         Dim currentElement As EA.Element
         Dim currentAttribute As EA.Attribute
         Dim currentConnector As EA.Connector
         Dim currentOperation As EA.Method
+        Dim currentConstraint As EA.Constraint
+        Dim currentConConstraint As EA.ConnectorConstraint
+        Dim currentAttConstraint As EA.AttributeConstraint
 
         elements = thePackage.Elements
 
@@ -260,15 +273,34 @@
 
             If currentElement.Type = "Class" Or currentElement.Type = "Enumeration" Or currentElement.Type = "DataType" Then
 
-                ' Call element subs for all class types
+
+                'SOSI ruleset
+                If ruleSet = "SOSI" Then
+                    Call kravDefinisjoner(currentElement)
+                    Call krav3(currentElement)
+                End If
+
+                '19103 ruleset
+                If ruleSet = "19103" Or ruleSet = "19109" Then
+                    Call requirement3(currentElement)
+                End If
+
+                '19109 ruleset
+                If ruleSet = "19109" Then
+                    Call reqUMLDocumentation(currentElement)
+                End If
+
 
                 Call requirement14(currentElement)
                 Call requirement15(currentElement)
                 Call requirement16(currentElement)
                 kravEnkelArv(currentElement)
 
-                If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
-                    ' Call element subs for codelists and enumerations
+                    If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
+                        ' Call element subs for codelists and enumerations
+
+
+                    Call kravEksternKodeliste(currentElement)
 
                     recommendation1(currentElement)
                     Call requirement6(currentElement)
@@ -306,17 +338,65 @@
                     Output("Debug Attribute " + currentAttribute.Name)
                     Call kravFlerspråklighetElement(currentAttribute)
                     ' Call attribute checks
+
+                    If UCase(currentElement.Stereotype) = "FEATURETYPE" Or UCase(currentElement.Stereotype) = "DATATYPE" Or UCase(currentElement.Stereotype) = "UNION" Then
+                        Call reqUMLProfile(currentElement, currentAttribute)
+                    Else
+                        ' bør også teste om koder i kodelister har type i det hele tatt, og eventuelt anbefale disse slettet
+                    End If
+
                     Call requirement15(currentElement, currentAttribute)
                     'flyttet vekk fra kodelister reqUMLProfile(currentElement, currentAttribute)
+
+                    constraints = currentAttribute.Constraints
+                    For Each currentAttConstraint In constraints
+                        'call attribute constraint checks
+                        reqUmlConstraint(currentAttConstraint, currentAttribute)
+                    Next
                 Next
 
 
+                        'SOSI ruleset
+                        If ruleSet = "SOSI" Then
+                            Call kravDefinisjoner(currentAttribute)
+                            Call krav3(currentAttribute)
+                        End If
 
-                connectors = currentElement.Connectors
-                For Each currentConnector In connectors
+                        '19103 ruleset
+                        If ruleSet = "19103" Then
+                            Call requirement3(currentAttribute)
+                        End If
 
-                    Output("Debug Connector " + currentConnector.Name + " " + currentConnector.Stereotype)
-                    ' call connector checks
+                        '19109 ruleset
+                        If ruleSet = "19109" Then
+                            Call reqUMLDocumentation(currentAttribute)
+                        End If
+
+                        Call requirement15onAttr(currentElement, currentAttribute)
+                        reqUMLProfile(currentElement, currentAttribute)
+                    Next
+
+                    connectors = currentElement.Connectors
+                    For Each currentConnector In connectors
+
+                        Output("Debug Connector " + currentConnector.Name + " " + currentConnector.Stereotype)
+                        ' call connector checks
+                        'SOSI ruleset
+                        If ruleSet = "SOSI" Then
+                            Call kravDefinisjoner(currentConnector)
+                            Call krav3(currentConnector)
+                        End If
+
+                        '19103 ruleset
+                        If ruleSet = "19103" Then
+                            Call requirement3(currentConnector)
+                        End If
+
+                        '19109 ruleset
+                        If ruleSet = "19109" Then
+                            Call reqUMLDocumentation(currentConnector)
+                        End If
+
                     Call requirement15(currentElement, currentConnector)
                     Call requirement16(currentConnector)
 
@@ -329,16 +409,34 @@
                         Call requirement16(currentConnector.ClientEnd)
                     End If
 
+                    constraints = currentConnector.Constraints
+                    For Each currentConConstraint In constraints
+                        'call connector constraint checks
+                        reqUmlConstraint(currentConConstraint, currentConnector)
+                    Next
                 Next
 
-                operations = currentElement.Methods
-                For Each currentOperation In operations
 
-                    Output("Debug Operation" + currentOperation.Name)
+                    operations = currentElement.Methods
+                    For Each currentOperation In operations
+
+                        Output("Debug Operation" + currentOperation.Name)
                     'call operation checks
+                    If ruleSet = "SOSI" Then
+                        kravDefinisjoner(currentOperation)
+                    End If
+
                     kravFlerspråklighetElement(currentOperation)
 
+                    Next
+
+                constraints = currentElement.Constraints
+                For Each currentConstraint In constraints
+                    Output("Debug Constraint " + currentConstraint.Name)
+                    'call element constraint checks
+                    reqUmlConstraint(currentConstraint, currentElement)
                 Next
+
             End If
         Next
 

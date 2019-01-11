@@ -7,7 +7,7 @@ X Main loops -Åsmund
 X Inheritance loop detection -Åsmund
 
 ISO 19103:2015
-requirement3 -Magnus
+x requirement3 -Magnus
 X requirement6 -Kent
 X requirement7 -Kent
 requirement10
@@ -25,7 +25,7 @@ X requirement25 -Kent
 X recommendation1 -Tore
 
 ISO 19109:2015
-reqUMLConstraint -Tore
+x reqUMLConstraint -Tore
 X reqUMLPackaging -Tore
 X reqUMLStructure -Åsmund
 X reqUMLProfile -Kent
@@ -34,8 +34,8 @@ x reqUMLIntegration -Åsmund (test on package dependencies not implemented yet)
 X reqGeneralFeature -Tore
 
 SOSI 5.0
-kravDefinisjoner -Magnus
-kravEksternKodeliste -Kent
+x kravDefinisjoner -Magnus
+X kravEksternKodeliste -Kent
 X KravEnkelArv -Åsmund
 X kravFlerspråklighetElement -Åsmund
 X kravFlerspråklighetPakke -Tore

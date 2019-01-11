@@ -70,22 +70,23 @@
   <ItemGroup>
     <Compile Include="recommendation1.vb" />
     <Compile Include="anbefalingStyleGuide.vb" />
+
+    <Compile Include="checkDefinition.vb" />
+    <Compile Include="krav3.vb" />
+    <Compile Include="reqUMLDocumentation.vb" />
+    <Compile Include="requirement3.vb" />
+    <Compile Include="kravDefinisjoner.vb" />
+
+    <Compile Include="kravEksternKodeliste.vb" />
+
     <Compile Include="kravEnkelArv.vb" />
     <Compile Include="kravFlerspråklighetElement.vb" />
-
     <Compile Include="kravSOSIModellregisterApplikasjonsskjemaVersjonsnummer.vb" />
-
-
     <Compile Include="kravSOSIModellregisterApplikasjonsskjemaStatus.vb" />
-
     <Compile Include="kravFlerspråklighetPakke.vb" />
     <Compile Include="kravTaggedValueSpråk.vb" />
-
     <Compile Include="kravOversiktsdiagram.vb" />
-
     <Compile Include="kravSOSIModellregisterApplikasjonsskjemaStandardPakkenavnUtkast.vb" />
-
-
     <Compile Include="Main.vb" />
     <Compile Include="ModelValidation.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -107,16 +108,12 @@
     <Compile Include="requirement14.vb" />
     <Compile Include="reqGeneralFeature.vb" />
     <Compile Include="requirement15.vb" />
-
     <Compile Include="requirement16.vb" />
     <Compile Include="requirement6.vb" />
     <Compile Include="requirement7.vb" />
-
-
+    <Compile Include="reqUmlConstraint.vb" />
     <Compile Include="reqUMLIntegration.vb" />
-
     <Compile Include="reqUmlPackaging.vb" />
-
     <Compile Include="reqUMLProfile.vb" />
     <Compile Include="reqUMLStructure.vb" />
     <Compile Include="scriptBreakingStructures.vb" />

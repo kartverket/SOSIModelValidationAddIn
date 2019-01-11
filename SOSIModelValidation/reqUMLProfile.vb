@@ -177,7 +177,7 @@
         ProfileTypes.Add("GM_OrientableCurve")
         ProfileTypes.Add("GM_OrientableSurface")
         ProfileTypes.Add("GM_PolyhedralSurface")
-        ProfileTypes.Add("GM_triangulatedSurface")
+        ProfileTypes.Add("GM_TriangulatedSurface")
         ProfileTypes.Add("GM_Tin")
 
         'well known and often used coverage types from iso 19123:2007
@@ -224,6 +224,7 @@
         ProfileTypes.Add("MD_Resolution")
         'ProfileTypes.Add("CI_Citation")
         'ProfileTypes.Add("CI_Date")
+
 
         'other lesser known Norwegian legacy geometry types
         NationalTypes.Add("Punkt")
