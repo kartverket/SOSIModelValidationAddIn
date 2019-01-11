@@ -35,7 +35,8 @@
 
     Dim packageIDList As New System.Collections.ArrayList
     Dim classifierIDList As New System.Collections.ArrayList
-
+    Dim packageIDToBeReferencedList As New System.Collections.ArrayList
+    Dim packageDependenciesElementIDList As New System.Collections.ArrayList
 
 
     ' Sub ModelValidation
@@ -126,6 +127,7 @@
         startTime = Timer
         packageIDList.Clear()
         classifierIDList.Clear()
+        packageDependenciesElementIDList.Clear()
 
         'set log level
         If validationWindow.RadioButtonW.Checked Then
@@ -167,10 +169,10 @@
             ' populate lists that will be used in the validation checks
             Call PopulatePackageIDList(thePackage)
             Call PopulateClassifierIDList(thePackage)
+            Call PopulatePackageDependenciesElementIDList(thePackage.Element)
 
             ' THESE SUBS MUST BE DECLARED AND NAME CHANGED TO NEW NAMING SCHEMES
             ' Subs below are for tests that are not recursively performed in sub packages
-            'Call findPackageDependencies(thePackage.Element)
             'Call getElementIDsOfExternalReferencedElements(thePackage)
             'Call findPackagesToBeReferenced()
             'Call checkPackageDependency(thePackage)
