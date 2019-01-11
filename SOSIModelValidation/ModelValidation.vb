@@ -219,7 +219,10 @@
         reqUmlPackaging(thePackage)
         kravSOSIModellregisterApplikasjonskjemaVersjonsnummer(thePackage)
         kravSOSIModellregisterApplikasjonsskjemaStatus(thePackage)
-
+        
+    
+        'do checks for all elements in package
+        findinvalidElementsInClassifiers(thePackage)
 
 
         constraintPCollection = thePackage.Element.Constraints
@@ -231,14 +234,11 @@
         'recursive call to subpackages
 
         For Each currentPackage In packages
-
             Call requirement16(currentPackage)
+
             FindInvalidElementsInPackage(currentPackage)
-            ' Skal denne kalles her? nei
+
         Next
-
-        findinvalidElementsInClassifiers(thePackage)
-
     End Sub
 
     Sub findinvalidElementsInClassifiers(thePackage As EA.Package)
