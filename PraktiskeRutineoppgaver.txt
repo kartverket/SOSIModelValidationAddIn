@@ -1,9 +1,6 @@
-
-
-
 Rutine for arbeid med EA-skript i Vb med VS og GitHub
 -----------------------------------------------------
-kent Jonsrud 2018-09-20/10-17
+kent Jonsrud 2018-09-20
 
 
 GitHub-klient - lag ny underkatalog for prosjektet + øverst til venstre - c:\s\GitHub/SOSIModelValidationAddin
@@ -16,7 +13,7 @@ Steng ned EA
 
 Visual Studio - maksimer vindu og se at riktig prosjekt/branch er kommet inn nederst til høyre
 
-Visual Studio - project add new item - Code File - skriv inn filnavn nederst - Add
+Visual Studio - project add new item - Code File - Add
 
 Visual Studio - editer filer
 
@@ -35,16 +32,10 @@ GitHub-klient - Sync - Committ (kommentar) - Pull request (rare N!)
 
 GitHub-webklient - Felles Merge
 
-GitHub-webklient - 1) Bytt til master i GitHub-klient, kompiler og kjør i EA for testing; 2) Lag ny Branch fra master, produser ny kode i denne branchen (til videre utvikling) 
+GitHub-webklient - Synk from Master ??? eller ny Branch (din lokale kopi blir overskrevet)
 
 Visual Studio - Build - Build Solution (for å få nytt felles startpunkt for testing)
 
 Åpne EA og test addinn mot modeller med og uten feil
 
 Publiser løsning ???
-
-
-
-
-
-

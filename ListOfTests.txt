@@ -1,30 +1,31 @@
 List of tests from original SOSI Model Validation script
 Put an X in front of test name when test is transferred to Add-in
+lower case 'x' means partially completed
 
 Script tests
 X Main loops -Åsmund
 X Inheritance loop detection -Åsmund
 
 ISO 19103:2015
-requirement3 -Magnus
-requirement6 -Kent
-requirement7 -Kent
+x requirement3 -Magnus
+X requirement6 -Kent
+X requirement7 -Kent
 requirement10
 requirement11
 requirement12
 X requirement14 -Tore
 X requirement15 -Kent
-requirement16 -Kent
-requirement17
+X requirement16 -Kent
+requirement17 -Åsmund
 requirement18 -Kent
 requirement19 -Magnus
-requirement21
-requirement22
-requirement25
-recommendation1
+requirement21 -Åsmund
+X requirement22 -Kent
+X requirement25 -Kent
+X recommendation1 -Tore
 
 ISO 19109:2015
-reqUMLConstraint -Tore
+x reqUMLConstraint -Tore
 X reqUMLPackaging -Tore
 X reqUMLStructure -Åsmund
 X reqUMLProfile -Kent
@@ -33,8 +34,8 @@ x reqUMLIntegration -Åsmund (test on package dependencies not implemented yet)
 X reqGeneralFeature -Tore
 
 SOSI 5.0
-kravDefinisjoner -Magnus
-kravEksternKodeliste -Kent
+x kravDefinisjoner -Magnus
+X kravEksternKodeliste -Kent
 X KravEnkelArv -Åsmund
 X kravFlerspråklighetElement -Åsmund
 X kravFlerspråklighetPakke -Tore
@@ -47,4 +48,3 @@ X kravSOSIModellregisterApplikasjonskjemaVersjonsnummer -Tore
 X kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast -Åsmund
 X kravTaggedValueSpråk -Tore
 X anbefalingStyleGuide -Åsmund
-X anbefaling1
