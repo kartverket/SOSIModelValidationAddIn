@@ -201,6 +201,7 @@
         'test functions that should be done recursivly in all subpackages
 
         Dim packages As EA.Collection
+        Dim constraintPCollection As EA.Collection
         Dim currentPackage As EA.Package
         Dim currentPConstraint As EA.Constraint
 
@@ -217,18 +218,21 @@
         kravSOSIModellregisterApplikasjonskjemaVersjonsnummer(thePackage)
         kravSOSIModellregisterApplikasjonsskjemaStatus(thePackage)
 
+
+
+        constraintPCollection = thePackage.Element.Constraints
+        For Each currentPConstraint In constraintPCollection
+            'call package constraint checks
+            reqUmlConstraint(currentPConstraint, thePackage)
+        Next
+
         'recursive call to subpackages
 
         For Each currentPackage In packages
 
             Call requirement16(currentPackage)
             FindInvalidElementsInPackage(currentPackage)
-            ' Skal denne kalles her?
-            Dim constraintPCollection As EA.Collection
-            constraintPCollection = currentPackage.Element.Constraints
-            For Each currentPConstraint In currentPackage.Element.Constraints
-                'call checConstriant
-            Next
+            ' Skal denne kalles her? nei
         Next
 
         findinvalidElementsInClassifiers(thePackage)
@@ -240,10 +244,14 @@
         Dim attributes As EA.Collection
         Dim connectors As EA.Collection
         Dim operations As EA.Collection
+        Dim constraints As EA.Collection
         Dim currentElement As EA.Element
         Dim currentAttribute As EA.Attribute
         Dim currentConnector As EA.Connector
         Dim currentOperation As EA.Method
+        Dim currentConstraint As EA.Constraint
+        Dim currentConConstraint As EA.ConnectorConstraint
+        Dim currentAttConstraint As EA.AttributeConstraint
 
         elements = thePackage.Elements
 
@@ -308,6 +316,12 @@
                     ' Call attribute checks
                     Call requirement15(currentElement, currentAttribute)
                     'flyttet vekk fra kodelister reqUMLProfile(currentElement, currentAttribute)
+
+                    constraints = currentAttribute.Constraints
+                    For Each currentAttConstraint In constraints
+                        'call attribute constraint checks
+                        reqUmlConstraint(currentAttConstraint, currentAttribute)
+                    Next
                 Next
 
 
@@ -329,6 +343,11 @@
                         Call requirement16(currentConnector.ClientEnd)
                     End If
 
+                    constraints = currentConnector.Constraints
+                    For Each currentConConstraint In constraints
+                        'call connector constraint checks
+                        reqUmlConstraint(currentConConstraint, currentConnector)
+                    Next
                 Next
 
                 operations = currentElement.Methods
@@ -339,6 +358,14 @@
                     kravFlerspråklighetElement(currentOperation)
 
                 Next
+
+                constraints = currentElement.Constraints
+                For Each currentConstraint In constraints
+                    Output("Debug Constraint " + currentConstraint.Name)
+                    'call element constraint checks
+                    reqUmlConstraint(currentConstraint, currentElement)
+                Next
+
             End If
         Next
 
