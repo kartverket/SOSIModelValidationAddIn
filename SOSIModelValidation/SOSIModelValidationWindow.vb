@@ -1,9 +1,14 @@
 ﻿Public Class SOSIModelValidationWindow
     ' Instance of ModelValidation that owns this instance of the Window
     Dim OwnerObject As ModelValidation
+    Dim avoidableCodeListsText As String
 
     Public Sub SetOwnerObject(OwnerO As ModelValidation)
         OwnerObject = OwnerO
+    End Sub
+
+    Public Sub setAvoidableCodeListsText(avoidableCodeLists As String)
+        avoidableCodeListsText = avoidableCodeLists
     End Sub
 
     Private Sub SOSIModelValidationWindow_Load(sender As Object, e As System.EventArgs) Handles MyBase.Load
@@ -24,6 +29,7 @@
         toolTips.SetToolTip(Me.RadioButtonSOSI, "SOSI Generell del - Regler for UML modellering - versjon 5.0")
         toolTips.SetToolTip(Me.RadioButtonISO19103, "ISO 19103:2015 - Geographic information - Conceptual schema language")
         toolTips.SetToolTip(Me.RadioButtonISO19109, "ISO 19109:2015 - Geographic information - Rules for application schema")
+        toolTips.SetToolTip(Me.CheckAllCodeNames, "Unchecking will cause Model Validation to omit naming requirement tests on code lists " + avoidableCodeListsText)
 
     End Sub
 

@@ -28,7 +28,7 @@ Partial Class SOSIModelValidationWindow
         Me.RadioButtonW = New System.Windows.Forms.RadioButton()
         Me.Output = New System.Windows.Forms.TextBox()
         Me.Options = New System.Windows.Forms.GroupBox()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.CheckAllCodeNames = New System.Windows.Forms.CheckBox()
         Me.ButtonRun = New System.Windows.Forms.Button()
         Me.ButtonCopy = New System.Windows.Forms.Button()
         Me.ButtonClose = New System.Windows.Forms.Button()
@@ -100,23 +100,25 @@ Partial Class SOSIModelValidationWindow
         '
         'Options
         '
-        Me.Options.Controls.Add(Me.CheckBox1)
+        Me.Options.Controls.Add(Me.CheckAllCodeNames)
         Me.Options.Location = New System.Drawing.Point(308, 118)
         Me.Options.Name = "Options"
-        Me.Options.Size = New System.Drawing.Size(173, 100)
+        Me.Options.Size = New System.Drawing.Size(246, 100)
         Me.Options.TabIndex = 3
         Me.Options.TabStop = False
         Me.Options.Text = "Options"
         '
-        'CheckBox1
+        'CheckAllCodeNames
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(7, 20)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(81, 17)
-        Me.CheckBox1.TabIndex = 0
-        Me.CheckBox1.Text = "CheckBox1"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.CheckAllCodeNames.AutoSize = True
+        Me.CheckAllCodeNames.Checked = True
+        Me.CheckAllCodeNames.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckAllCodeNames.Location = New System.Drawing.Point(7, 20)
+        Me.CheckAllCodeNames.Name = "CheckAllCodeNames"
+        Me.CheckAllCodeNames.Size = New System.Drawing.Size(222, 17)
+        Me.CheckAllCodeNames.TabIndex = 0
+        Me.CheckAllCodeNames.Text = "Test naming requirements on all code lists"
+        Me.CheckAllCodeNames.UseVisualStyleBackColor = True
         '
         'ButtonRun
         '
@@ -234,7 +236,7 @@ Partial Class SOSIModelValidationWindow
     Friend WithEvents RadioButtonW As System.Windows.Forms.RadioButton
     Friend WithEvents Output As System.Windows.Forms.TextBox
     Friend WithEvents Options As System.Windows.Forms.GroupBox
-    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckAllCodeNames As System.Windows.Forms.CheckBox
     Friend WithEvents ButtonRun As System.Windows.Forms.Button
     Friend WithEvents ButtonCopy As System.Windows.Forms.Button
     Friend WithEvents ButtonClose As System.Windows.Forms.Button
