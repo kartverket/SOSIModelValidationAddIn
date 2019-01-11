@@ -69,6 +69,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="anbefalingStyleGuide.vb" />
+    <Compile Include="checkDefinition.vb" />
+    <Compile Include="krav3.vb" />
+    <Compile Include="reqUMLDocumentation.vb" />
+    <Compile Include="requirement3.vb" />
     <Compile Include="kravDefinisjoner.vb" />
     <Compile Include="kravEnkelArv.vb" />
     <Compile Include="kravFlerspråklighetElement.vb" />

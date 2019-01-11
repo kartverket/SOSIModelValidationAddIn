@@ -193,7 +193,7 @@
         ' Call to tests
         ' Call to tests
         ' Call to tests
-        checkDefinitionOfElement(thePackage)
+        Call kravDefinisjoner(thePackage)
         'CheckDefinition(thePackage)
         'Requirement15(thePackage)
         '	call checkEndingOfPackageName(package)
@@ -231,71 +231,119 @@
                 ' Call element subs for all class types
                 Call requirement15onClass(currentElement)
                 kravEnkelArv(currentElement)
-                Call checkDefinitionOfElement(currentElement)
 
+                'SOSI ruleset
+                If ruleSet = "SOSI" Then
+                    Call kravDefinisjoner(currentElement)
+                    Call krav3(currentElement)
+                End If
+
+                '19103 ruleset
+                If ruleSet = "19103" Or ruleSet = "19109" Then
+                    Call requirement3(currentElement)
+                End If
+
+                '19109 ruleset
+                If ruleSet = "19109" Then
+                    Call reqUMLDocumentation(currentElement)
+                End If
 
                 Call requirement14(currentElement)
 
-                If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
-                    ' Call element subs for codelists and enumerations
+                    If UCase(currentElement.Stereotype) = "CODELIST" Or UCase(currentElement.Stereotype) = "ENUMERATION" Or currentElement.Type = "Enumeration" Then
+                        ' Call element subs for codelists and enumerations
 
-                End If
-
-                If UCase(currentElement.Stereotype) = "FEATURETYPE" Then
-                    ' Call element subs for feature types
-                    Call reqGeneralFeature(currentElement, currentElement)
-
-                    Call kravFlerspråklighetElement(currentElement)
-
-
-                End If
-
-
-
-                attributes = currentElement.Attributes
-                For Each currentAttribute In attributes
-
-                    Output("Debug Attribute " + currentAttribute.Name)
-                    Call kravFlerspråklighetElement(currentAttribute)
-                    ' Call attribute checks
-                    Call checkDefinitionOfElement(currentAttribute)
-
-                    Call requirement15onAttr(currentElement, currentAttribute)
-                    reqUMLProfile(currentElement, currentAttribute)
-                Next
-
-
-
-                connectors = currentElement.Connectors
-                For Each currentConnector In connectors
-
-                    Output("Debug Connector " + currentConnector.Name + " " + currentConnector.Stereotype)
-                    ' call connector checks
-                    Call checkDefinitionOfElement(currentConnector)
-                    Call requirement15onRole(currentElement, currentConnector)
-
-                    If currentConnector.Type = "Aggregation" Or currentConnector.Type = "Assosiation" Then
-                        kravFlerspråklighetElement(currentConnector.SupplierEnd)
-                        kravFlerspråklighetElement(currentConnector.ClientEnd)
                     End If
 
-                Next
+                    If UCase(currentElement.Stereotype) = "FEATURETYPE" Then
+                        ' Call element subs for feature types
+                        Call reqGeneralFeature(currentElement, currentElement)
+
+                        Call kravFlerspråklighetElement(currentElement)
+
+
+                    End If
+
+
+
+                    attributes = currentElement.Attributes
+                    For Each currentAttribute In attributes
+
+                        Output("Debug Attribute " + currentAttribute.Name)
+                        Call kravFlerspråklighetElement(currentAttribute)
+                        ' Call attribute checks
+
+                        'SOSI ruleset
+                        If ruleSet = "SOSI" Then
+                            Call kravDefinisjoner(currentAttribute)
+                            Call krav3(currentAttribute)
+                        End If
+
+                        '19103 ruleset
+                        If ruleSet = "19103" Then
+                            Call requirement3(currentAttribute)
+                        End If
+
+                        '19109 ruleset
+                        If ruleSet = "19109" Then
+                            Call reqUMLDocumentation(currentAttribute)
+                        End If
+
+                        Call requirement15onAttr(currentElement, currentAttribute)
+                        reqUMLProfile(currentElement, currentAttribute)
+                    Next
+
+
+
+                    connectors = currentElement.Connectors
+                    For Each currentConnector In connectors
+
+                        Output("Debug Connector " + currentConnector.Name + " " + currentConnector.Stereotype)
+                        ' call connector checks
+                        'SOSI ruleset
+                        If ruleSet = "SOSI" Then
+                            Call kravDefinisjoner(currentConnector)
+                            Call krav3(currentConnector)
+                        End If
+
+                        '19103 ruleset
+                        If ruleSet = "19103" Then
+                            Call requirement3(currentConnector)
+                        End If
+
+                        '19109 ruleset
+                        If ruleSet = "19109" Then
+                            Call reqUMLDocumentation(currentConnector)
+                        End If
+
+
+                        Call requirement15onRole(currentElement, currentConnector)
+
+                        If currentConnector.Type = "Aggregation" Or currentConnector.Type = "Assosiation" Then
+                            kravFlerspråklighetElement(currentConnector.SupplierEnd)
+                            kravFlerspråklighetElement(currentConnector.ClientEnd)
+                        End If
+
+                    Next
 
 
 
 
-                operations = currentElement.Methods
-                For Each currentOperation In operations
+                    operations = currentElement.Methods
+                    For Each currentOperation In operations
 
-                    Output("Debug Operation" + currentOperation.Name)
+                        Output("Debug Operation" + currentOperation.Name)
                     'call operation checks
-                    checkDefinitionOfElement(currentOperation)
+                    If ruleSet = "SOSI" Then
+                        kravDefinisjoner(currentOperation)
+                    End If
+
                     kravFlerspråklighetElement(currentOperation)
 
-                Next
+                    Next
 
 
-            End If
+                End If
 
         Next
 
