@@ -10,9 +10,9 @@ ISO 19103:2015
 x requirement3 -Magnus
 X requirement6 -Kent
 X requirement7 -Kent
-requirement10
-requirement11
-requirement12
+requirement10 -Kent
+requirement11 -Kent
+requirement12 -Kent
 X requirement14 -Tore
 X requirement15 -Kent
 X requirement16 -Kent
