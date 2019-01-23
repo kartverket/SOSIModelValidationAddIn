@@ -14,23 +14,27 @@
 
 
     Sub kravDefinisjoner(theElement As EA.Package)
-        Call checkDefinitionOfPackage(theElement, "/krav/definisjoner")
+        Call checkDefinitionOfPackage(theElement, "krav/definisjoner")
     End Sub
 
     Sub kravDefinisjoner(theElement As EA.Element)
-        Call checkDefinitionOfClass(theElement, "/krav/definisjoner")
+        Call checkDefinitionOfClass(theElement, "krav/definisjoner")
     End Sub
 
     Sub kravDefinisjoner(theElement As EA.Attribute)
-        Call checkDefinitionOfAttribute(theElement, "/krav/definisjoner")
+        Call checkDefinitionOfAttribute(theElement, "krav/definisjoner")
     End Sub
 
     Sub kravDefinisjoner(theElement As EA.Connector)
-        Call checkDefinitionOfAssociationRole(theElement, "/krav/definisjoner")
+        Call checkDefinitionOfAssociationRole(theElement, "krav/definisjoner")
     End Sub
 
     Sub kravDefinisjoner(theElement As EA.Method)
-        Call checkDefinitionOfOperation(theElement, "/krav/definisjoner")
+        Call checkDefinitionOfOperation(theElement, "krav/definisjoner")
+    End Sub
+
+    Sub kravDefinisjoner(theElement As Object, constraintHoldingElement As Object)
+        Call checkDefinitionOfConstraint(theElement, constraintHoldingElement, "krav/definisjoner")
     End Sub
 
 
