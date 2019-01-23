@@ -68,17 +68,16 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="requirement19.vb" />
+    <Compile Include="krav19.vb" />
     <Compile Include="recommendation1.vb" />
     <Compile Include="anbefalingStyleGuide.vb" />
-
     <Compile Include="checkDefinition.vb" />
     <Compile Include="krav3.vb" />
     <Compile Include="reqUMLDocumentation.vb" />
     <Compile Include="requirement3.vb" />
     <Compile Include="kravDefinisjoner.vb" />
-
     <Compile Include="kravEksternKodeliste.vb" />
-
     <Compile Include="kravEnkelArv.vb" />
     <Compile Include="kravFlerspråklighetElement.vb" />
     <Compile Include="kravSOSIModellregisterApplikasjonsskjemaVersjonsnummer.vb" />
