@@ -29,7 +29,7 @@ X reqUMLConstraint -Tore
 X reqUMLPackaging -Tore
 X reqUMLStructure -Åsmund
 X reqUMLProfile -Kent
-reqUMLFeature
+reqUMLFeature -Magnus
 x reqUMLIntegration -Åsmund (test on package dependencies not implemented yet)
 X reqGeneralFeature -Tore
 
