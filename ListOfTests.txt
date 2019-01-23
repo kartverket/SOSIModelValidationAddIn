@@ -18,7 +18,7 @@ X requirement15 -Kent
 X requirement16 -Kent
 requirement17 -Åsmund
 requirement18 -Kent
-requirement19 -Magnus
+X requirement19 -Magnus
 requirement21 -Åsmund
 X requirement22 -Kent
 X requirement25 -Kent
