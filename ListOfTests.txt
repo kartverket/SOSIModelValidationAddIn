@@ -29,9 +29,9 @@ X reqUMLConstraint -Tore
 X reqUMLPackaging -Tore
 X reqUMLStructure -Åsmund
 X reqUMLProfile -Kent
-reqUMLFeature -Magnus
+X reqUMLFeature -Magnus
 X reqUMLIntegration -Åsmund
-X reqGeneralFeature -Tore
+XX reqGeneralFeature -Tore/Magnus
 
 SOSI 5.0
 X kravDefinisjoner -Magnus
