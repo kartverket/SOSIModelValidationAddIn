@@ -6,6 +6,7 @@
     'Author: 		Åsmund Tjora
     'Date: 			20170223
     'Purpose: 		Populate the packageIDList variable. 
+    '               The list shall contain all packageIDs of root package and its subpackages
     'Parameters:	rootPackage  The package to be added to the list and investigated for subpackages
     ' 
     Sub PopulatePackageIDList(rootPackage)
@@ -25,6 +26,7 @@
     'Author: 		Åsmund Tjora
     'Date: 			20170228
     'Purpose: 		Populate the classifierIDList variable. 
+    '               The list shall contain all elementIDs of elements in root package and its subpackages
     'Parameters:	rootPackage  The package to be added to the list and investigated for subpackages
 
     Sub PopulateClassifierIDList(rootPackage)
@@ -49,6 +51,8 @@
     'Author:    Åsmund Tjora
     'Date:      20190109 (date of original sub in script is unknown)
     'Purpose:   Populate the packageDependenciesElementIDList
+    '           The list shall contain all elementIDs of packages that the current package is dependent on
+
     Sub PopulatePackageDependenciesElementIDList(thePackageElement)
         Dim connectorList As EA.Collection
         Dim packageConnector As EA.Connector
@@ -63,4 +67,45 @@
             End If
         Next
     End Sub
+
+    'Sub name:  PopulateExternalReferencedElementIDList
+    'Author:    Magnus Karge (original script version), Åsmund Tjora (current version)
+    'Date:      20170228 (original script version), 20192301 (current version)
+    'Purpose:   Populate the externalReferencedElementIDList
+    '           The list shall contain all elementIDs of elements in external packages
+
+    Sub PopulateExternalReferencedElementIDList(thePackage As EA.Package)
+        Dim currentElement As EA.Element
+        Dim currentAttribute As EA.Attribute
+        Dim currentConnector As EA.Connector
+        Dim currentPackage As EA.Package
+
+        ' Navigate all elements in the package
+        For Each currentElement In thePackage.Elements
+            ' Add externally defined types for attributes to list
+            For Each currentAttribute In currentElement.Attributes
+                If Not currentAttribute.ClassifierID = 0 And Not classifierIDList.Contains(currentAttribute.ClassifierID) Then
+                    If Not externalReferencedElementIDList.Contains(currentAttribute.ClassifierID) Then
+                        externalReferencedElementIDList.Add(currentAttribute.ClassifierID)
+                    End If
+                End If
+            Next
+            ' Add external connected elements to list, ignoring realisiation connections
+            For Each currentConnector In currentElement.Connectors
+                If currentElement.ElementID = currentConnector.ClientID And Not currentConnector.Type = "Realisation" And Not classifierIDList.Contains(currentConnector.SupplierID) Then
+                    If Not externalReferencedElementIDList.Contains(currentConnector.SupplierID) Then
+                        externalReferencedElementIDList.Add(currentConnector.SupplierID)
+                    End If
+                End If
+            Next
+
+
+        Next
+        ' Recurse for all subpackages
+        For Each currentPackage In thePackage.Packages
+            PopulateExternalReferencedElementIDList(currentPackage)
+        Next
+    End Sub
+
 End Class
+

@@ -32,12 +32,13 @@
     Dim CoreTypes As New System.Collections.ArrayList
     'reqUmlProfileLoad()
 
-
+    ' Lists of model structures used by several subs and functions
     Dim packageIDList As New System.Collections.ArrayList
     Dim classifierIDList As New System.Collections.ArrayList
     Dim packageIDToBeReferencedList As New System.Collections.ArrayList
     Dim packageDependenciesElementIDList As New System.Collections.ArrayList
-
+    Dim externalReferencedElementIDList As New System.Collections.ArrayList
+    Dim packagesToBeReferencedPackageIDList As New System.Collections.ArrayList
 
     ' Sub ModelValidation
     ' Check that the selected object is a package
@@ -120,7 +121,7 @@
         'Tests that are run only on the start package should be called from this sub.
         'Tests that are run on all start packages should be called from sub findInvalidElementsInPackage
 
-        'initialize variables
+        'initialize variables, set counters to 0 and clear lists
         errorCounter = 0
         warningCounter = 0
         omittedCounter = 0
@@ -128,6 +129,8 @@
         packageIDList.Clear()
         classifierIDList.Clear()
         packageDependenciesElementIDList.Clear()
+        externalReferencedElementIDList.Clear()
+        packagesToBeReferencedPackageIDList.Clear()
 
         'set log level
         If validationWindow.RadioButtonW.Checked Then
@@ -170,10 +173,10 @@
             Call PopulatePackageIDList(thePackage)
             Call PopulateClassifierIDList(thePackage)
             Call PopulatePackageDependenciesElementIDList(thePackage.Element)
+            Call PopulateExternalReferencedElementIDList(thePackage)
 
             ' THESE SUBS MUST BE DECLARED AND NAME CHANGED TO NEW NAMING SCHEMES
             ' Subs below are for tests that are not recursively performed in sub packages
-            'Call getElementIDsOfExternalReferencedElements(thePackage)
             'Call findPackagesToBeReferenced()
             'Call checkPackageDependency(thePackage)
             'Call dependencyLoop(thePackage.Element)
