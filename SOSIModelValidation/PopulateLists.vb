@@ -23,25 +23,30 @@
 
     '------------------------------------------------------------START-------------------------------------------------------------------------------------------
     'Sub name: 		PopulateClassifierIDList
-    'Author: 		Åsmund Tjora
+    'Author: 		Åsmund Tjora, Magnus Karge
     'Date: 			20170228
-    'Purpose: 		Populate the classifierIDList variable. 
-    '               The list shall contain all elementIDs of elements in root package and its subpackages
-    'Parameters:	rootPackage  The package to be added to the list and investigated for subpackages
 
-    Sub PopulateClassifierIDList(rootPackage)
+    'Purpose: 		To populate the following list variables: classifierIDList, featureTypeNamesList, featureTypeElementIDsList
+    'Parameters:	package  The package to be examined for existing classifiers
+
+    Sub PopulateClassifierLists(package)
         Dim containedElementList As EA.Collection
         Dim containedElement As EA.Element
         Dim subPackageList As EA.Collection
         Dim subPackage As EA.Package
-        containedElementList = rootPackage.Elements
-        subPackageList = rootPackage.Packages
+        containedElementList = package.Elements
+        subPackageList = package.Packages
 
         For Each containedElement In containedElementList
             classifierIDList.Add(containedElement.ElementID)
+            'add name and elementID of featureType (elements with stereotype <<featureType>>) to the related array variables in order to check if the names are unique
+            If UCase(containedElement.Stereotype) = "FEATURETYPE" Then
+                featureTypeNamesList.Add(containedElement.Name)
+                featureTypeElementIDsList.Add(containedElement.ElementID)
+            End If
         Next
         For Each subPackage In subPackageList
-            PopulateClassifierIDList(subPackage)
+            PopulateClassifierLists(subPackage)
         Next
     End Sub
     '-------------------------------------------------------------END--------------------------------------------------------------------------------------------

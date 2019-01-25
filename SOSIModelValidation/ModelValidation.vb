@@ -37,6 +37,8 @@
     Dim classifierIDList As New System.Collections.ArrayList
     Dim packageIDToBeReferencedList As New System.Collections.ArrayList
     Dim packageDependenciesElementIDList As New System.Collections.ArrayList
+    Dim featureTypeElementIDsList As New System.Collections.ArrayList
+    Dim featureTypeNamesList As New System.Collections.ArrayList
     Dim externalReferencedElementIDList As New System.Collections.ArrayList
     Dim packagesToBeReferencedPackageIDList As New System.Collections.ArrayList
 
@@ -129,6 +131,8 @@
         packageIDList.Clear()
         classifierIDList.Clear()
         packageDependenciesElementIDList.Clear()
+        featureTypeElementIDsList.Clear()
+        featureTypeNamesList.Clear()
         externalReferencedElementIDList.Clear()
         packagesToBeReferencedPackageIDList.Clear()
 
@@ -171,7 +175,7 @@
 
             ' populate lists that will be used in the validation checks
             Call PopulatePackageIDList(thePackage)
-            Call PopulateClassifierIDList(thePackage)
+            Call PopulateClassifierLists(thePackage)
             Call PopulatePackageDependenciesElementIDList(thePackage.Element)
             Call PopulateExternalReferencedElementIDList(thePackage)
 
@@ -194,6 +198,14 @@
 
             ' Tests that should be done recursivly on subpackages should called in FindInvalidElementsInPackage
             Call FindInvalidElementsInPackage(thePackage)
+
+
+            'global tests in the end of the validation process
+            If ruleSet = "SOSI" Or ruleSet = "19109" Then
+                Call reqUMLFeature(featureTypeNamesList.Clone, featureTypeElementIDsList.Clone)
+                Call reqGeneralFeature(featureTypeNamesList.Clone, featureTypeElementIDsList.Clone)
+
+            End If
 
         End If
         ' end of report: Show footer with results
