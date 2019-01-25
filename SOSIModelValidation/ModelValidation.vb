@@ -229,6 +229,7 @@
         anbefalingStyleGuide(thePackage)
         If ruleSet = "SOSI" Then
             Call kravDefinisjoner(thePackage)
+            Call kravNavning(thePackage)
         End If
 
 
@@ -301,6 +302,7 @@
                     Call kravDefinisjoner(currentElement)
                     Call krav3(currentElement)
                     Call krav19(currentElement)
+                    Call kravNavning(currentElement)
                 End If
 
                 '19103 ruleset (also implicitly included when 19109 is selected)
@@ -372,19 +374,13 @@
                     Call requirement15(currentElement, currentAttribute)
                     'flyttet vekk fra kodelister reqUMLProfile(currentElement, currentAttribute)
 
-                    constraints = currentAttribute.Constraints
-                    For Each currentAttConstraint In constraints
-                        'call attribute constraint checks
-                        reqUmlConstraint(currentAttConstraint, currentAttribute)
-                        If ruleSet = "SOSI" Then
-                            Call kravDefinisjoner(currentAttConstraint, currentAttribute)
-                        End If
-                    Next
+
 
                     'SOSI ruleset
                     If ruleSet = "SOSI" Then
                         Call kravDefinisjoner(currentAttribute)
                         Call krav3(currentAttribute)
+                        Call kravNavning(currentAttribute)
                     End If
 
                     '19103 ruleset
@@ -397,6 +393,14 @@
                         Call reqUMLDocumentation(currentAttribute)
                     End If
 
+                    constraints = currentAttribute.Constraints
+                    For Each currentAttConstraint In constraints
+                        'call attribute constraint checks
+                        reqUmlConstraint(currentAttConstraint, currentAttribute)
+                        If ruleSet = "SOSI" Then
+                            Call kravDefinisjoner(currentAttConstraint, currentAttribute)
+                        End If
+                    Next
                 Next
 
                 connectors = currentElement.Connectors
@@ -407,6 +411,8 @@
                     If ruleSet = "SOSI" Then
                         Call kravDefinisjoner(currentConnector)
                         Call krav3(currentConnector)
+                        Call kravNavning(currentConnector)
+
                     End If
 
                     '19103 ruleset
