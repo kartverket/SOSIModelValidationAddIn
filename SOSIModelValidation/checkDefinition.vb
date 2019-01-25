@@ -5,6 +5,9 @@
     'Purpose: 		Collection of subs checking different elements' definition
     '				
     'Called by:     kravDefinisjoner in file kravDefinisjoner.vb
+    '               krav3 in file krav3.vb
+    '               requirement3 in file requirement3.vb
+    '               requirement19 in file requirement19.vb
 
 
     'old:

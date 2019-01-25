@@ -286,11 +286,13 @@
                 If ruleSet = "SOSI" Then
                     Call kravDefinisjoner(currentElement)
                     Call krav3(currentElement)
+                    Call krav19(currentElement)
                 End If
 
-                '19103 ruleset
+                '19103 ruleset (also implicitly included when 19109 is selected)
                 If ruleSet = "19103" Or ruleSet = "19109" Then
                     Call requirement3(currentElement)
+                    Call requirement19(currentElement)
                 End If
 
                 '19109 ruleset
