@@ -7,7 +7,7 @@
     '				Find elements (classes, attributes, association, operations) without definition (notes/rolenotes) 
     '               Here only the redirection to subs in the checkDefinition file happens where the logic is implemented.
 
-    'Calls: 		checkDefinition in file checkDefinition.vb
+    'Calls: 		checkDefinition* in file checkDefinition.vb
 
     '@param[in] 	theObject (EA.ObjectType) The object to check,  
     '				supposed to be one of the following types: EA.Attribute, EA.Method, EA.Connector, EA.Element 

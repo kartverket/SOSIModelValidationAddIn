@@ -98,12 +98,87 @@
         methodParentElement = theRepository.GetElementByID(theOperation.ParentID)
 
         If theOperation.Notes = "" Then
-            Output("Error: Class [«" & getStereotypeOfClass(methodParentElement) & "» " & methodParentElement.Name & "] \ operation [" & theOperation.Name & "] has no definition. [/krav/definisjoner]")
+            Output("Error: Class [«" & getStereotypeOfClass(methodParentElement) & "» " & methodParentElement.Name & "] \ operation [" & theOperation.Name & "] has no definition. [" & reference & "]")
             errorCounter = errorCounter + 1
         End If
     End Sub
 
+    ' subname: checkConstraint
+    ' Author: Sara Henriksen, Magnus Karge
+    ' Date: 22.01.19
+    ' Purpose: to check if a constraint lacks a definition. 
+    ' req/uml/constraint & krav/definisjoner
+    ' sub procedure to check the current element/attribute/connector/package for constraints without definition
+    ' @param[in]: currentConstraint (EA.Constraint) theElement (EA.ObjectType) The object to check against req/uml/constraint,  
+    ' supposed to be one of the following types: EA.Element, EA.Attribute, EA.Connector, EA.package
 
+    Sub checkDefinitionOfConstraint(currentConstraint As Object, constraintHoldingObject As Object, reference As String)
+
+        Dim currentConnector As EA.Connector
+        Dim currentElement As EA.Element
+        Dim currentAttribute As EA.Attribute
+        Dim currentPackage As EA.Package
+
+        Select Case constraintHoldingObject.ObjectType
+            'if the object is an element
+            Case EA.ObjectType.otElement
+                currentElement = constraintHoldingObject
+
+                'if the current constraint lacks definition, then return an error
+                If currentConstraint.Notes = "" Then
+                    Output("Error: Class [«" & currentElement.Stereotype & "» " & currentElement.Name & "] \ constraint [" & currentConstraint.Name & "] has no definition. [" & reference & "]")
+                    errorCounter = errorCounter + 1
+                End If
+
+
+            'if the object is an attribute 
+            Case EA.ObjectType.otAttribute
+                currentAttribute = constraintHoldingObject
+
+                'if the current constraint lacks definition, then return an error
+                Dim parentElementID
+                parentElementID = currentAttribute.ParentID
+                Dim parentElementOfAttribute As EA.Element
+                parentElementOfAttribute = theRepository.GetElementByID(parentElementID)
+                If currentConstraint.Notes = "" Then
+                    Output("Error: Class [" & parentElementOfAttribute.Name & "] \ attribute [" & currentAttribute.Name & "] \ constraint [" & currentConstraint.Name & "] has no definition. [" & reference & "]")
+                    errorCounter = errorCounter + 1
+                End If
+
+
+            Case EA.ObjectType.otPackage
+                currentPackage = constraintHoldingObject
+
+                'if the current constraint lacks definition, then return an error message
+                If currentConstraint.Notes = "" Then
+                    Output("Error: Package [«" & currentPackage.Element.Stereotype & "» " & currentPackage.Name & "] \ constraint [" & currentConstraint.Name & "] has no definition. [" & reference & "]")
+                    errorCounter = errorCounter + 1
+                End If
+
+
+            Case EA.ObjectType.otConnector
+                currentConnector = constraintHoldingObject
+
+                'if the current constraint lacks definition, then return an error message
+                If currentConstraint.Notes = "" Then
+
+                    Dim sourceElementID
+                    sourceElementID = currentConnector.ClientID
+                    Dim sourceElementOfConnector As EA.Element
+                    sourceElementOfConnector = theRepository.GetElementByID(sourceElementID)
+
+                    Dim targetElementID
+                    targetElementID = currentConnector.SupplierID
+                    Dim targetElementOfConnector As EA.Element
+                    targetElementOfConnector = theRepository.GetElementByID(targetElementID)
+
+                    Output("Error: Constraint [" & currentConstraint.Name & "] on connector [ " & currentConnector.Name & "] between class [" & sourceElementOfConnector.Name & "] and class [" & targetElementOfConnector.Name & "] has no definition. [" & reference & "]")
+                    errorCounter = errorCounter + 1
+                End If
+
+
+        End Select
+    End Sub
 
     'Purpose: 		help function to set stereotype that is shown 
     '				in diagrams but not accessible as such via EAObjectAPI
@@ -124,111 +199,5 @@
     End Function
 
 
-    ' Sub checkDefinition(theObject As EA.ObjectType)
-    '     'Declare local variables 
-    '     Dim currentAttribute As EA.Attribute
-    '     Dim currentMethod As EA.Method
-    '     Dim currentConnector As EA.Connector
-    '     Dim currentElement As EA.Element
-    '     Dim currentPackage As EA.Package
-
-    '     Select Case theObject.ObjectType
-    '         Case otElement
-    ' Code for when the function's parameter is an element 
-    'Set currentElement = theObject 
-
-    '	If currentElement.Notes = "" Then
-    '                 Session.Output("Error: Class [«" & getStereotypeOfClass(currentElement) & "» " & currentElement.Name & "] has no definition. [/krav/3], [/krav/definisjoner] & [/krav/19]")
-    '                 globalErrorCounter = globalErrorCounter + 1
-    '             End If
-    '         Case otAttribute
-    '	' Code for when the function's parameter is an attribute 
-
-    '	set currentAttribute = theObject 
-
-    '	'get the attribute's parent element 
-    '	Dim attributeParentElement As EA.Element
-    '	set attributeParentElement = Repository.GetElementByID(currentAttribute.ParentID) 
-
-    'If UCase(attributeParentElement.Stereotype) <> "CODELIST" Then
-    '                 If UCase(attributeParentElement.Stereotype) <> "ENUMERATION" Then
-    '                     If attributeParentElement.Type <> "Enumeration" Then
-    '                         If currentAttribute.Notes = "" Then
-    '                             Session.Output("Error: Class [«" & getStereotypeOfClass(attributeParentElement) & "» " & attributeParentElement.Name & "] \ attribute [" & currentAttribute.Name & "] has no definition. [/krav/3] & [/krav/definisjoner]")
-    '                             globalErrorCounter = globalErrorCounter + 1
-    '                         End If
-    '                     End If
-    '                 End If
-    '             End If
-
-    '         Case otMethod
-    '	' Code for when the function's parameter is a method 
-
-    '	set currentMethod = theObject 
-
-    '	'get the method's parent element, which is the class the method is part of 
-    '	Dim methodParentElement As EA.Element
-    '	set methodParentElement = Repository.GetElementByID(currentMethod.ParentID) 
-
-    '	If currentMethod.Notes = "" Then
-    '                 Session.Output("Error: Class [«" & getStereotypeOfClass(methodParentElement) & "» " & methodParentElement.Name & "] \ operation [" & currentMethod.Name & "] has no definition. [/krav/3] & [/krav/definisjoner]")
-    '                 globalErrorCounter = globalErrorCounter + 1
-    '             End If
-    '         Case otConnector
-    '	' Code for when the function's parameter is a connector 
-
-    '	set currentConnector = theObject 
-
-    '	'get the necessary connector attributes 
-    '	Dim sourceEndElementID
-    '             sourceEndElementID = currentConnector.ClientID 'id of the element on the source end of the connector 
-    '             Dim sourceEndNavigable
-    '             sourceEndNavigable = currentConnector.ClientEnd.Navigable 'navigability on the source end of the connector 
-    '             Dim sourceEndName
-    '             sourceEndName = currentConnector.ClientEnd.Role 'role name on the source end of the connector 
-    '             Dim sourceEndDefinition
-    '             sourceEndDefinition = currentConnector.ClientEnd.RoleNote 'role definition on the source end of the connector 
-
-    '             Dim targetEndNavigable
-    '             targetEndNavigable = currentConnector.SupplierEnd.Navigable 'navigability on the target end of the connector 
-    '             Dim targetEndName
-    '             targetEndName = currentConnector.SupplierEnd.Role 'role name on the target end of the connector 
-    '             Dim targetEndDefinition
-    '             targetEndDefinition = currentConnector.SupplierEnd.RoleNote 'role definition on the target end of the connector 
-
-
-    '             Dim sourceEndElement As EA.Element
-
-    '             If sourceEndNavigable = "Navigable" And sourceEndDefinition = "" And currentConnector.Type <> "Dependency" Then
-    '		'get the element on the source end of the connector 
-    '		set sourceEndElement = Repository.GetElementByID(sourceEndElementID) 
-
-    '	Session.Output("Error: Class [«" & getStereotypeOfClass(sourceEndElement) & "» " & sourceEndElement.Name & "] \ association role [" & sourceEndName & "] has no definition. [/krav/3] & [/krav/definisjoner]")
-    '                 globalErrorCounter = globalErrorCounter + 1
-    '             End If
-
-    '             If targetEndNavigable = "Navigable" And targetEndDefinition = "" And currentConnector.Type <> "Dependency" Then
-    '		'get the element on the source end of the connector (also source end element here because error message is related to the element on the source end of the connector) 
-    '		set sourceEndElement = Repository.GetElementByID(sourceEndElementID) 
-
-    '	Session.Output("Error: Class [«" & getStereotypeOfClass(sourceEndElement) & "» " & sourceEndElement.Name & "] \ association role [" & targetEndName & "] has no definition. [/krav/3] & [/krav/definisjoner]")
-    '                 globalErrorCounter = globalErrorCounter + 1
-    '             End If
-    '         Case otPackage
-    '	' Code for when the function's parameter is a package 
-
-    '	set currentPackage = theObject 
-
-    '	'check package definition 
-    'If currentPackage.Notes = "" Then
-    '                 Session.Output("Error: Package [" & currentPackage.Name & "] lacks a definition. [/krav/definisjoner]")
-    '                 globalErrorCounter = globalErrorCounter + 1
-    '             End If
-    '         Case Else
-    '             'TODO: need some type of exception handling here
-    '             Session.Output("Debug: Function [CheckDefinition] started with invalid parameter.")
-    '     End Select
-
-    ' End Sub
 End Class
 

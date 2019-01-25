@@ -213,8 +213,10 @@
         Output("Debug Package " + thePackage.Name)
 
         anbefalingStyleGuide(thePackage)
+        If ruleSet = "SOSI" Then
+            Call kravDefinisjoner(thePackage)
+        End If
 
-        Call kravDefinisjoner(thePackage)
 
         kravOversiktsdiagram(thePackage)
         kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast(thePackage)
@@ -222,17 +224,23 @@
         reqUmlPackaging(thePackage)
         kravSOSIModellregisterApplikasjonskjemaVersjonsnummer(thePackage)
         kravSOSIModellregisterApplikasjonsskjemaStatus(thePackage)
-        
-    
-        'do checks for all elements in package
-        findinvalidElementsInClassifiers(thePackage)
 
 
         constraintPCollection = thePackage.Element.Constraints
         For Each currentPConstraint In constraintPCollection
             'call package constraint checks
+            Output("Debug Package " + thePackage.Name + "/ constraint " + currentPConstraint.Name)
             reqUmlConstraint(currentPConstraint, thePackage)
+            If ruleSet = "SOSI" Then
+                Call kravDefinisjoner(currentPConstraint, thePackage)
+            End If
+
         Next
+
+        'do checks for all elements in package
+        findinvalidElementsInClassifiers(thePackage)
+
+
 
         'recursive call to subpackages
 
@@ -352,6 +360,9 @@
                     For Each currentAttConstraint In constraints
                         'call attribute constraint checks
                         reqUmlConstraint(currentAttConstraint, currentAttribute)
+                        If ruleSet = "SOSI" Then
+                            Call kravDefinisjoner(currentAttConstraint, currentAttribute)
+                        End If
                     Next
 
                     'SOSI ruleset
@@ -406,8 +417,14 @@
 
                     constraints = currentConnector.Constraints
                     For Each currentConConstraint In constraints
+                        Output("Debug Connector " + currentConnector.Name + " / constraint " + currentConConstraint.Name)
+
                         'call connector constraint checks
                         reqUmlConstraint(currentConConstraint, currentConnector)
+                        If ruleSet = "SOSI" Then
+                            Call kravDefinisjoner(currentConConstraint, currentConnector)
+                        End If
+
                     Next
                 Next
 
@@ -420,6 +437,11 @@
                     'call operation checks
                     If ruleSet = "SOSI" Then
                         kravDefinisjoner(currentOperation)
+                        krav3(currentOperation)
+                    End If
+
+                    If ruleSet = "19103" Then
+                        requirement3(currentOperation)
                     End If
 
                     kravFlerspråklighetElement(currentOperation)
@@ -431,6 +453,11 @@
                     Output("Debug Constraint " + currentConstraint.Name)
                     'call element constraint checks
                     reqUmlConstraint(currentConstraint, currentElement)
+
+                    If ruleSet = "SOSI" Then
+                        Call kravDefinisjoner(currentConstraint, currentElement)
+                    End If
+
                 Next
 
             End If
