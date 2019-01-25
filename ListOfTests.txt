@@ -30,7 +30,7 @@ X reqUMLPackaging -Tore
 X reqUMLStructure -Åsmund
 X reqUMLProfile -Kent
 reqUMLFeature -Magnus
-x reqUMLIntegration -Åsmund (test on package dependencies not implemented yet)
+X reqUMLIntegration -Åsmund
 X reqGeneralFeature -Tore
 
 SOSI 5.0
