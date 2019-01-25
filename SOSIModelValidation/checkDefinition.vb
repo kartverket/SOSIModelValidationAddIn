@@ -185,7 +185,7 @@
 
     'Purpose: 		help function to set stereotype that is shown 
     '				in diagrams but not accessible as such via EAObjectAPI
-    'Used in sub: 	checkElementName
+    'Used in file: 	checkName.vb, checkDefinition.vb
     '@param[in]: theClass (EA.Element)
     'returns: theClass's visible stereotype as character string, empty string if nothing found
     Function getStereotypeOfClass(theClass)

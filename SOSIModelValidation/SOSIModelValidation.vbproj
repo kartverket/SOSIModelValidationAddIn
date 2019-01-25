@@ -68,7 +68,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="checkName.vb" />
     <Compile Include="checkUniqueFeatureTypeNames.vb" />
+    <Compile Include="kravNavning.vb" />
     <Compile Include="reqUMLFeature.vb" />
     <Compile Include="requirement19.vb" />
     <Compile Include="krav19.vb" />
