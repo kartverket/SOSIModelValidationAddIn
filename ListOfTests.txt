@@ -17,7 +17,7 @@ X requirement14 -Tore
 X requirement15 -Kent
 X requirement16 -Kent
 requirement17 -Åsmund
-requirement18 -Kent
+(requirement18 -Kent)
 X requirement19 -Magnus
 requirement21 -Åsmund
 X requirement22 -Kent
@@ -39,8 +39,8 @@ X kravEksternKodeliste -Kent
 X KravEnkelArv -Åsmund
 X kravFlerspråklighetElement -Åsmund
 X kravFlerspråklighetPakke -Tore
-kravHoveddiagramDetaljeringNavning
-kravHoveddiagramNavning
+kravHoveddiagramDetaljeringNavning -Magnus
+kravHoveddiagramNavning -Magnus
 X kravOversiktsdiagram -Åsmund
 x kravNavning -Magnus
 X kravSOSIModellregisterApplikasjonsskjemaStatus -Tore
