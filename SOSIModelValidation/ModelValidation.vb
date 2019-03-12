@@ -1,7 +1,7 @@
 ﻿Public Class ModelValidation
     ' Version and year
-    Dim versionNumber = "1.0.0"
-    Dim versionYear = "2018"
+    Dim versionNumber As String
+    Dim versionYear As String
     ' Counters
     Dim errorCounter As Integer
     Dim warningCounter As Integer
@@ -45,6 +45,11 @@
     ' Sub ModelValidation
     ' Check that the selected object is a package
     ' Start the model validation window
+
+    Public Sub SetVersion(Version As String, Year As String)
+        versionNumber = Version
+        versionYear = Year
+    End Sub
 
     Public Sub ModelValidationStartWindow(startRepository As EA.Repository)
         theRepository = startRepository
