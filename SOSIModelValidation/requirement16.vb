@@ -2,11 +2,11 @@
 
     'Sub name:      requirement16
     'Author: 		Kent Jonsrud
-    'Date: 			2018-10-17
+    'Date: 			2018-10-17, 2019-03-12
     'Purpose: 		'/krav/15 Iso 19103 Requirement 16 - legal NCNames case-insesnitively unique within their namespace
     'Parameter: 	the element that has a stereotype
     'Requirement class:     requirement16
-    'Conformance class:     from iso 19103 and 19109? part nnn
+    'Conformance class:     from iso 19103
 
     Sub requirement16(theThing As EA.Package)
         Call requirement16onPackage(theThing)
@@ -24,8 +24,8 @@
     Sub requirement16(theThing As EA.Connector)
         Call requirement16onConnector(theThing)
     End Sub
-    Sub requirement16(theThing As EA.ConnectorEnd)
-        Call requirement16onConnectorEnd(theThing)
+    Sub requirement16(theClass As EA.Element, theConn As EA.Connector, theThing As EA.ConnectorEnd)
+        Call requirement16onConnectorEnd(theClass, theConn, theThing)
     End Sub
     Sub requirement16onPackage(thePackage)
         Dim PackageNames As New System.Collections.ArrayList
@@ -123,9 +123,10 @@
             errorCounter += 1
         End If
     End Sub
-    Sub requirement16onConnectorEnd(theConnectorEnd)
+    Sub requirement16onConnectorEnd(theClass, theConn, theConnectorEnd)
         If Not isNCName(theConnectorEnd.Role) Then
-            Output("Error: Connector [" & theRepository.GetElementByID(theConnectorEnd.ConnectorID).Name & "] has illegal role property names [" & theConnectorEnd.Role & "]. [/krav/16]")
+            Output("Error: Class [" & theClass.Name & "] has illegal role property name [" & theConnectorEnd.Role & "]. [/krav/16]")
+            'Output("Error: Connector [" & theRepository.GetElementByID(theConnectorEnd.ConnectorID).Name & "] has illegal role property names [" & theConnectorEnd.Role & "]. [/krav/16]")
             errorCounter += 1
         End If
     End Sub
