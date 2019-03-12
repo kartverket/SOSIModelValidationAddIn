@@ -3,7 +3,7 @@
 
 
     Public Sub SetVersion(Version As String, Year As String)
-        Label1.Text() = "SOSI Model Validationversion " + Version
+        Label1.Text() = "SOSI Model Validation version " + Version
         Label2.Text() = "Kartverket " + Year
     End Sub
 
