@@ -40,7 +40,6 @@
     Dim featureTypeElementIDsList As New System.Collections.ArrayList
     Dim featureTypeNamesList As New System.Collections.ArrayList
     Dim externalReferencedElementIDList As New System.Collections.ArrayList
-    Dim packagesToBeReferencedPackageIDList As New System.Collections.ArrayList
     Dim packageDependenciesShownElementIDList As New System.Collections.ArrayList
 
     ' Sub ModelValidation
@@ -135,7 +134,7 @@
         featureTypeElementIDsList.Clear()
         featureTypeNamesList.Clear()
         externalReferencedElementIDList.Clear()
-        packagesToBeReferencedPackageIDList.Clear()
+        packageDependenciesShownElementIDList.Clear()
 
         'set log level
         If validationWindow.RadioButtonW.Checked Then
