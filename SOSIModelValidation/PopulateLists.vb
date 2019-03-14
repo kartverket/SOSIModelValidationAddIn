@@ -75,7 +75,7 @@
 
     'Sub name:  PopulateExternalReferencedElementIDList
     'Author:    Magnus Karge (original script version), Åsmund Tjora (current version)
-    'Date:      20170228 (original script version), 20192301 (current version)
+    'Date:      20170228 (original script version), 20190123 (current version)
     'Purpose:   Populate the externalReferencedElementIDList
     '           The list shall contain all elementIDs of elements in external packages
 
@@ -109,6 +109,65 @@
         ' Recurse for all subpackages
         For Each currentPackage In thePackage.Packages
             PopulateExternalReferencedElementIDList(currentPackage)
+        Next
+    End Sub
+
+    'Sub name:  PopulatePackageDependenciesShownIDList
+    'Author:    Åsmund Tjora
+    'Date:      20190312
+    'Purpose:   Populate the packageDependenciesShownIDList variable
+    '           The list shall contain all IDs of package dependencies shown in the model's package diagrams
+    '           Give warning if package diagram contains hidden links
+
+    Sub PopulatePackageDependenciesShownElementIDList(thePackage As EA.Package)
+        Dim thePackageElementID
+        Dim packageDiagramIDList As New System.Collections.ArrayList
+        Dim diagramID
+        Dim diagram As EA.Diagram
+        Dim linkList As EA.Collection
+        Dim diagramLink As EA.DiagramLink
+        Dim modelLink As EA.Connector
+        Dim supplier As EA.Element
+        Dim client As EA.Element
+
+        thePackageElementID = thePackage.Element.ElementID
+        PopulatePackageDiagramIDList(thePackage, packageDiagramIDList)
+
+        For Each diagramID In packageDiagramIDList
+            diagram = theRepository.GetDiagramByID(diagramID)
+            linkList = diagram.DiagramLinks
+
+            For Each diagramLink In linkList
+                modelLink = theRepository.GetConnectorByID(diagramLink.ConnectorID)
+                If modelLink.Type = "Package" Or modelLink.Type = "Usage" Or modelLink.Type = "Dependency" Then
+                    If modelLink.ClientID = thePackageElementID Then
+                        packageDependenciesShownElementIDList.Add(modelLink.SupplierID)
+                        If diagramLink.IsHidden And logLevel = "Warning" Then
+                            supplier = theRepository.GetElementByID(modelLink.SupplierID)
+                            client = theRepository.GetElementByID(modelLink.ClientID)
+                            Output("Warning: Diagram [" & diagram.Name & "] contains hidden dependency link between elements " & supplier.Name & " and " & client.Name & ".")
+                            warningCounter += 1
+                        End If
+                    End If
+                End If
+            Next
+        Next
+    End Sub
+
+    ' Find all package diagrams.  Recurse for all subpackages.
+    ' Used by PopulatePackageDiagramIDList sub.
+    Sub PopulatePackageDiagramIDList(thePackage As EA.Package, ByRef packageDiagramIDList As System.Collections.ArrayList)
+        Dim diagramList As EA.Collection
+        diagramList = thePackage.Diagrams
+        Dim subPackageList As EA.Collection
+        subPackageList = thePackage.Packages
+        Dim diagram As EA.Diagram
+        Dim subPackage As EA.Package
+        For Each diagram In diagramList
+            packageDiagramIDList.Add(diagram.DiagramID)
+        Next
+        For Each subPackage In subPackageList
+            PopulatePackageDiagramIDList(subPackage, packageDiagramIDList)
         Next
     End Sub
 
