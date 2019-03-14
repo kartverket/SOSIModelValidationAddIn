@@ -42,7 +42,7 @@ X kravFlerspråklighetPakke -Tore
 kravHoveddiagramDetaljeringNavning -Magnus
 kravHoveddiagramNavning -Magnus
 X kravOversiktsdiagram -Åsmund
-x kravNavning -Magnus
+X kravNavning -Magnus
 X kravSOSIModellregisterApplikasjonsskjemaStatus -Tore
 X kravSOSIModellregisterApplikasjonskjemaVersjonsnummer -Tore
 X kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast -Åsmund
