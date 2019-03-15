@@ -37,9 +37,14 @@ Partial Class SOSIModelValidationWindow
         Me.RadioButtonISO19109 = New System.Windows.Forms.RadioButton()
         Me.RadioButtonISO19103 = New System.Windows.Forms.RadioButton()
         Me.RadioButtonSOSI = New System.Windows.Forms.RadioButton()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.LogLevel.SuspendLayout()
         Me.Options.SuspendLayout()
         Me.RuleSet.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -203,11 +208,51 @@ Partial Class SOSIModelValidationWindow
         Me.RadioButtonSOSI.Text = "SOSI 5.0"
         Me.RadioButtonSOSI.UseVisualStyleBackColor = True
         '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.Label4)
+        Me.GroupBox1.Controls.Add(Me.Label3)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Location = New System.Drawing.Point(560, 118)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(194, 99)
+        Me.GroupBox1.TabIndex = 9
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Currently Testing"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(7, 24)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(39, 13)
+        Me.Label2.TabIndex = 0
+        Me.Label2.Text = "Label2"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(7, 48)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(39, 13)
+        Me.Label3.TabIndex = 1
+        Me.Label3.Text = "Label3"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(6, 72)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(39, 13)
+        Me.Label4.TabIndex = 2
+        Me.Label4.Text = "Label4"
+        '
         'SOSIModelValidationWindow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(808, 621)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.RuleSet)
         Me.Controls.Add(Me.ButtonClear)
         Me.Controls.Add(Me.ButtonClose)
@@ -225,6 +270,8 @@ Partial Class SOSIModelValidationWindow
         Me.Options.PerformLayout()
         Me.RuleSet.ResumeLayout(False)
         Me.RuleSet.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -245,4 +292,8 @@ Partial Class SOSIModelValidationWindow
     Friend WithEvents RadioButtonISO19109 As System.Windows.Forms.RadioButton
     Friend WithEvents RadioButtonISO19103 As System.Windows.Forms.RadioButton
     Friend WithEvents RadioButtonSOSI As System.Windows.Forms.RadioButton
+    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
 End Class
