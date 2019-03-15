@@ -9,7 +9,8 @@
     ' /anbefaling/1
     ' sub procedure to check if the initial values of the attributes in a CodeList/enumeration are numeric or not. 
     ' @param[in]: theElement (EA.element) The element containing  attributes with potentially numeric inital values 
-    ' Conformity class: Basisregler for UML
+    ' Conformity class: Basisregler for UML
+
     Sub recommendation1(theElement)
 
         Dim attr As EA.Attribute

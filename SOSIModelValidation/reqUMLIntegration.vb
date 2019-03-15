@@ -182,8 +182,6 @@
 
             End If
 
-            packagesToBeReferencedPackageIDList.Add(tempPackageIDOfPotentialReferencedPackage)
-
             If tempPackageIDsOfApplicationSchemaPackageInHierarchy.Count = 0 And tempPackageIDsOfReferencedPackageInHierarchy.Count = 0 Then
                 packageToReference = theRepository.GetPackageByID(tempPackageIDOfPotentialReferencedPackage)
                 Output("Error: Missing dependency for package [«" & packageToReference.Element.Stereotype & "» " & packageToReference.Name & "] (or any of its subpackages) containing external referenced class [«" & currentExternalElement.Stereotype & "» " & currentExternalElement.Name & "] [" & ruleString & "]")

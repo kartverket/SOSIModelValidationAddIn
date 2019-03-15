@@ -40,7 +40,7 @@
     Dim featureTypeElementIDsList As New System.Collections.ArrayList
     Dim featureTypeNamesList As New System.Collections.ArrayList
     Dim externalReferencedElementIDList As New System.Collections.ArrayList
-    Dim packagesToBeReferencedPackageIDList As New System.Collections.ArrayList
+    Dim packageDependenciesShownElementIDList As New System.Collections.ArrayList
 
     ' Sub ModelValidation
     ' Check that the selected object is a package
@@ -139,7 +139,7 @@
         featureTypeElementIDsList.Clear()
         featureTypeNamesList.Clear()
         externalReferencedElementIDList.Clear()
-        packagesToBeReferencedPackageIDList.Clear()
+        packageDependenciesShownElementIDList.Clear()
 
         'set log level
         If validationWindow.RadioButtonW.Checked Then
@@ -183,12 +183,7 @@
             Call PopulateClassifierLists(thePackage)
             Call PopulatePackageDependenciesElementIDList(thePackage.Element)
             Call PopulateExternalReferencedElementIDList(thePackage)
-
-            ' THESE SUBS MUST BE DECLARED AND NAME CHANGED TO NEW NAMING SCHEMES
-            ' Subs below are for tests that are not recursively performed in sub packages
-            'Call findPackagesToBeReferenced()
-            'Call checkPackageDependency(thePackage)
-            'Call dependencyLoop(thePackage.Element)
+            Call PopulatePackageDependenciesShownElementIDList(thePackage)
 
             Select Case ruleSet
                 Case "SOSI", "19109"
@@ -200,6 +195,8 @@
 
             Call reqUMLProfileLoad()
             Call reqUMLIntegration(thePackage)
+            Call requirement17(thePackage.Element)
+            Call requirement21(thePackage.Element)
 
             ' Tests that should be done recursivly on subpackages should called in FindInvalidElementsInPackage
             Call FindInvalidElementsInPackage(thePackage)

@@ -77,6 +77,9 @@
     <Compile Include="checkName.vb" />
     <Compile Include="checkUniqueFeatureTypeNames.vb" />
     <Compile Include="kravNavning.vb" />
+    <Compile Include="PackageIsShown.vb" />
+    <Compile Include="requirement17.vb" />
+    <Compile Include="requirement21.vb" />
     <Compile Include="reqUMLFeature.vb" />
     <Compile Include="requirement19.vb" />
     <Compile Include="krav19.vb" />
