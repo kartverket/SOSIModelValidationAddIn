@@ -102,6 +102,7 @@
             Case "19109"
                 Output("Selected rule set: ISO 19109:2015 - Geographic information - Rules for application schema")
         End Select
+        Output("Start time: " + DateTime.Now.ToString)
         Output("-----------------------------------")
     End Sub
 
