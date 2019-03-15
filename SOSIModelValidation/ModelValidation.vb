@@ -25,6 +25,12 @@
     ' Package object
     Dim thePackage As EA.Package
 
+    'For kravHoveddiagramNavning
+    Dim numberOfHoveddiagram
+    Dim numberOfHoveddiagramWithAdditionalInformationInTheName
+    Dim foundHoveddiagram As Boolean
+
+
     'For reqUMLProfile:
     Dim NationalTypes As New System.Collections.ArrayList
     Dim ProfileTypes As New System.Collections.ArrayList
@@ -132,6 +138,9 @@
         errorCounter = 0
         warningCounter = 0
         omittedCounter = 0
+        numberOfHoveddiagram = 0
+        numberOfHoveddiagramWithAdditionalInformationInTheName = 0
+        foundHoveddiagram = False
         startTime = Timer
         packageIDList.Clear()
         classifierIDList.Clear()
@@ -206,7 +215,8 @@
             If ruleSet = "SOSI" Or ruleSet = "19109" Then
                 Call reqUMLFeature(featureTypeNamesList.Clone, featureTypeElementIDsList.Clone)
                 Call reqGeneralFeature(featureTypeNamesList.Clone, featureTypeElementIDsList.Clone)
-
+                Call kravHoveddiagramNavning(thePackage)
+                Call kravHoveddiagramDetaljeringNavning(thePackage)
             End If
 
         End If
@@ -231,6 +241,11 @@
 
         anbefalingStyleGuide(thePackage)
         If ruleSet = "SOSI" Then
+            If Not foundHoveddiagram Then
+                Call checkPackageForHoveddiagram(thePackage)
+            End If
+
+            Call findHoveddiagramInPackage(thePackage)
             Call kravDefinisjoner(thePackage)
             Call kravNavning(thePackage)
         End If

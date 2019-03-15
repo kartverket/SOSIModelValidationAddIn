@@ -76,6 +76,10 @@
     </Compile>
     <Compile Include="checkName.vb" />
     <Compile Include="checkUniqueFeatureTypeNames.vb" />
+    <Compile Include="checkPackageForHoveddiagram.vb" />
+    <Compile Include="findHoveddiagramInPackage.vb" />
+    <Compile Include="kravHoveddiagramDetaljeringNavning.vb" />
+    <Compile Include="kravHoveddiagramNavning.vb" />
     <Compile Include="kravNavning.vb" />
     <Compile Include="PackageIsShown.vb" />
     <Compile Include="requirement17.vb" />
