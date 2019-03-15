@@ -71,6 +71,7 @@
                     messageText = messageText + "Model validation based on requirements and recommendations in SOSI standard 'Regler for UML-modellering 5.0'" + vbCrLf + vbCrLf
                     messageText = messageText + "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
                     validationWindow.Label1.Text() = messageText
+                    TestFeedbackClear()
                     'generate text list for tool tip on avoidable code lists 
                     Dim avoidableCodeListsText As String = ""
                     Dim avoidableCodeList As String
@@ -112,6 +113,7 @@
             Case "19109"
                 Output("Selected rule set: ISO 19109:2015 - Geographic information - Rules for application schema")
         End Select
+        Output("Start time: " + DateTime.Now.ToString)
         Output("-----------------------------------")
     End Sub
 
@@ -127,6 +129,24 @@
         End If
         Output("Time used: " & FormatNumber(elapsedTime, 2))
         Output("-----------------------------------")
+    End Sub
+
+    Private Sub TestFeedback(testElementType As String, testElementStereotype As String, testElementName As String, testMoreInfo As String)
+        validationWindow.Label2.Text() = testElementType
+        If testElementStereotype = "" Then
+            validationWindow.Label3.Text() = testElementName
+        Else
+            validationWindow.Label3.Text() = "«" + testElementStereotype + "» " + testElementName
+        End If
+        validationWindow.Label4.Text() = testMoreInfo
+        validationWindow.Refresh()
+    End Sub
+
+    Private Sub TestFeedbackClear()
+        validationWindow.Label2.Text() = ""
+        validationWindow.Label3.Text() = ""
+        validationWindow.Label4.Text() = ""
+        validationWindow.Refresh()
     End Sub
 
     Public Sub RunValidation()
@@ -181,6 +201,8 @@
         'start of report: Show header
         ReportHeader()
 
+        TestFeedback("Model", thePackage.Element.Stereotype, thePackage.Name, "")
+
         'Check model for script breaking structures
         If scriptBreakingStructuresInModel(thePackage) Then
             Output("Critical Errors: The errors listed above must be corrected before the program can validate the model.")
@@ -223,6 +245,7 @@
         ' end of report: Show footer with results
         endTime = Timer
         elapsedTime = endTime - startTime
+        TestFeedbackClear()
         ReportFooter()
     End Sub
 
@@ -237,7 +260,7 @@
         packages = thePackage.Packages
 
 
-        Output("Debug Package " + thePackage.Name)
+        TestFeedback("Package", thePackage.Element.Stereotype, thePackage.Name, "")
 
         anbefalingStyleGuide(thePackage)
         If ruleSet = "SOSI" Then
@@ -262,7 +285,7 @@
         constraintPCollection = thePackage.Element.Constraints
         For Each currentPConstraint In constraintPCollection
             'call package constraint checks
-            Output("Debug Package " + thePackage.Name + "/ constraint " + currentPConstraint.Name)
+            TestFeedback("Package Constraint", thePackage.Stereotype, thePackage.Name, currentPConstraint.Name)
             reqUmlConstraint(currentPConstraint, thePackage)
             If ruleSet = "SOSI" Then
                 Call kravDefinisjoner(currentPConstraint, thePackage)
@@ -304,7 +327,7 @@
         'ClassNames.Clear()
 
         For Each currentElement In elements
-            Output("Debug --- Element " + currentElement.Name + " Type " + currentElement.Type)
+            TestFeedback("Element", currentElement.Stereotype, currentElement.Name, "")
 
             ' All classifiers
 
@@ -379,7 +402,7 @@
                 attributes = currentElement.Attributes
                 For Each currentAttribute In attributes
 
-                    Output("Debug Attribute " + currentAttribute.Name)
+                    TestFeedback("Attribute", currentElement.Stereotype, currentElement.Name, currentAttribute.Name)
                     Call kravFlerspråklighetElement(currentAttribute)
                     ' Call attribute checks
 
@@ -423,7 +446,10 @@
 
                 connectors = currentElement.Connectors
                 For Each currentConnector In connectors
-                    Output("Debug Connector " + currentConnector.Name + " " + currentConnector.Stereotype)
+
+                    TestFeedback("Connector", currentConnector.Stereotype, currentConnector.Name, "")
+  
+                   
                     'if the current element is on the connectors client side conduct some tests 
                     '(this condition is needed to make sure only associations where the source end is connected to 
                     'elements within "this" package will be checked. Associations with source end connected to elements
@@ -464,13 +490,12 @@
                         Call requirement12(currentElement, currentConnector, currentConnector.ClientEnd)
                         Call requirement15(currentElement, currentConnector.SupplierEnd)
                         Call requirement15(currentElement, currentConnector.ClientEnd)
-
                         Call requirement16(currentElement, currentConnector, currentConnector.SupplierEnd)
                         Call requirement16(currentElement, currentConnector, currentConnector.ClientEnd)
 
                         constraints = currentConnector.Constraints
                         For Each currentConConstraint In constraints
-                            Output("Debug Connector " + currentConnector.Name + " / constraint " + currentConConstraint.Name)
+                            TestFeedback("Connector Constraint", currentConnector.Stereotype, currentConnector.Name, "Constraint" + currentConConstraint.Name)
 
                             'call connector constraint checks
                             reqUmlConstraint(currentConConstraint, currentConnector)
@@ -487,7 +512,7 @@
                 operations = currentElement.Methods
                 For Each currentOperation In operations
 
-                    Output("Debug Operation" + currentOperation.Name)
+                    TestFeedback("Operation", currentElement.Stereotype, currentElement.Name, currentOperation.Name)
                     'call operation checks
                     If ruleSet = "SOSI" Then
                         kravDefinisjoner(currentOperation)
@@ -506,7 +531,7 @@
 
                 constraints = currentElement.Constraints
                 For Each currentConstraint In constraints
-                    Output("Debug Constraint " + currentConstraint.Name)
+                    TestFeedback("Constraint", currentElement.Stereotype, currentElement.Name, currentConstraint.Name)
                     'call element constraint checks
                     reqUmlConstraint(currentConstraint, currentElement)
 
