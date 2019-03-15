@@ -39,8 +39,8 @@ X kravEksternKodeliste -Kent
 X KravEnkelArv -Åsmund
 X kravFlerspråklighetElement -Åsmund
 X kravFlerspråklighetPakke -Tore
-kravHoveddiagramDetaljeringNavning -Magnus
-kravHoveddiagramNavning -Magnus
+X kravHoveddiagramDetaljeringNavning -Magnus
+X kravHoveddiagramNavning -Magnus
 X kravOversiktsdiagram -Åsmund
 X kravNavning -Magnus
 X kravSOSIModellregisterApplikasjonsskjemaStatus -Tore
