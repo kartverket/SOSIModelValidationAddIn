@@ -2,11 +2,12 @@
 
     'Sub name:      requirement15
     'Author: 		Kent Jonsrud
-    'Date: 			2018-09-20, 10-18
+    'Date: 			2018-09-20, 10-18, 2019-03-12
     'Purpose: 		'/krav/15 Iso 19103 Requirement 15 - warning if not a standardised stereotype
     'Parameter: 	the element that has a stereotype
     'Requirement class:     requirement15
-    'Conformance class:     from iso 19103 and 19109? part nnn
+    'Conformance class:     from iso 19103 and 19109 clause 8.2.2 (see req/UML/Profile)
+    'TBD:           do we really need separate tests for different rulesets on attributes and roles?
 
     Sub requirement15(theThing As EA.Package)
         Call requirement15onPackage(theThing)
@@ -26,23 +27,55 @@
         Call requirement15onRole(theElement, theThing)
     End Sub
     Sub requirement15onPackage(thePackage)
-        If thePackage.Element.Stereotype = "" Or UCase(thePackage.Element.Stereotype) = "APPLICATIONSCHEMA" Or UCase(thePackage.Element.Stereotype) = "LEAF" Then
-        Else
-            If logLevel = "Warning" Then
-                Output("Warning: Package [«" & thePackage.Element.Stereotype & "» " & thePackage.Element.Name & "] has unknown stereotype. [/krav/15]")
-                warningCounter += 1
+        If ruleSet = "SOSI" Or ruleSet = "19109" Then
+            If thePackage.Element.Stereotype = "" Or UCase(thePackage.Element.Stereotype) = "APPLICATIONSCHEMA" Or UCase(thePackage.Element.Stereotype) = "LEAF" Then
+            Else
+                If logLevel = "Warning" Then
+                    Output("Warning: Package [«" & thePackage.Element.Stereotype & "» " & thePackage.Element.Name & "] has unknown stereotype. [/krav/15]")
+                    warningCounter += 1
+                End If
+            End If
+        End If
+        If ruleSet = "19103" Then
+            If thePackage.Element.Stereotype = "" Or UCase(thePackage.Element.Stereotype) = "LEAF" Then
+            Else
+                If logLevel = "Warning" Then
+                    Output("Warning: Package [«" & thePackage.Element.Stereotype & "» " & thePackage.Element.Name & "] has unknown stereotype. [/krav/15]")
+                    warningCounter += 1
+                End If
             End If
         End If
     End Sub
 
     Sub requirement15onClass(theElement)
-        If UCase(theElement.Stereotype) = "FEATURETYPE" Or UCase(theElement.Stereotype) = "DATATYPE" Or UCase(theElement.Stereotype) = "UNION" Or UCase(theElement.Stereotype) = "CODELIST" Or UCase(theElement.Stereotype) = "ENUMERATION" Or UCase(theElement.Stereotype) = "ESTIMATED" Or UCase(theElement.Stereotype) = "MESSAGETYPE" Or UCase(theElement.Stereotype) = "INTERFACE" Or theElement.Type = "Enumeration" Then
-        Else
-            If logLevel = "Warning" Then
-                Output("Warning: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown stereotype. [/krav/15]")
-                warningCounter += 1
+        If ruleSet = "SOSI" Then
+            If UCase(theElement.Stereotype) = "FEATURETYPE" Or UCase(theElement.Stereotype) = "DATATYPE" Or UCase(theElement.Stereotype) = "UNION" Or UCase(theElement.Stereotype) = "CODELIST" Or UCase(theElement.Stereotype) = "ENUMERATION" Or UCase(theElement.Stereotype) = "ESTIMATED" Or UCase(theElement.Stereotype) = "MESSAGETYPE" Or theElement.Type = "Enumeration" Then
+            Else
+                If logLevel = "Warning" Then
+                    Output("Warning: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown stereotype. [/krav/15]")
+                    warningCounter += 1
+                End If
             End If
         End If
+        If ruleSet = "19109" Then
+            If UCase(theElement.Stereotype) = "FEATURETYPE" Or UCase(theElement.Stereotype) = "DATATYPE" Or UCase(theElement.Stereotype) = "UNION" Or UCase(theElement.Stereotype) = "CODELIST" Or UCase(theElement.Stereotype) = "ENUMERATION" Or UCase(theElement.Stereotype) = "ESTIMATED" Or theElement.Type = "Enumeration" Then
+            Else
+                If logLevel = "Warning" Then
+                    Output("Warning: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown stereotype. [/krav/15]")
+                    warningCounter += 1
+                End If
+            End If
+        End If
+        If ruleSet = "19103" Then
+            If UCase(theElement.Stereotype) = "DATATYPE" Or UCase(theElement.Stereotype) = "UNION" Or UCase(theElement.Stereotype) = "CODELIST" Or UCase(theElement.Stereotype) = "ENUMERATION" Or UCase(theElement.Stereotype) = "INTERFACE" Or theElement.Type = "Enumeration" Then
+            Else
+                If logLevel = "Warning" Then
+                    Output("Warning: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown stereotype. [/krav/15]")
+                    warningCounter += 1
+                End If
+            End If
+        End If
+
     End Sub
 
     Sub requirement15onAttr(theElement, attr)

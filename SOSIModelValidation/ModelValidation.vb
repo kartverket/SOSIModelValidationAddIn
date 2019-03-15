@@ -1,7 +1,7 @@
 ﻿Public Class ModelValidation
     ' Version and year
-    Dim versionNumber = "1.0.0"
-    Dim versionYear = "2018"
+    Dim versionNumber As String
+    Dim versionYear As String
     ' Counters
     Dim errorCounter As Integer
     Dim warningCounter As Integer
@@ -45,6 +45,11 @@
     ' Sub ModelValidation
     ' Check that the selected object is a package
     ' Start the model validation window
+
+    Public Sub SetVersion(Version As String, Year As String)
+        versionNumber = Version
+        versionYear = Year
+    End Sub
 
     Public Sub ModelValidationStartWindow(startRepository As EA.Repository)
         theRepository = startRepository
@@ -366,11 +371,11 @@
                     Call kravFlerspråklighetElement(currentAttribute)
                     ' Call attribute checks
 
-                    If UCase(currentElement.Stereotype) = "FEATURETYPE" Or UCase(currentElement.Stereotype) = "DATATYPE" Or UCase(currentElement.Stereotype) = "UNION" Then
-                        Call reqUMLProfile(currentElement, currentAttribute)
-                    Else
-                        ' bør også teste om koder i kodelister har type i det hele tatt, og eventuelt anbefale disse slettet
-                    End If
+                    'If UCase(currentElement.Stereotype) = "FEATURETYPE" Or UCase(currentElement.Stereotype) = "DATATYPE" Or UCase(currentElement.Stereotype) = "UNION" Then
+                    'Call reqUMLProfile(currentElement, currentAttribute)
+                    'Else
+                    '' bør også teste om koder i kodelister har type i det hele tatt, og eventuelt anbefale disse slettet
+                    'End If
 
                     Call requirement15(currentElement, currentAttribute)
                     'flyttet vekk fra kodelister reqUMLProfile(currentElement, currentAttribute)
@@ -439,11 +444,17 @@
 
                         kravFlerspråklighetElement(currentConnector.SupplierEnd)
                         kravFlerspråklighetElement(currentConnector.ClientEnd)
+                        Call requirement10(currentElement, currentConnector, currentConnector.SupplierEnd)
+                        Call requirement10(currentElement, currentConnector, currentConnector.ClientEnd)
+                        Call requirement11(currentElement, currentConnector, currentConnector.SupplierEnd)
+                        Call requirement11(currentElement, currentConnector, currentConnector.ClientEnd)
+                        Call requirement12(currentElement, currentConnector, currentConnector.SupplierEnd)
+                        Call requirement12(currentElement, currentConnector, currentConnector.ClientEnd)
                         Call requirement15(currentElement, currentConnector.SupplierEnd)
                         Call requirement15(currentElement, currentConnector.ClientEnd)
-                        Call requirement16(currentConnector.SupplierEnd)
-                        Call requirement16(currentConnector.ClientEnd)
 
+                        Call requirement16(currentElement, currentConnector, currentConnector.SupplierEnd)
+                        Call requirement16(currentElement, currentConnector, currentConnector.ClientEnd)
 
                         constraints = currentConnector.Constraints
                         For Each currentConConstraint In constraints

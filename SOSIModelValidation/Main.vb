@@ -1,10 +1,14 @@
 ﻿Public Class Main
 
+    Dim Version = "1.0.0"
+    Dim VersionYear = "2019"
+
     Const menuHeader = "-&SOSI Model Validation"
     Const menuValidate = "&Run SOSI Model Validation"
     Const menuAbout = "&About"
 
     Dim modelVal As Object
+    Dim aboutWindow As About
 
     ' Check existence of Add-In
     Public Function EA_Connect(Repository As EA.Repository)
@@ -60,6 +64,7 @@
         Select Case ItemName
             Case menuValidate
                 modelVal = New ModelValidation
+                modelVal.SetVersion(Version, VersionYear)
                 Call modelVal.ModelValidationStartWindow(Repository)
             Case menuAbout
                 ShowAbout()
@@ -67,8 +72,9 @@
     End Sub
 
     Private Sub ShowAbout()
-        'Dim About = New AboutWindow
-        System.Windows.Forms.MessageBox.Show("SOSI Model Validation" + vbCrLf + "Kartverket 2018")
+        aboutWindow = New About
+        aboutWindow.SetVersion(Version, VersionYear)
+        aboutWindow.Show()
     End Sub
 
 
