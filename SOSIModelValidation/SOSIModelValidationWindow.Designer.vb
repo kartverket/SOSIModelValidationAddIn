@@ -22,6 +22,7 @@ Partial Class SOSIModelValidationWindow
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SOSIModelValidationWindow))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.LogLevel = New System.Windows.Forms.GroupBox()
         Me.RadioButtonE = New System.Windows.Forms.RadioButton()
@@ -262,6 +263,7 @@ Partial Class SOSIModelValidationWindow
         Me.Controls.Add(Me.Output)
         Me.Controls.Add(Me.LogLevel)
         Me.Controls.Add(Me.Label1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "SOSIModelValidationWindow"
         Me.Text = "SOSI Model Validation"
         Me.LogLevel.ResumeLayout(False)

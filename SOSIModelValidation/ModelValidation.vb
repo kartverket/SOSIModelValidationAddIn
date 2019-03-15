@@ -1,7 +1,7 @@
 ﻿Public Class ModelValidation
     ' Version and year
-    Dim versionNumber = "1.0.0"
-    Dim versionYear = "2018"
+    Dim versionNumber As String
+    Dim versionYear As String
     ' Counters
     Dim errorCounter As Integer
     Dim warningCounter As Integer
@@ -25,6 +25,12 @@
     ' Package object
     Dim thePackage As EA.Package
 
+    'For kravHoveddiagramNavning
+    Dim numberOfHoveddiagram
+    Dim numberOfHoveddiagramWithAdditionalInformationInTheName
+    Dim foundHoveddiagram As Boolean
+
+
     'For reqUMLProfile:
     Dim NationalTypes As New System.Collections.ArrayList
     Dim ProfileTypes As New System.Collections.ArrayList
@@ -40,11 +46,16 @@
     Dim featureTypeElementIDsList As New System.Collections.ArrayList
     Dim featureTypeNamesList As New System.Collections.ArrayList
     Dim externalReferencedElementIDList As New System.Collections.ArrayList
-    Dim packagesToBeReferencedPackageIDList As New System.Collections.ArrayList
+    Dim packageDependenciesShownElementIDList As New System.Collections.ArrayList
 
     ' Sub ModelValidation
     ' Check that the selected object is a package
     ' Start the model validation window
+
+    Public Sub SetVersion(Version As String, Year As String)
+        versionNumber = Version
+        versionYear = Year
+    End Sub
 
     Public Sub ModelValidationStartWindow(startRepository As EA.Repository)
         theRepository = startRepository
@@ -147,6 +158,9 @@
         errorCounter = 0
         warningCounter = 0
         omittedCounter = 0
+        numberOfHoveddiagram = 0
+        numberOfHoveddiagramWithAdditionalInformationInTheName = 0
+        foundHoveddiagram = False
         startTime = Timer
         packageIDList.Clear()
         classifierIDList.Clear()
@@ -154,7 +168,7 @@
         featureTypeElementIDsList.Clear()
         featureTypeNamesList.Clear()
         externalReferencedElementIDList.Clear()
-        packagesToBeReferencedPackageIDList.Clear()
+        packageDependenciesShownElementIDList.Clear()
 
         'set log level
         If validationWindow.RadioButtonW.Checked Then
@@ -200,12 +214,7 @@
             Call PopulateClassifierLists(thePackage)
             Call PopulatePackageDependenciesElementIDList(thePackage.Element)
             Call PopulateExternalReferencedElementIDList(thePackage)
-
-            ' THESE SUBS MUST BE DECLARED AND NAME CHANGED TO NEW NAMING SCHEMES
-            ' Subs below are for tests that are not recursively performed in sub packages
-            'Call findPackagesToBeReferenced()
-            'Call checkPackageDependency(thePackage)
-            'Call dependencyLoop(thePackage.Element)
+            Call PopulatePackageDependenciesShownElementIDList(thePackage)
 
             Select Case ruleSet
                 Case "SOSI", "19109"
@@ -217,6 +226,8 @@
 
             Call reqUMLProfileLoad()
             Call reqUMLIntegration(thePackage)
+            Call requirement17(thePackage.Element)
+            Call requirement21(thePackage.Element)
 
             ' Tests that should be done recursivly on subpackages should called in FindInvalidElementsInPackage
             Call FindInvalidElementsInPackage(thePackage)
@@ -226,7 +237,8 @@
             If ruleSet = "SOSI" Or ruleSet = "19109" Then
                 Call reqUMLFeature(featureTypeNamesList.Clone, featureTypeElementIDsList.Clone)
                 Call reqGeneralFeature(featureTypeNamesList.Clone, featureTypeElementIDsList.Clone)
-
+                Call kravHoveddiagramNavning(thePackage)
+                Call kravHoveddiagramDetaljeringNavning(thePackage)
             End If
 
         End If
@@ -252,6 +264,11 @@
 
         anbefalingStyleGuide(thePackage)
         If ruleSet = "SOSI" Then
+            If Not foundHoveddiagram Then
+                Call checkPackageForHoveddiagram(thePackage)
+            End If
+
+            Call findHoveddiagramInPackage(thePackage)
             Call kravDefinisjoner(thePackage)
             Call kravNavning(thePackage)
         End If
@@ -389,11 +406,11 @@
                     Call kravFlerspråklighetElement(currentAttribute)
                     ' Call attribute checks
 
-                    If UCase(currentElement.Stereotype) = "FEATURETYPE" Or UCase(currentElement.Stereotype) = "DATATYPE" Or UCase(currentElement.Stereotype) = "UNION" Then
-                        Call reqUMLProfile(currentElement, currentAttribute)
-                    Else
-                        ' bør også teste om koder i kodelister har type i det hele tatt, og eventuelt anbefale disse slettet
-                    End If
+                    'If UCase(currentElement.Stereotype) = "FEATURETYPE" Or UCase(currentElement.Stereotype) = "DATATYPE" Or UCase(currentElement.Stereotype) = "UNION" Then
+                    'Call reqUMLProfile(currentElement, currentAttribute)
+                    'Else
+                    '' bør også teste om koder i kodelister har type i det hele tatt, og eventuelt anbefale disse slettet
+                    'End If
 
                     Call requirement15(currentElement, currentAttribute)
                     'flyttet vekk fra kodelister reqUMLProfile(currentElement, currentAttribute)
@@ -429,49 +446,65 @@
 
                 connectors = currentElement.Connectors
                 For Each currentConnector In connectors
+
                     TestFeedback("Connector", currentConnector.Stereotype, currentConnector.Name, "")
-                    ' call connector checks
-                    'SOSI ruleset
-                    If ruleSet = "SOSI" Then
-                        Call kravDefinisjoner(currentConnector)
-                        Call krav3(currentConnector)
-                        Call kravNavning(currentConnector)
+  
+                   
+                    'if the current element is on the connectors client side conduct some tests 
+                    '(this condition is needed to make sure only associations where the source end is connected to 
+                    'elements within "this" package will be checked. Associations with source end connected to elements
+                    'outside of "this" package are possibly locked and not editable)
 
-                    End If
-
-                    '19103 ruleset
-                    If ruleSet = "19103" Then
-                        Call requirement3(currentConnector)
-                    End If
-
-                    '19109 ruleset
-                    If ruleSet = "19109" Then
-                        Call reqUMLDocumentation(currentConnector)
-                    End If
-
-                    Call requirement15(currentElement, currentConnector)
-                    Call requirement16(currentConnector)
-
-                    If currentConnector.Type = "Aggregation" Or currentConnector.Type = "Assosiation" Then
-                        kravFlerspråklighetElement(currentConnector.SupplierEnd)
-                        kravFlerspråklighetElement(currentConnector.ClientEnd)
-                        Call requirement15(currentElement, currentConnector.SupplierEnd)
-                        Call requirement15(currentElement, currentConnector.ClientEnd)
-                        Call requirement16(currentConnector.SupplierEnd)
-                        Call requirement16(currentConnector.ClientEnd)
-                    End If
-
-                    constraints = currentConnector.Constraints
-                    For Each currentConConstraint In constraints
-                        TestFeedback("Connector Constraint", currentConnector.Stereotype, currentConnector.Name, "Constraint" + currentConConstraint.Name)
-
-                        'call connector constraint checks
-                        reqUmlConstraint(currentConConstraint, currentConnector)
+                    If currentElement.ElementID = currentConnector.ClientID And (currentConnector.Type = "Aggregation" Or currentConnector.Type = "Association") Then
+                        ' call connector checks
+                        'SOSI ruleset
                         If ruleSet = "SOSI" Then
-                            Call kravDefinisjoner(currentConConstraint, currentConnector)
+                            Call kravDefinisjoner(currentConnector)
+                            Call krav3(currentConnector)
+                            Call kravNavning(currentConnector)
+                            Call kravNavning(currentConnector, currentElement)
+
                         End If
 
-                    Next
+                        '19103 ruleset
+                        If ruleSet = "19103" Then
+                            Call requirement3(currentConnector)
+                        End If
+
+                        '19109 ruleset
+                        If ruleSet = "19109" Then
+                            Call reqUMLDocumentation(currentConnector)
+                        End If
+
+                        Call requirement15(currentElement, currentConnector)
+                        Call requirement16(currentConnector)
+
+
+                        kravFlerspråklighetElement(currentConnector.SupplierEnd)
+                        kravFlerspråklighetElement(currentConnector.ClientEnd)
+                        Call requirement10(currentElement, currentConnector, currentConnector.SupplierEnd)
+                        Call requirement10(currentElement, currentConnector, currentConnector.ClientEnd)
+                        Call requirement11(currentElement, currentConnector, currentConnector.SupplierEnd)
+                        Call requirement11(currentElement, currentConnector, currentConnector.ClientEnd)
+                        Call requirement12(currentElement, currentConnector, currentConnector.SupplierEnd)
+                        Call requirement12(currentElement, currentConnector, currentConnector.ClientEnd)
+                        Call requirement15(currentElement, currentConnector.SupplierEnd)
+                        Call requirement15(currentElement, currentConnector.ClientEnd)
+                        Call requirement16(currentElement, currentConnector, currentConnector.SupplierEnd)
+                        Call requirement16(currentElement, currentConnector, currentConnector.ClientEnd)
+
+                        constraints = currentConnector.Constraints
+                        For Each currentConConstraint In constraints
+                            TestFeedback("Connector Constraint", currentConnector.Stereotype, currentConnector.Name, "Constraint" + currentConConstraint.Name)
+
+                            'call connector constraint checks
+                            reqUmlConstraint(currentConConstraint, currentConnector)
+                            If ruleSet = "SOSI" Then
+                                Call kravDefinisjoner(currentConConstraint, currentConnector)
+                            End If
+
+                        Next
+                    End If
                 Next
 
 
@@ -484,6 +517,8 @@
                     If ruleSet = "SOSI" Then
                         kravDefinisjoner(currentOperation)
                         krav3(currentOperation)
+                        kravNavning(currentOperation)
+
                     End If
 
                     If ruleSet = "19103" Then

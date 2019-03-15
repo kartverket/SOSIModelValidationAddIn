@@ -6,7 +6,8 @@
     'Purpose: 		/req/uml/profile from iso 19109 - check for valid well known types for all attributes (GM_Surface etc.), builds on iso 19103 Requirement 22 and 25.
     'Parameter: 	the property element that uses a type
     'Requirement class:     /req/uml/profile (and 25 and 22)
-    'Conformance class:     from iso 19109 part nnn
+    'Conformance class:     from iso 19109 clause 8.2.2
+    'TBD:           do we need to point to the details in 19109 req/Spatial/Attribute and req/Temporal/Attribute etc. ?
     Sub reqUMLProfileNorsk(theElement, attr)
 
         If attr.ClassifierID = 0 Then
@@ -15,7 +16,7 @@
                 If ProfileTypes.IndexOf(attr.Type, 0) = -1 Then
                     If ExtensionTypes.IndexOf(attr.Type, 0) = -1 Then
                         If CoreTypes.IndexOf(attr.Type, 0) = -1 Then
-                            Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown type for attribute [" & attr.Name & " : " & attr.Type & "]. [norsk /req/uml/profile]")
+                            Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown type for attribute [" & attr.Name & " : " & attr.Type & "].  [norsk /req/uml/profile]")
                             errorCounter += 1
                         End If
                     End If

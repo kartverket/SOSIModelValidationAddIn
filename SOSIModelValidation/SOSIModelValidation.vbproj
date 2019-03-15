@@ -68,9 +68,22 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.Designer.vb">
+      <DependentUpon>About.vb</DependentUpon>
+    </Compile>
+    <Compile Include="About.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="checkName.vb" />
     <Compile Include="checkUniqueFeatureTypeNames.vb" />
+    <Compile Include="checkPackageForHoveddiagram.vb" />
+    <Compile Include="findHoveddiagramInPackage.vb" />
+    <Compile Include="kravHoveddiagramDetaljeringNavning.vb" />
+    <Compile Include="kravHoveddiagramNavning.vb" />
     <Compile Include="kravNavning.vb" />
+    <Compile Include="PackageIsShown.vb" />
+    <Compile Include="requirement17.vb" />
+    <Compile Include="requirement21.vb" />
     <Compile Include="reqUMLFeature.vb" />
     <Compile Include="requirement19.vb" />
     <Compile Include="krav19.vb" />
@@ -128,6 +141,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
