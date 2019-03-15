@@ -371,11 +371,11 @@
                     Call kravFlerspråklighetElement(currentAttribute)
                     ' Call attribute checks
 
-                    If UCase(currentElement.Stereotype) = "FEATURETYPE" Or UCase(currentElement.Stereotype) = "DATATYPE" Or UCase(currentElement.Stereotype) = "UNION" Then
-                        Call reqUMLProfile(currentElement, currentAttribute)
-                    Else
-                        ' bør også teste om koder i kodelister har type i det hele tatt, og eventuelt anbefale disse slettet
-                    End If
+                    'If UCase(currentElement.Stereotype) = "FEATURETYPE" Or UCase(currentElement.Stereotype) = "DATATYPE" Or UCase(currentElement.Stereotype) = "UNION" Then
+                    'Call reqUMLProfile(currentElement, currentAttribute)
+                    'Else
+                    '' bør også teste om koder i kodelister har type i det hele tatt, og eventuelt anbefale disse slettet
+                    'End If
 
                     Call requirement15(currentElement, currentAttribute)
                     'flyttet vekk fra kodelister reqUMLProfile(currentElement, currentAttribute)
@@ -437,10 +437,16 @@
                     If currentConnector.Type = "Aggregation" Or currentConnector.Type = "Assosiation" Then
                         kravFlerspråklighetElement(currentConnector.SupplierEnd)
                         kravFlerspråklighetElement(currentConnector.ClientEnd)
+                        Call requirement10(currentElement, currentConnector, currentConnector.SupplierEnd)
+                        Call requirement10(currentElement, currentConnector, currentConnector.ClientEnd)
+                        Call requirement11(currentElement, currentConnector, currentConnector.SupplierEnd)
+                        Call requirement11(currentElement, currentConnector, currentConnector.ClientEnd)
+                        Call requirement12(currentElement, currentConnector, currentConnector.SupplierEnd)
+                        Call requirement12(currentElement, currentConnector, currentConnector.ClientEnd)
                         Call requirement15(currentElement, currentConnector.SupplierEnd)
                         Call requirement15(currentElement, currentConnector.ClientEnd)
-                        Call requirement16(currentConnector.SupplierEnd)
-                        Call requirement16(currentConnector.ClientEnd)
+                        Call requirement16(currentElement, currentConnector, currentConnector.SupplierEnd)
+                        Call requirement16(currentElement, currentConnector, currentConnector.ClientEnd)
                     End If
 
                     constraints = currentConnector.Constraints
