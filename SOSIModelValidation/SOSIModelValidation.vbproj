@@ -82,6 +82,9 @@
     <Compile Include="kravHoveddiagramNavning.vb" />
     <Compile Include="kravNavning.vb" />
     <Compile Include="PackageIsShown.vb" />
+    <Compile Include="requirement10.vb" />
+    <Compile Include="requirement11.vb" />
+    <Compile Include="requirement12.vb" />
     <Compile Include="requirement17.vb" />
     <Compile Include="requirement21.vb" />
     <Compile Include="reqUMLFeature.vb" />
