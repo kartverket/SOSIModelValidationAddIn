@@ -7,7 +7,6 @@
     '			(navigable ends shall have role names)
     '
     Sub requirement11(theElement, conn, connEnd)
-        Output("Debug: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] \ association role [" & connEnd.Role & "] [/krav/11]")
         If connEnd.Navigable = "Navigable" And connEnd.Role = "" And conn.Type <> "Dependency" Then
             Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has no role name on navigable end close to class " & connEnd.End & ". [/krav/11]")
             '? Output("Error: Association between class [«" & theElement.Stereotype & "» " & theElement.Name & "] and class [«" & "elementOnOppositeSide.Stereotype" & "» " & "elementOnOppositeSide.Name" & "] has no role name on navigable end on " & theElement.Name & "-side. [/krav/11]")

@@ -146,6 +146,7 @@ Partial Class About
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.LinkLabel1)
         Me.Controls.Add(Me.PictureBox1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "About"
         Me.Text = "About SOSI Model Validation"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
