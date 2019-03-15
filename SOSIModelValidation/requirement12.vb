@@ -12,7 +12,6 @@
         If elementOnOppositeSide.Name <> connEnd.End Then
             elementOnOppositeSide = theRepository.GetElementByID(conn.SupplierID)
         End If
-        Output("Debug: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] \ association role [" & connEnd.Role & "] elementOnOppositeSide.Name = " & elementOnOppositeSide.Name & "] [/krav/12]")
 
         'check if the elementOnOppositeSide has stereotype "dataType" and this side's end is no composition and not elements both sides of the association are datatypes
         If (UCase(elementOnOppositeSide.Stereotype) = UCase("dataType")) And Not (conn.ClientEnd.Aggregation = 2) And conn.Type <> "Dependency" Then
