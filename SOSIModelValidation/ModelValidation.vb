@@ -412,29 +412,36 @@
                 connectors = currentElement.Connectors
                 For Each currentConnector In connectors
                     Output("Debug Connector " + currentConnector.Name + " " + currentConnector.Stereotype)
-                    ' call connector checks
-                    'SOSI ruleset
-                    If ruleSet = "SOSI" Then
-                        Call kravDefinisjoner(currentConnector)
-                        Call krav3(currentConnector)
-                        Call kravNavning(currentConnector)
+                    'if the current element is on the connectors client side conduct some tests 
+                    '(this condition is needed to make sure only associations where the source end is connected to 
+                    'elements within "this" package will be checked. Associations with source end connected to elements
+                    'outside of "this" package are possibly locked and not editable)
 
-                    End If
+                    If currentElement.ElementID = currentConnector.ClientID And (currentConnector.Type = "Aggregation" Or currentConnector.Type = "Association") Then
+                        ' call connector checks
+                        'SOSI ruleset
+                        If ruleSet = "SOSI" Then
+                            Call kravDefinisjoner(currentConnector)
+                            Call krav3(currentConnector)
+                            Call kravNavning(currentConnector)
+                            Call kravNavning(currentConnector, currentElement)
 
-                    '19103 ruleset
-                    If ruleSet = "19103" Then
-                        Call requirement3(currentConnector)
-                    End If
+                        End If
 
-                    '19109 ruleset
-                    If ruleSet = "19109" Then
-                        Call reqUMLDocumentation(currentConnector)
-                    End If
+                        '19103 ruleset
+                        If ruleSet = "19103" Then
+                            Call requirement3(currentConnector)
+                        End If
 
-                    Call requirement15(currentElement, currentConnector)
-                    Call requirement16(currentConnector)
+                        '19109 ruleset
+                        If ruleSet = "19109" Then
+                            Call reqUMLDocumentation(currentConnector)
+                        End If
 
-                    If currentConnector.Type = "Aggregation" Or currentConnector.Type = "Assosiation" Then
+                        Call requirement15(currentElement, currentConnector)
+                        Call requirement16(currentConnector)
+
+
                         kravFlerspråklighetElement(currentConnector.SupplierEnd)
                         kravFlerspråklighetElement(currentConnector.ClientEnd)
                         Call requirement10(currentElement, currentConnector, currentConnector.SupplierEnd)
@@ -445,21 +452,22 @@
                         Call requirement12(currentElement, currentConnector, currentConnector.ClientEnd)
                         Call requirement15(currentElement, currentConnector.SupplierEnd)
                         Call requirement15(currentElement, currentConnector.ClientEnd)
+
                         Call requirement16(currentElement, currentConnector, currentConnector.SupplierEnd)
                         Call requirement16(currentElement, currentConnector, currentConnector.ClientEnd)
+
+                        constraints = currentConnector.Constraints
+                        For Each currentConConstraint In constraints
+                            Output("Debug Connector " + currentConnector.Name + " / constraint " + currentConConstraint.Name)
+
+                            'call connector constraint checks
+                            reqUmlConstraint(currentConConstraint, currentConnector)
+                            If ruleSet = "SOSI" Then
+                                Call kravDefinisjoner(currentConConstraint, currentConnector)
+                            End If
+
+                        Next
                     End If
-
-                    constraints = currentConnector.Constraints
-                    For Each currentConConstraint In constraints
-                        Output("Debug Connector " + currentConnector.Name + " / constraint " + currentConConstraint.Name)
-
-                        'call connector constraint checks
-                        reqUmlConstraint(currentConConstraint, currentConnector)
-                        If ruleSet = "SOSI" Then
-                            Call kravDefinisjoner(currentConConstraint, currentConnector)
-                        End If
-
-                    Next
                 Next
 
 
@@ -472,6 +480,8 @@
                     If ruleSet = "SOSI" Then
                         kravDefinisjoner(currentOperation)
                         krav3(currentOperation)
+                        kravNavning(currentOperation)
+
                     End If
 
                     If ruleSet = "19103" Then
