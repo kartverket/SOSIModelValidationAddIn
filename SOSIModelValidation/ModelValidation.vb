@@ -68,7 +68,10 @@
                 thePackage = theRepository.GetTreeSelectedObject()
                 If Not thePackage.IsModel Then
                     Dim messageText = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear + vbCrLf + vbCrLf
-                    messageText = messageText + "Model validation based on requirements and recommendations in SOSI standard 'Regler for UML-modellering 5.0'" + vbCrLf + vbCrLf
+                    messageText = messageText + "Model validation based on requirements and recommendations in standards" + vbCrLf
+                    messageText = messageText + " ● SOSI Generell del - Regler for UML-modellering 5.0" + vbCrLf
+                    messageText = messageText + " ● ISO 19109:2015 - Geographic Information -- Rules for Application Schema" + vbCrLf
+                    messageText = messageText + " ● ISO 19103:2015 - Geographic Information -- Conceptual Schema Language" + vbCrLf + vbCrLf
                     messageText = messageText + "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
                     validationWindow.Label1.Text() = messageText
                     TestFeedbackClear()
@@ -219,7 +222,7 @@
             Select Case ruleSet
                 Case "SOSI", "19109"
                     If UCase(thePackage.Element.Stereotype) <> "APPLICATIONSCHEMA" Then
-                        Output("Error: Selected package does not have stereotype ApplicationSchema.  The selected rule set is for Application Schema packages.")
+                        Output("Error: Selected package does not have stereotype ApplicationSchema. The selected rule set is for Application Schema packages. Some tests will not be run.")
                         errorCounter += 1
                     End If
             End Select

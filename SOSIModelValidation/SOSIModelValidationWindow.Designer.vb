@@ -39,9 +39,9 @@ Partial Class SOSIModelValidationWindow
         Me.RadioButtonISO19103 = New System.Windows.Forms.RadioButton()
         Me.RadioButtonSOSI = New System.Windows.Forms.RadioButton()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.LogLevel.SuspendLayout()
         Me.Options.SuspendLayout()
         Me.RuleSet.SuspendLayout()
@@ -61,7 +61,7 @@ Partial Class SOSIModelValidationWindow
         '
         Me.LogLevel.Controls.Add(Me.RadioButtonE)
         Me.LogLevel.Controls.Add(Me.RadioButtonW)
-        Me.LogLevel.Location = New System.Drawing.Point(15, 118)
+        Me.LogLevel.Location = New System.Drawing.Point(15, 171)
         Me.LogLevel.Name = "LogLevel"
         Me.LogLevel.Size = New System.Drawing.Size(137, 100)
         Me.LogLevel.TabIndex = 1
@@ -96,18 +96,18 @@ Partial Class SOSIModelValidationWindow
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Output.BackColor = System.Drawing.SystemColors.Window
-        Me.Output.Location = New System.Drawing.Point(12, 257)
+        Me.Output.Location = New System.Drawing.Point(12, 306)
         Me.Output.Multiline = True
         Me.Output.Name = "Output"
         Me.Output.ReadOnly = True
         Me.Output.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.Output.Size = New System.Drawing.Size(784, 352)
+        Me.Output.Size = New System.Drawing.Size(784, 349)
         Me.Output.TabIndex = 2
         '
         'Options
         '
         Me.Options.Controls.Add(Me.CheckAllCodeNames)
-        Me.Options.Location = New System.Drawing.Point(308, 118)
+        Me.Options.Location = New System.Drawing.Point(308, 171)
         Me.Options.Name = "Options"
         Me.Options.Size = New System.Drawing.Size(246, 100)
         Me.Options.TabIndex = 3
@@ -128,7 +128,7 @@ Partial Class SOSIModelValidationWindow
         '
         'ButtonRun
         '
-        Me.ButtonRun.Location = New System.Drawing.Point(15, 225)
+        Me.ButtonRun.Location = New System.Drawing.Point(15, 277)
         Me.ButtonRun.Name = "ButtonRun"
         Me.ButtonRun.Size = New System.Drawing.Size(75, 23)
         Me.ButtonRun.TabIndex = 4
@@ -137,7 +137,7 @@ Partial Class SOSIModelValidationWindow
         '
         'ButtonCopy
         '
-        Me.ButtonCopy.Location = New System.Drawing.Point(97, 225)
+        Me.ButtonCopy.Location = New System.Drawing.Point(96, 277)
         Me.ButtonCopy.Name = "ButtonCopy"
         Me.ButtonCopy.Size = New System.Drawing.Size(75, 23)
         Me.ButtonCopy.TabIndex = 5
@@ -146,7 +146,7 @@ Partial Class SOSIModelValidationWindow
         '
         'ButtonClose
         '
-        Me.ButtonClose.Location = New System.Drawing.Point(259, 225)
+        Me.ButtonClose.Location = New System.Drawing.Point(257, 277)
         Me.ButtonClose.Name = "ButtonClose"
         Me.ButtonClose.Size = New System.Drawing.Size(75, 23)
         Me.ButtonClose.TabIndex = 6
@@ -155,7 +155,7 @@ Partial Class SOSIModelValidationWindow
         '
         'ButtonClear
         '
-        Me.ButtonClear.Location = New System.Drawing.Point(178, 225)
+        Me.ButtonClear.Location = New System.Drawing.Point(176, 277)
         Me.ButtonClear.Name = "ButtonClear"
         Me.ButtonClear.Size = New System.Drawing.Size(75, 23)
         Me.ButtonClear.TabIndex = 7
@@ -167,7 +167,7 @@ Partial Class SOSIModelValidationWindow
         Me.RuleSet.Controls.Add(Me.RadioButtonISO19109)
         Me.RuleSet.Controls.Add(Me.RadioButtonISO19103)
         Me.RuleSet.Controls.Add(Me.RadioButtonSOSI)
-        Me.RuleSet.Location = New System.Drawing.Point(158, 118)
+        Me.RuleSet.Location = New System.Drawing.Point(158, 171)
         Me.RuleSet.Name = "RuleSet"
         Me.RuleSet.Size = New System.Drawing.Size(144, 100)
         Me.RuleSet.TabIndex = 8
@@ -178,11 +178,10 @@ Partial Class SOSIModelValidationWindow
         '
         Me.RadioButtonISO19109.AutoSize = True
         Me.RadioButtonISO19109.Enabled = False
-        Me.RadioButtonISO19109.Location = New System.Drawing.Point(7, 68)
+        Me.RadioButtonISO19109.Location = New System.Drawing.Point(6, 42)
         Me.RadioButtonISO19109.Name = "RadioButtonISO19109"
         Me.RadioButtonISO19109.Size = New System.Drawing.Size(76, 17)
         Me.RadioButtonISO19109.TabIndex = 2
-        Me.RadioButtonISO19109.TabStop = True
         Me.RadioButtonISO19109.Text = "ISO 19109"
         Me.RadioButtonISO19109.UseVisualStyleBackColor = True
         '
@@ -190,18 +189,18 @@ Partial Class SOSIModelValidationWindow
         '
         Me.RadioButtonISO19103.AutoSize = True
         Me.RadioButtonISO19103.Enabled = False
-        Me.RadioButtonISO19103.Location = New System.Drawing.Point(7, 44)
+        Me.RadioButtonISO19103.Location = New System.Drawing.Point(6, 65)
         Me.RadioButtonISO19103.Name = "RadioButtonISO19103"
         Me.RadioButtonISO19103.Size = New System.Drawing.Size(76, 17)
         Me.RadioButtonISO19103.TabIndex = 1
-        Me.RadioButtonISO19103.TabStop = True
         Me.RadioButtonISO19103.Text = "ISO 19103"
         Me.RadioButtonISO19103.UseVisualStyleBackColor = True
         '
         'RadioButtonSOSI
         '
         Me.RadioButtonSOSI.AutoSize = True
-        Me.RadioButtonSOSI.Location = New System.Drawing.Point(7, 20)
+        Me.RadioButtonSOSI.Checked = True
+        Me.RadioButtonSOSI.Location = New System.Drawing.Point(6, 19)
         Me.RadioButtonSOSI.Name = "RadioButtonSOSI"
         Me.RadioButtonSOSI.Size = New System.Drawing.Size(68, 17)
         Me.RadioButtonSOSI.TabIndex = 0
@@ -214,30 +213,12 @@ Partial Class SOSIModelValidationWindow
         Me.GroupBox1.Controls.Add(Me.Label4)
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Location = New System.Drawing.Point(560, 118)
+        Me.GroupBox1.Location = New System.Drawing.Point(560, 171)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(194, 99)
         Me.GroupBox1.TabIndex = 9
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Currently Testing"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(7, 24)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(39, 13)
-        Me.Label2.TabIndex = 0
-        Me.Label2.Text = "Label2"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(7, 48)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(39, 13)
-        Me.Label3.TabIndex = 1
-        Me.Label3.Text = "Label3"
         '
         'Label4
         '
@@ -248,11 +229,29 @@ Partial Class SOSIModelValidationWindow
         Me.Label4.TabIndex = 2
         Me.Label4.Text = "Label4"
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(7, 48)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(39, 13)
+        Me.Label3.TabIndex = 1
+        Me.Label3.Text = "Label3"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(7, 24)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(39, 13)
+        Me.Label2.TabIndex = 0
+        Me.Label2.Text = "Label2"
+        '
         'SOSIModelValidationWindow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(808, 621)
+        Me.ClientSize = New System.Drawing.Size(808, 667)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.RuleSet)
         Me.Controls.Add(Me.ButtonClear)
