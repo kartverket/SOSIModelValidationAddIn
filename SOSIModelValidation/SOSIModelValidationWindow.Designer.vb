@@ -42,6 +42,8 @@ Partial Class SOSIModelValidationWindow
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
         Me.LogLevel.SuspendLayout()
         Me.Options.SuspendLayout()
         Me.RuleSet.SuspendLayout()
@@ -247,11 +249,31 @@ Partial Class SOSIModelValidationWindow
         Me.Label2.TabIndex = 0
         Me.Label2.Text = "Label2"
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(12, 132)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(39, 13)
+        Me.Label5.TabIndex = 10
+        Me.Label5.Text = "Label5"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(12, 56)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(376, 52)
+        Me.Label6.TabIndex = 11
+        Me.Label6.Text = resources.GetString("Label6.Text")
+        '
         'SOSIModelValidationWindow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(808, 667)
+        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.RuleSet)
         Me.Controls.Add(Me.ButtonClear)
@@ -297,4 +319,6 @@ Partial Class SOSIModelValidationWindow
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents Label6 As System.Windows.Forms.Label
 End Class

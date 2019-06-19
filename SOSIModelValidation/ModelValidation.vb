@@ -24,6 +24,7 @@
     Dim validationWindow As SOSIModelValidationWindow
     ' Package object
     Dim thePackage As EA.Package
+    Dim startPackageID As Long
 
     'For kravHoveddiagramNavning
     Dim numberOfHoveddiagram
@@ -66,14 +67,11 @@
         Select Case treeSelectedType
             Case EA.ObjectType.otPackage
                 thePackage = theRepository.GetTreeSelectedObject()
+                startPackageID = thePackage.PackageID
+
                 If Not thePackage.IsModel Then
-                    Dim messageText = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear + vbCrLf + vbCrLf
-                    messageText = messageText + "Model validation based on requirements and recommendations in standards" + vbCrLf
-                    messageText = messageText + " ● SOSI Generell del - Regler for UML-modellering 5.0" + vbCrLf
-                    messageText = messageText + " ● ISO 19109:2015 - Geographic Information -- Rules for Application Schema" + vbCrLf
-                    messageText = messageText + " ● ISO 19103:2015 - Geographic Information -- Conceptual Schema Language" + vbCrLf + vbCrLf
-                    messageText = messageText + "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
-                    validationWindow.Label1.Text() = messageText
+                    validationWindow.Label1.Text() = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear
+                    validationWindow.Label5.Text() = "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
                     TestFeedbackClear()
                     'generate text list for tool tip on avoidable code lists 
                     Dim avoidableCodeListsText As String = ""
@@ -156,6 +154,11 @@
         'Initialization of variables common to several tests should be done from this sub.
         'Tests that are run only on the start package should be called from this sub.
         'Tests that are run on all start packages should be called from sub findInvalidElementsInPackage
+
+        'reload start package
+        thePackage = theRepository.GetPackageByID(startPackageID)
+        validationWindow.Label5.Text() = "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
+        validationWindow.Refresh()
 
         'initialize variables, set counters to 0 and clear lists
         errorCounter = 0
