@@ -421,7 +421,9 @@
                     If ruleSet = "SOSI" Then
                         Call kravDefinisjoner(currentAttribute)
                         Call krav3(currentAttribute)
-                        Call kravNavning(currentAttribute)
+                        If Not (UCase(currentElement.Stereotype) = "ENUMERATION" Or UCase(currentElement.Stereotype) = "CODELIST" Or currentElement.Type = "Enumeration") Then
+                            Call kravNavning(currentAttribute)
+                        End If
                     End If
 
                     '19103 ruleset
