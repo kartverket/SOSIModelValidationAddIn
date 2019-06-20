@@ -2,9 +2,9 @@
 
     'Sub name:      requirement16
     'Author: 		Kent Jonsrud
-    'Date: 			2018-10-17, 2019-03-12
-    'Purpose: 		'/krav/15 Iso 19103 Requirement 16 - legal NCNames case-insesnitively unique within their namespace
-    'Parameter: 	the element that has a stereotype
+    'Date: 			2018-10-17, 2019-03-12, 2019-06-19
+    'Purpose: 		'/krav/15 Iso 19103 Requirement 16 - legal non-whitespaced (NC)Name case-insesnitively unique within its namespace
+    'Parameter: 	the element that has a name, and is a namespace for names
     'Requirement class:     requirement16
     'Conformance class:     from iso 19103
 
@@ -74,8 +74,9 @@
         Next
         For Each connector In theElement.Connectors
             If connector.Type <> "Generalization" And connector.Type <> "Realisation" Then
+                'Output("Debug:  Class [" & theElement.Name & "] [" & theElement.ElementID & "] Client [" & connector.ClientEnd.Role & "] [" & connector.ClientID & "] Supplier [" & connector.SupplierEnd.Role & "] [" & connector.SupplierID & "]")
 
-                If connector.ClientEnd.Role <> "" Then
+                If connector.ClientEnd.Role <> "" And connector.SupplierID = theElement.ElementID Then
                     If PropertyNames.IndexOf(UCase(connector.ClientEnd.Role), 0) <> -1 Then
                         Output("Error: Class [" & theElement.Name & "] has non-unique role property names [" & connector.ClientEnd.Role & "]. [/krav/16]")
                         errorCounter += 1
@@ -83,7 +84,7 @@
                         PropertyNames.Add(UCase(connector.ClientEnd.Role))
                     End If
                 End If
-                If connector.SupplierEnd.Role <> "" Then
+                If connector.SupplierEnd.Role <> "" And connector.ClientID = theElement.ElementID Then
                     If PropertyNames.IndexOf(UCase(connector.SupplierEnd.Role), 0) <> -1 Then
                         Output("Error: Class [" & theElement.Name & "] has non-unique role property names [" & connector.SupplierEnd.Role & "]. [/krav/16]")
                         errorCounter += 1
@@ -93,7 +94,7 @@
                 End If
             End If
         Next
-        'operations may be polymorpcic
+        'operations may be polymorphic
 
         'PropertyNames.Clear()
         For Each constraint In theElement.Constraints
@@ -138,7 +139,6 @@
             If tegn = " " Or tegn = "," Or tegn = """" Or tegn = "#" Or tegn = "$" Or tegn = "%" Or tegn = "&" Or tegn = "(" Or tegn = ")" Or tegn = "*" Then
                 u = False
             End If
-
             If tegn = "+" Or tegn = "/" Or tegn = ":" Or tegn = ";" Or tegn = "<" Or tegn = ">" Or tegn = "?" Or tegn = "@" Or tegn = "[" Or tegn = "\" Then
                 u = False
             End If
@@ -156,5 +156,25 @@
         End If
         'end if
         isNCName = u
+    End Function
+    Function isNWName(streng)
+        Dim tegn, i, u
+        u = True
+        For i = 1 To Len(streng)
+            tegn = Mid(streng, i, 1)
+            If tegn = " " Or tegn = "," Or tegn = """" Or tegn = "#" Or tegn = "$" Or tegn = "%" Or tegn = "&" Or tegn = "(" Or tegn = ")" Or tegn = "*" Then
+                u = False
+            End If
+            If tegn = "+" Or tegn = "/" Or tegn = ":" Or tegn = ";" Or tegn = "<" Or tegn = ">" Or tegn = "?" Or tegn = "@" Or tegn = "[" Or tegn = "\" Then
+                u = False
+            End If
+            If tegn = "]" Or tegn = "^" Or tegn = "`" Or tegn = "{" Or tegn = "|" Or tegn = "}" Or tegn = "~" Or tegn = "'" Or tegn = "´" Or tegn = "¨" Then
+                u = False
+            End If
+            If tegn < " " Then
+                u = False
+            End If
+        Next
+        isNWName = u
     End Function
 End Class
