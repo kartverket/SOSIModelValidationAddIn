@@ -22,5 +22,10 @@ SOSIModelValidation
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="T:SOSIModelValidation.ModelValidation">
+ <summary>
+ 
+ </summary>
+</member>
 </members>
 </doc>

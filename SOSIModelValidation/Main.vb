@@ -1,6 +1,6 @@
 ﻿Public Class Main
 
-    Dim Version = "0.9.0"
+    Dim Version = "0.90"
     Dim VersionYear = "2019"
 
     Const menuHeader = "-&SOSI Model Validation"
