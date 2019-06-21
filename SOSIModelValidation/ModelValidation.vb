@@ -375,9 +375,18 @@
 
                     Call kravEksternKodeliste(currentElement)
 
+                    Select Case ruleSet
+                        Case "SOSI"
+                            Call krav6(currentElement)
+                            Call krav7(currentElement)
+                        Case "19109"
+                            Call requirement6(currentElement)
+                            Call requirement7(currentElement)
+                        Case "19103"
+                            Call requirement6(currentElement)
+                            Call requirement7(currentElement)
+                    End Select
                     recommendation1(currentElement)
-                    Call requirement6(currentElement)
-                    Call requirement7(currentElement)
                 Else
                     ' Call element subs for classes that are not codelists or enumerations
 
