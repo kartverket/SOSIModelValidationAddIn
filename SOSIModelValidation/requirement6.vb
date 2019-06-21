@@ -17,19 +17,19 @@
     Sub requirement6onElement(theElement)
         Dim CodeNames As New System.Collections.ArrayList
         If Not checkAllCodeNames And avoidableCodeLists.Contains(theElement.Name) Then
-            Output("Info: Class [" & theElement.Name & "] content was not tested for compliance with /krav/6")
+            Output("Info: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] content was not tested for compliance with /krav/6")
         Else
             If Not isNCName(theElement.Name) Then
-                Output("Error: Class [" & theElement.Name & "] has illegal name. [/krav/6]")
+                Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has illegal name. [/krav/6]")
                 errorCounter += 1
             End If
             For Each attribute In theElement.Attributes
                 If Not isNWName(attribute.Name) Then
-                    Output("Error: Class [" & theElement.Name & "] has illegal code name [" & attribute.Name & "]. [/krav/6]")
+                    Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has illegal code name [" & attribute.Name & "]. [/krav/6]")
                     errorCounter += 1
                 End If
                 If CodeNames.IndexOf(UCase(attribute.Name), 0) <> -1 Then
-                    Output("Error: Class [" & theElement.Name & "] has non-unique code names [" & attribute.Name & "]. [/krav/16]")
+                    Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has non-unique code names [" & attribute.Name & "]. [/krav/16]")
                     errorCounter += 1
                 Else
                     CodeNames.Add(UCase(attribute.Name))
@@ -40,23 +40,23 @@
     Sub krav6onElement(theElement)
         Dim CodeNames As New System.Collections.ArrayList
         If Not checkAllCodeNames And avoidableCodeLists.Contains(theElement.Name) Then
-            Output("Info: Class [" & theElement.Name & "] content was not tested for compliance with /krav/6")
+            Output("Info: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] content was not tested for compliance with /krav/6")
         Else
             If Not isNCName(theElement.Name) Then
-                Output("Error: Class [" & theElement.Name & "] has illegal name. [/krav/6]")
+                Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has illegal name. [/krav/6]")
                 errorCounter += 1
             End If
             For Each attribute In theElement.Attributes
                 If Not isNCName(attribute.Name) Then
-                    Output("Error: Class [" & theElement.Name & "] has illegal character in code name [" & attribute.Name & "]. [/krav/6]")
+                    Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has illegal character in code name [" & attribute.Name & "]. [/krav/6]")
                     errorCounter += 1
                 End If
                 If Not Left(attribute.Name, 1) = LCase(Left(attribute.Name, 1)) Then
-                    Output("Error: Class [" & theElement.Name & "] has code name starting with uppercase character [" & attribute.Name & "]. [/krav/6]")
+                    Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has code name starting with uppercase character [" & attribute.Name & "]. [/krav/6]")
                     errorCounter += 1
                 End If
                 If CodeNames.IndexOf(UCase(attribute.Name), 0) <> -1 Then
-                    Output("Error: Class [" & theElement.Name & "] has non-unique code names [" & attribute.Name & "]. [/krav/16]")
+                    Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has non-unique code names [" & attribute.Name & "]. [/krav/16]")
                     errorCounter += 1
                 Else
                     CodeNames.Add(UCase(attribute.Name))

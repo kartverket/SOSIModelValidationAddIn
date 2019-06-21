@@ -28,7 +28,7 @@
     End Sub
     Sub krav7onElement(theElement)
         If Not checkAllCodeNames And avoidableCodeLists.Contains(theElement.Name) Then
-            Output("Info: Class [" & theElement.Name & "] content was not tested for compliance with /krav/7")
+            Output("Info: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] content was not tested for compliance with /krav/7")
         Else
             If theElement.Notes = "" Then
                 Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has no definition. [/krav/7]")
