@@ -24,6 +24,7 @@
     Dim validationWindow As SOSIModelValidationWindow
     ' Package object
     Dim thePackage As EA.Package
+    Dim startPackageID As Long
 
     'For kravHoveddiagramNavning
     Dim numberOfHoveddiagram
@@ -66,11 +67,11 @@
         Select Case treeSelectedType
             Case EA.ObjectType.otPackage
                 thePackage = theRepository.GetTreeSelectedObject()
+                startPackageID = thePackage.PackageID
+
                 If Not thePackage.IsModel Then
-                    Dim messageText = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear + vbCrLf + vbCrLf
-                    messageText = messageText + "Model validation based on requirements and recommendations in SOSI standard 'Regler for UML-modellering 5.0'" + vbCrLf + vbCrLf
-                    messageText = messageText + "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
-                    validationWindow.Label1.Text() = messageText
+                    validationWindow.Label1.Text() = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear
+                    validationWindow.Label5.Text() = "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
                     TestFeedbackClear()
                     'generate text list for tool tip on avoidable code lists 
                     Dim avoidableCodeListsText As String = ""
@@ -154,6 +155,11 @@
         'Tests that are run only on the start package should be called from this sub.
         'Tests that are run on all start packages should be called from sub findInvalidElementsInPackage
 
+        'reload start package
+        thePackage = theRepository.GetPackageByID(startPackageID)
+        validationWindow.Label5.Text() = "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
+        validationWindow.Refresh()
+
         'initialize variables, set counters to 0 and clear lists
         errorCounter = 0
         warningCounter = 0
@@ -219,7 +225,7 @@
             Select Case ruleSet
                 Case "SOSI", "19109"
                     If UCase(thePackage.Element.Stereotype) <> "APPLICATIONSCHEMA" Then
-                        Output("Error: Selected package does not have stereotype ApplicationSchema.  The selected rule set is for Application Schema packages.")
+                        Output("Error: Selected package does not have stereotype ApplicationSchema. The selected rule set is for Application Schema packages. Some tests will not be run.")
                         errorCounter += 1
                     End If
             End Select

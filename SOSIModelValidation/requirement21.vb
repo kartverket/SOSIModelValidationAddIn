@@ -18,9 +18,9 @@
                         dependee = theRepository.GetElementByID(connector.SupplierID)
                         Select Case ruleSet
                             Case "SOSI"
-                                Output("Error: Dependency to package [«" & dependee.Stereotype & "» " & dependee.Name & "] exists in model, but is not shown in any package diagram [/krav/21]")
+                                Output("Error: Dependency to package [«" & dependee.Stereotype & "» " & dependee.Name & "] exists in model, but is not shown in any package diagram within «" & thePackageElement.Stereotype & "» " & thePackageElement.Name & " [/krav/21]")
                             Case "19109", "19103"
-                                Output("Error: Dependency to package [«" & dependee.Stereotype & "» " & dependee.Name & "] exists in model, but is not shown in any package diagram [ISO19103:2015/requirement21]")
+                                Output("Error: Dependency to package [«" & dependee.Stereotype & "» " & dependee.Name & "] exists in model, but is not shown in any package diagram within «" & thePackageElement.Stereotype & "» " & thePackageElement.Name & " [ISO19103:2015/requirement21]")
                         End Select
                         errorCounter += 1
                     End If
