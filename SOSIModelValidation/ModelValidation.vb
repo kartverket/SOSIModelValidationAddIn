@@ -291,7 +291,7 @@
         constraintPCollection = thePackage.Element.Constraints
         For Each currentPConstraint In constraintPCollection
             'call package constraint checks
-            TestFeedback("Package Constraint", thePackage.Stereotype, thePackage.Name, currentPConstraint.Name)
+            TestFeedback("Package Constraint", thePackage.Element.Stereotype, thePackage.Name, currentPConstraint.Name)
             reqUmlConstraint(currentPConstraint, thePackage)
             If ruleSet = "SOSI" Then
                 Call kravDefinisjoner(currentPConstraint, thePackage)
