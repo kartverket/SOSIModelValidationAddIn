@@ -4,7 +4,7 @@ List of tests from the original SOSI Model Validation script.
 Put an X in the brackets in front of the test name when the test is transferred to Add-In.
 
 == Script tests
-* [X] Main loops -Åsmund
+* [x] Main loops -Åsmund
 * [X] Inheritance loop detection -Åsmund
 
 == ISO 19103:2015
