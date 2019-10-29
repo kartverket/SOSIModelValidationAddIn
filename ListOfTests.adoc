@@ -18,7 +18,7 @@ Put an * in the brackets in front of the test name when the test is transferred 
 * [*] requirement15 -Kent
 * [*] requirement16 -Kent
 * [*] requirement17 -Åsmund
-* [ ] requirement18 -Kent (partially)
+* [] requirement18 -Kent (partially)
 * [*] requirement19 -Magnus
 * [*] requirement21 -Åsmund
 * [*] requirement22 -Kent
