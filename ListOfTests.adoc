@@ -1,0 +1,51 @@
+= List of tests
+
+List of tests from the original SOSI Model Validation script.
+Put an X in the brackets in front of the test name when the test is transferred to Add-In.
+
+== Script tests
+* [X] Main loops -Åsmund
+* [X] Inheritance loop detection -Åsmund
+
+== ISO 19103:2015
+* [X] requirement3 -Magnus
+* [X] requirement6 -Kent
+* [X] requirement7 -Kent
+* [X] requirement10 -Kent
+* [X] requirement11 -Kent
+* [X] requirement12 -Kent
+* [X] requirement14 -Tore
+* [X] requirement15 -Kent
+* [X] requirement16 -Kent
+* [X] requirement17 -Åsmund
+* [ ] requirement18 -Kent (partially)
+* [X] requirement19 -Magnus
+* [X] requirement21 -Åsmund
+* [X] requirement22 -Kent
+* [X] requirement25 -Kent
+* [X] recommendation1 -Tore
+
+== ISO 19109:2015
+* [X] reqUMLConstraint -Tore
+* [X] reqUMLPackaging -Tore
+* [X] reqUMLStructure -Åsmund
+* [X] reqUMLProfile -Kent
+* [X] reqUMLFeature -Magnus
+* [X] reqUMLIntegration -Åsmund
+* [X] reqGeneralFeature -Tore/Magnus
+
+== SOSI 5.0
+* [X] kravDefinisjoner -Magnus
+* [X] kravEksternKodeliste -Kent
+* [X] KravEnkelArv -Åsmund
+* [X] kravFlerspråklighetElement -Åsmund
+* [X] kravFlerspråklighetPakke -Tore
+* [X] kravHoveddiagramDetaljeringNavning -Magnus
+* [X] kravHoveddiagramNavning -Magnus
+* [X] kravOversiktsdiagram -Åsmund
+* [X] kravNavning -Magnus
+* [X] kravSOSIModellregisterApplikasjonsskjemaStatus -Tore
+* [X] kravSOSIModellregisterApplikasjonskjemaVersjonsnummer -Tore
+* [X] kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast -Åsmund
+* [X] kravTaggedValueSpråk -Tore
+* [X] anbefalingStyleGuide -Åsmund
