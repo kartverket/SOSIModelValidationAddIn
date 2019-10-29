@@ -1,0 +1,5 @@
+= SOSIModelValidationAddIn
+
+This is an Add-In for Enterprise Architect that validates UML models according to the requirements and recommendations in
+https://kartverket.no/globalassets/standard/sosi-standarden-del-1-og-2/sosi-standard-del-1/5.0/regler_for_uml-modellering_5.0.pdf[the norwegian standard "SOSI Generell del - Regler for UML modellering versjon 5.0"] +
+
