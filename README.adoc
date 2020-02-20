@@ -3,54 +3,44 @@
 This is an Add-In for Enterprise Architect that validates UML models according to the requirements and recommendations in
 https://kartverket.no/globalassets/standard/sosi-standarden-del-1-og-2/sosi-standard-del-1/5.0/regler_for_uml-modellering_5.0.pdf[the norwegian standard "SOSI Generell del - Regler for UML modellering versjon 5.0"] +
 
-= List of tests
+= Implemented requirements and recommendations in version 1.0
 
-List of tests from the original SOSI Model Validation script.
-Put an * in the brackets in front of the test name when the test is transferred to Add-In.
+== Requirements (URI as in the standard document)
+* /krav/3
+* /krav/6
+* /krav/7
+* /krav/10
+* /krav/11
+* /krav/12
+* /krav/14
+* /krav/15
+* /krav/16
+* /krav/17
+* /krav/19
+* /krav/21
+* /krav/22
+* /krav/25
+* /req/uml/constraint
+* /req/uml/packaging
+* /req/uml/structure
+* /req/uml/profile/req/uml
+* /req/uml/feature
+* /req/uml/integration
+* /req/general/feature
+* /krav/definisjoner
+* /krav/eksternKodeliste
+* /krav/enkelArv
+* /krav/flerspråklighet/element
+* /krav/flerspråklighet/pakke
+* /krav/hoveddiagram/detaljering/navning
+* /krav/hoveddiagram/navning
+* /krav/oversiktsdiagram
+* /krav/navning
+* /krav/SOSI-modellregister/applikasjonsskjema/status
+* /krav/SOSI-modellregister/applikasjonsskjema/versjonsnummer
+* /krav/SOSI-modellregister/applikasjonsskjema/standard/pakkenavn/utkast
+* /krav/taggedValueSpråk
 
-== Script tests
-* [*] Main loops -Åsmund
-* [*] Inheritance loop detection -Åsmund
-
-== ISO 19103:2015
-* [*] requirement3 -Magnus
-* [*] requirement6 -Kent
-* [*] requirement7 -Kent
-* [*] requirement10 -Kent
-* [*] requirement11 -Kent
-* [*] requirement12 -Kent
-* [*] requirement14 -Tore
-* [*] requirement15 -Kent
-* [*] requirement16 -Kent
-* [*] requirement17 -Åsmund
-*   requirement18 -Kent (partially)
-* [*] requirement19 -Magnus
-* [*] requirement21 -Åsmund
-* [*] requirement22 -Kent
-* [*] requirement25 -Kent
-* [*] recommendation1 -Tore
-
-== ISO 19109:2015
-* [*] reqUMLConstraint -Tore
-* [*] reqUMLPackaging -Tore
-* [*] reqUMLStructure -Åsmund
-* [*] reqUMLProfile -Kent
-* [*] reqUMLFeature -Magnus
-* [*] reqUMLIntegration -Åsmund
-* [*] reqGeneralFeature -Tore/Magnus
-
-== SOSI 5.0
-* [*] kravDefinisjoner -Magnus
-* [*] kravEksternKodeliste -Kent
-* [*] KravEnkelArv -Åsmund
-* [*] kravFlerspråklighetElement -Åsmund
-* [*] kravFlerspråklighetPakke -Tore
-* [*] kravHoveddiagramDetaljeringNavning -Magnus
-* [*] kravHoveddiagramNavning -Magnus
-* [*] kravOversiktsdiagram -Åsmund
-* [*] kravNavning -Magnus
-* [*] kravSOSIModellregisterApplikasjonsskjemaStatus -Tore
-* [*] kravSOSIModellregisterApplikasjonskjemaVersjonsnummer -Tore
-* [*] kravSOSIModellregisterApplikasjonskjemaStandardPakkenavnUtkast -Åsmund
-* [*] kravTaggedValueSpråk -Tore
-* [*] anbefalingStyleGuide -Åsmund
+== Recommendations (URI as in the standard document)
+* /anbefaling/1
+* /anbefaling/styleGuide
