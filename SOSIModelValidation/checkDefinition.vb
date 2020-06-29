@@ -191,9 +191,9 @@
     Function getStereotypeOfClass(theClass)
         Dim visibleStereotype As String
         visibleStereotype = ""
-        If (UCase(theClass.Stereotype) = UCase("featuretype")) Or (UCase(theClass.Stereotype) = UCase("codelist")) Or (UCase(theClass.Stereotype) = UCase("datatype")) Or (UCase(theClass.Stereotype) = UCase("enumeration")) Then
+        If (UCase(theClass.StereotypeEX) = UCase("featuretype")) Or (UCase(theClass.StereotypeEX) = UCase("codelist")) Or (UCase(theClass.StereotypeEX) = UCase("datatype")) Or (UCase(theClass.StereotypeEX) = UCase("enumeration")) Or (UCase(theClass.StereotypeEX) = UCase("union")) Then
             'param theClass is Classifier subtype Class with different stereotypes
-            visibleStereotype = theClass.Stereotype
+            visibleStereotype = theClass.StereotypeEX
         ElseIf (UCase(theClass.Type) = UCase("enumeration")) Or (UCase(theClass.Type) = UCase("datatype")) Then
             'param theClass is Classifier subtype DataType or Enumeration
             visibleStereotype = theClass.Type
