@@ -39,7 +39,7 @@ Open a project - velg fila SOSIModelValidation.sln
 
 
 
-erstatter:
+Erstatter:
 
 Rutine for arbeid med EA-skript i Vb med VS og GitHub
 -----------------------------------------------------
