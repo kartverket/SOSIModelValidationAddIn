@@ -1,3 +1,4 @@
+How to contribute in development
 Hvordan en kan bidra til videreutviklingen av SOSIModelValidationAddin
 ----------------------------------------------------------------------
 Kent Jonsrud 2020-06-29
