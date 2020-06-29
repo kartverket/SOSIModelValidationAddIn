@@ -4,18 +4,14 @@ Hvordan en kan bidra til videreutviklingen av SOSIModelValidationAddin
 Kent Jonsrud 2020-06-29
 
 
-last ned og installer GitHub Desktop klient fra desktop.GitHUB.com
-clone repository SOSIModelValidationAddIn (e:\s+GitHub+SOSIModelValidationAddIn)
-Lag eller velg branch
-
 last ned og installer (med kommandolinjeklient!) 64-bits fra tortoisesvn.net
 lag katalog for xmi-filer - e:\r
 Høyreklikk på e: og velg SVN Checkout, og følg deretter fra 6.2 og 7 i http://sosi.geonorge.no/veiledere/installasjonsveileder/
 
 Installer EA (15)
-kopier SSJavaCOM.dll til windows/SysWOW64
+kopier SSJavaCOM64.dll til windows/SysWOW64 ?
 Konfigurer EA 15:
-Configure->Options: MDG disable alle unntatt EA
+Configure->Options: MDG disable alle unntatt de fra EA
 Start->Preferences: General Use JET 4.0 !!!
 Start->Preferences: General Clipboard format Metafile
 Start->Preferences: Diagram Themes Monochrome for printing
@@ -28,6 +24,10 @@ Start->Preferences: XML Code Page utf-8
 
 regedit ny hkey_current_user\Sparx\EAAddins\SOSIModelValidation
 (default) SOSIModelValidation.Main
+
+last ned og installer GitHub Desktop klient fra desktop.GitHUB.com
+clone repository SOSIModelValidationAddIn (e:\s+GitHub+SOSIModelValidationAddIn)
+Lag eller velg branch
 
 last ned Visual Studio Community Edition (free) fra visualstudio.microsoft.com
 installer modulene Universal Windows og .NET desktop
