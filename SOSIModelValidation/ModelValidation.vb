@@ -128,7 +128,7 @@
         If omittedCounter > 0 Then
             Output("Number of omitted tests:" & omittedCounter)
         End If
-        Output("Time used: " & FormatNumber(elapsedTime, 2))
+        Output("Time used: " & FormatNumber(elapsedTime, 2) & " seconds")
         Output("-----------------------------------")
     End Sub
 
@@ -150,6 +150,19 @@
         validationWindow.Refresh()
     End Sub
 
+    Public Function TryRunValidation()
+        Try
+            RunValidation()
+            Return True
+        Catch ex As Exception
+            Output("-----------------------------------")
+            Output("Critical Error:  Running SOSI Model Validation on this model resulted in an exception.")
+            Output("                 Try running EA repair on the model.")
+            Output("                 If the problem persists, please post an issue on https://github.com/kartverket/SOSIModelValidationAddIn")
+            Output("-----------------------------------")
+            Return False
+        End Try
+    End Function
     Public Sub RunValidation()
         'Initialization of variables common to several tests should be done from this sub.
         'Tests that are run only on the start package should be called from this sub.
