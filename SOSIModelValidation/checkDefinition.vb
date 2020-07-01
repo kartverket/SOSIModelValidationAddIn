@@ -56,7 +56,24 @@
         End If
 
     End Sub
+    Sub checkDefinitionOfAssociation(theConnector As EA.Connector, reference As String)
+        Dim sourceEndElementID
+        Dim targetEndElementID
+        Dim sourceEndElement As EA.Element
+        Dim targetEndElement As EA.Element
 
+
+        If theConnector.Notes = "" Then
+            sourceEndElementID = theConnector.ClientID 'id of the element on the source end of the connector 
+            targetEndElementID = theConnector.SupplierID 'id of the element on the supplier end of the connector 
+            'get the element on the source end of the connector 
+            sourceEndElement = theRepository.GetElementByID(sourceEndElementID)
+            targetEndElement = theRepository.GetElementByID(targetEndElementID)
+
+            Output("Error: Association [" & theConnector.Name & "] between class [«" & getStereotypeOfClass(sourceEndElement) & "» " & sourceEndElement.Name & "] and class [«" & getStereotypeOfClass(targetEndElement) & "» " & targetEndElement.Name & "] has no definition. [" & reference & "]")
+            errorCounter = errorCounter + 1
+        End If
+    End Sub
     Sub checkDefinitionOfAssociationRole(theConnector As EA.Connector, reference As String)
         'get the necessary connector attributes 
         Dim sourceEndElementID
@@ -197,6 +214,8 @@
         ElseIf (UCase(theClass.Type) = UCase("enumeration")) Or (UCase(theClass.Type) = UCase("datatype")) Then
             'param theClass is Classifier subtype DataType or Enumeration
             visibleStereotype = theClass.Type
+        ElseIf Not theClass.Stereotype = "" Then
+            visibleStereotype = theClass.Stereotype
         End If
         getStereotypeOfClass = visibleStereotype
     End Function
