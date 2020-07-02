@@ -51,5 +51,19 @@
         Close()
     End Sub
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim request As System.Net.HttpWebRequest = System.Net.HttpWebRequest.Create("http://sosi.geonorge.no/sosimodelvalidation/version.txt")
+        Dim response As System.Net.HttpWebResponse = request.GetResponse
 
+        Dim sr As System.IO.StreamReader = New System.IO.StreamReader(response.GetResponseStream)
+
+        Dim newestversion As String = sr.ReadToEnd
+        Dim currentversion As String = ProductVersion
+
+        If newestversion.Contains(currentversion) Then
+            MsgBox("You are up tp date!")
+        Else
+            MsgBox("There is a new update available!")
+        End If
+    End Sub
 End Class

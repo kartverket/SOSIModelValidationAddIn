@@ -44,6 +44,7 @@ Partial Class SOSIModelValidationWindow
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.LogLevel.SuspendLayout()
         Me.Options.SuspendLayout()
         Me.RuleSet.SuspendLayout()
@@ -53,9 +54,10 @@ Partial Class SOSIModelValidationWindow
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 9)
+        Me.Label1.Location = New System.Drawing.Point(16, 11)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(39, 13)
+        Me.Label1.Size = New System.Drawing.Size(51, 17)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Label1"
         '
@@ -63,9 +65,11 @@ Partial Class SOSIModelValidationWindow
         '
         Me.LogLevel.Controls.Add(Me.RadioButtonE)
         Me.LogLevel.Controls.Add(Me.RadioButtonW)
-        Me.LogLevel.Location = New System.Drawing.Point(15, 171)
+        Me.LogLevel.Location = New System.Drawing.Point(20, 210)
+        Me.LogLevel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.LogLevel.Name = "LogLevel"
-        Me.LogLevel.Size = New System.Drawing.Size(137, 100)
+        Me.LogLevel.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.LogLevel.Size = New System.Drawing.Size(183, 123)
         Me.LogLevel.TabIndex = 1
         Me.LogLevel.TabStop = False
         Me.LogLevel.Text = "Log Level"
@@ -73,9 +77,10 @@ Partial Class SOSIModelValidationWindow
         'RadioButtonE
         '
         Me.RadioButtonE.AutoSize = True
-        Me.RadioButtonE.Location = New System.Drawing.Point(7, 44)
+        Me.RadioButtonE.Location = New System.Drawing.Point(9, 54)
+        Me.RadioButtonE.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadioButtonE.Name = "RadioButtonE"
-        Me.RadioButtonE.Size = New System.Drawing.Size(47, 17)
+        Me.RadioButtonE.Size = New System.Drawing.Size(61, 21)
         Me.RadioButtonE.TabIndex = 1
         Me.RadioButtonE.TabStop = True
         Me.RadioButtonE.Text = "Error"
@@ -84,9 +89,10 @@ Partial Class SOSIModelValidationWindow
         'RadioButtonW
         '
         Me.RadioButtonW.AutoSize = True
-        Me.RadioButtonW.Location = New System.Drawing.Point(7, 20)
+        Me.RadioButtonW.Location = New System.Drawing.Point(9, 25)
+        Me.RadioButtonW.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadioButtonW.Name = "RadioButtonW"
-        Me.RadioButtonW.Size = New System.Drawing.Size(65, 17)
+        Me.RadioButtonW.Size = New System.Drawing.Size(82, 21)
         Me.RadioButtonW.TabIndex = 0
         Me.RadioButtonW.TabStop = True
         Me.RadioButtonW.Text = "Warning"
@@ -98,20 +104,23 @@ Partial Class SOSIModelValidationWindow
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Output.BackColor = System.Drawing.SystemColors.Window
-        Me.Output.Location = New System.Drawing.Point(12, 306)
+        Me.Output.Location = New System.Drawing.Point(16, 377)
+        Me.Output.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Output.Multiline = True
         Me.Output.Name = "Output"
         Me.Output.ReadOnly = True
         Me.Output.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.Output.Size = New System.Drawing.Size(784, 349)
+        Me.Output.Size = New System.Drawing.Size(1044, 429)
         Me.Output.TabIndex = 2
         '
         'Options
         '
         Me.Options.Controls.Add(Me.CheckAllCodeNames)
-        Me.Options.Location = New System.Drawing.Point(308, 171)
+        Me.Options.Location = New System.Drawing.Point(411, 210)
+        Me.Options.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Options.Name = "Options"
-        Me.Options.Size = New System.Drawing.Size(246, 100)
+        Me.Options.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Options.Size = New System.Drawing.Size(328, 123)
         Me.Options.TabIndex = 3
         Me.Options.TabStop = False
         Me.Options.Text = "Options"
@@ -121,45 +130,50 @@ Partial Class SOSIModelValidationWindow
         Me.CheckAllCodeNames.AutoSize = True
         Me.CheckAllCodeNames.Checked = True
         Me.CheckAllCodeNames.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckAllCodeNames.Location = New System.Drawing.Point(7, 20)
+        Me.CheckAllCodeNames.Location = New System.Drawing.Point(9, 25)
+        Me.CheckAllCodeNames.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.CheckAllCodeNames.Name = "CheckAllCodeNames"
-        Me.CheckAllCodeNames.Size = New System.Drawing.Size(222, 17)
+        Me.CheckAllCodeNames.Size = New System.Drawing.Size(296, 21)
         Me.CheckAllCodeNames.TabIndex = 0
         Me.CheckAllCodeNames.Text = "Test naming requirements on all code lists"
         Me.CheckAllCodeNames.UseVisualStyleBackColor = True
         '
         'ButtonRun
         '
-        Me.ButtonRun.Location = New System.Drawing.Point(15, 277)
+        Me.ButtonRun.Location = New System.Drawing.Point(20, 341)
+        Me.ButtonRun.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.ButtonRun.Name = "ButtonRun"
-        Me.ButtonRun.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonRun.Size = New System.Drawing.Size(100, 28)
         Me.ButtonRun.TabIndex = 4
         Me.ButtonRun.Text = "Run"
         Me.ButtonRun.UseVisualStyleBackColor = True
         '
         'ButtonCopy
         '
-        Me.ButtonCopy.Location = New System.Drawing.Point(96, 277)
+        Me.ButtonCopy.Location = New System.Drawing.Point(128, 341)
+        Me.ButtonCopy.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.ButtonCopy.Name = "ButtonCopy"
-        Me.ButtonCopy.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonCopy.Size = New System.Drawing.Size(100, 28)
         Me.ButtonCopy.TabIndex = 5
         Me.ButtonCopy.Text = "Copy Log"
         Me.ButtonCopy.UseVisualStyleBackColor = True
         '
         'ButtonClose
         '
-        Me.ButtonClose.Location = New System.Drawing.Point(257, 277)
+        Me.ButtonClose.Location = New System.Drawing.Point(343, 341)
+        Me.ButtonClose.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.ButtonClose.Name = "ButtonClose"
-        Me.ButtonClose.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonClose.Size = New System.Drawing.Size(100, 28)
         Me.ButtonClose.TabIndex = 6
         Me.ButtonClose.Text = "Close"
         Me.ButtonClose.UseVisualStyleBackColor = True
         '
         'ButtonClear
         '
-        Me.ButtonClear.Location = New System.Drawing.Point(176, 277)
+        Me.ButtonClear.Location = New System.Drawing.Point(235, 341)
+        Me.ButtonClear.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.ButtonClear.Name = "ButtonClear"
-        Me.ButtonClear.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonClear.Size = New System.Drawing.Size(100, 28)
         Me.ButtonClear.TabIndex = 7
         Me.ButtonClear.Text = "Clear Log"
         Me.ButtonClear.UseVisualStyleBackColor = True
@@ -169,9 +183,11 @@ Partial Class SOSIModelValidationWindow
         Me.RuleSet.Controls.Add(Me.RadioButtonISO19109)
         Me.RuleSet.Controls.Add(Me.RadioButtonISO19103)
         Me.RuleSet.Controls.Add(Me.RadioButtonSOSI)
-        Me.RuleSet.Location = New System.Drawing.Point(158, 171)
+        Me.RuleSet.Location = New System.Drawing.Point(211, 210)
+        Me.RuleSet.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RuleSet.Name = "RuleSet"
-        Me.RuleSet.Size = New System.Drawing.Size(144, 100)
+        Me.RuleSet.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.RuleSet.Size = New System.Drawing.Size(192, 123)
         Me.RuleSet.TabIndex = 8
         Me.RuleSet.TabStop = False
         Me.RuleSet.Text = "Rule Set"
@@ -180,9 +196,10 @@ Partial Class SOSIModelValidationWindow
         '
         Me.RadioButtonISO19109.AutoSize = True
         Me.RadioButtonISO19109.Enabled = False
-        Me.RadioButtonISO19109.Location = New System.Drawing.Point(6, 42)
+        Me.RadioButtonISO19109.Location = New System.Drawing.Point(8, 52)
+        Me.RadioButtonISO19109.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadioButtonISO19109.Name = "RadioButtonISO19109"
-        Me.RadioButtonISO19109.Size = New System.Drawing.Size(76, 17)
+        Me.RadioButtonISO19109.Size = New System.Drawing.Size(96, 21)
         Me.RadioButtonISO19109.TabIndex = 2
         Me.RadioButtonISO19109.Text = "ISO 19109"
         Me.RadioButtonISO19109.UseVisualStyleBackColor = True
@@ -191,9 +208,10 @@ Partial Class SOSIModelValidationWindow
         '
         Me.RadioButtonISO19103.AutoSize = True
         Me.RadioButtonISO19103.Enabled = False
-        Me.RadioButtonISO19103.Location = New System.Drawing.Point(6, 65)
+        Me.RadioButtonISO19103.Location = New System.Drawing.Point(8, 80)
+        Me.RadioButtonISO19103.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadioButtonISO19103.Name = "RadioButtonISO19103"
-        Me.RadioButtonISO19103.Size = New System.Drawing.Size(76, 17)
+        Me.RadioButtonISO19103.Size = New System.Drawing.Size(96, 21)
         Me.RadioButtonISO19103.TabIndex = 1
         Me.RadioButtonISO19103.Text = "ISO 19103"
         Me.RadioButtonISO19103.UseVisualStyleBackColor = True
@@ -202,9 +220,10 @@ Partial Class SOSIModelValidationWindow
         '
         Me.RadioButtonSOSI.AutoSize = True
         Me.RadioButtonSOSI.Checked = True
-        Me.RadioButtonSOSI.Location = New System.Drawing.Point(6, 19)
+        Me.RadioButtonSOSI.Location = New System.Drawing.Point(8, 23)
+        Me.RadioButtonSOSI.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RadioButtonSOSI.Name = "RadioButtonSOSI"
-        Me.RadioButtonSOSI.Size = New System.Drawing.Size(68, 17)
+        Me.RadioButtonSOSI.Size = New System.Drawing.Size(85, 21)
         Me.RadioButtonSOSI.TabIndex = 0
         Me.RadioButtonSOSI.TabStop = True
         Me.RadioButtonSOSI.Text = "SOSI 5.0"
@@ -215,9 +234,11 @@ Partial Class SOSIModelValidationWindow
         Me.GroupBox1.Controls.Add(Me.Label4)
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Location = New System.Drawing.Point(560, 171)
+        Me.GroupBox1.Location = New System.Drawing.Point(747, 210)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(194, 99)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox1.Size = New System.Drawing.Size(259, 122)
         Me.GroupBox1.TabIndex = 9
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Currently Testing"
@@ -225,53 +246,68 @@ Partial Class SOSIModelValidationWindow
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(6, 72)
+        Me.Label4.Location = New System.Drawing.Point(8, 89)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(39, 13)
+        Me.Label4.Size = New System.Drawing.Size(51, 17)
         Me.Label4.TabIndex = 2
         Me.Label4.Text = "Label4"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(7, 48)
+        Me.Label3.Location = New System.Drawing.Point(9, 59)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(39, 13)
+        Me.Label3.Size = New System.Drawing.Size(51, 17)
         Me.Label3.TabIndex = 1
         Me.Label3.Text = "Label3"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(7, 24)
+        Me.Label2.Location = New System.Drawing.Point(9, 30)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(39, 13)
+        Me.Label2.Size = New System.Drawing.Size(51, 17)
         Me.Label2.TabIndex = 0
         Me.Label2.Text = "Label2"
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(12, 132)
+        Me.Label5.Location = New System.Drawing.Point(16, 162)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(39, 13)
+        Me.Label5.Size = New System.Drawing.Size(51, 17)
         Me.Label5.TabIndex = 10
         Me.Label5.Text = "Label5"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(12, 56)
+        Me.Label6.Location = New System.Drawing.Point(16, 69)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(376, 52)
+        Me.Label6.Size = New System.Drawing.Size(500, 68)
         Me.Label6.TabIndex = 11
         Me.Label6.Text = resources.GetString("Label6.Text")
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(895, 69)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(133, 23)
+        Me.Button1.TabIndex = 12
+        Me.Button1.Text = "Check for update"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'SOSIModelValidationWindow
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(808, 667)
+        Me.ClientSize = New System.Drawing.Size(1077, 821)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.GroupBox1)
@@ -285,6 +321,7 @@ Partial Class SOSIModelValidationWindow
         Me.Controls.Add(Me.LogLevel)
         Me.Controls.Add(Me.Label1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "SOSIModelValidationWindow"
         Me.Text = "SOSI Model Validation"
         Me.LogLevel.ResumeLayout(False)
@@ -321,4 +358,5 @@ Partial Class SOSIModelValidationWindow
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents Button1 As System.Windows.Forms.Button
 End Class
