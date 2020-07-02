@@ -11,12 +11,12 @@
     Sub reqUMLProfileNorsk(theElement, attr)
 
         If attr.ClassifierID = 0 Then
-            'Attribute not connected to a datatype class, check if the attribute has a iso TC 211 well known type
+            'Attribute not connected to a datatype class, check if the attribute has a iso TC 211 well known type or a SOSI well known type
             If NationalTypes.IndexOf(attr.Type, 0) = -1 Then
                 If ProfileTypes.IndexOf(attr.Type, 0) = -1 Then
                     If ExtensionTypes.IndexOf(attr.Type, 0) = -1 Then
                         If CoreTypes.IndexOf(attr.Type, 0) = -1 Then
-                            Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown type for attribute [" & attr.Name & " : " & attr.Type & "].  [norsk /req/uml/profile]")
+                            Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown type for attribute [" & attr.Name & " : " & attr.Type & "].  [/req/uml/profile]")
                             errorCounter += 1
                         End If
                     End If
@@ -146,6 +146,8 @@
         ExtensionTypes.Add("Acceleration")
         ExtensionTypes.Add("AngularAcceleration")
 
+        'ProfileTypes are listed in iso 19109:2015
+
         'well known and often used spatial types from iso 19107:2003
         ProfileTypes.Add("DirectPosition")
         ProfileTypes.Add("GM_Object")
@@ -226,6 +228,7 @@
         'ProfileTypes.Add("CI_Citation")
         'ProfileTypes.Add("CI_Date")
 
+        'NationalTypes are listed in the SOSI standard Regler for UML-modellering 5.1:2020
 
         'other lesser known Norwegian legacy geometry types
         NationalTypes.Add("Punkt")
