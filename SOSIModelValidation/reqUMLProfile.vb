@@ -2,7 +2,7 @@
 
     'Sub name:      reqUMLProfile
     'Author: 		Kent Jonsrud
-    'Date: 			2018-09-20, 10-18
+    'Date: 			2018-09-20, 10-18, 2020-07-02
     'Purpose: 		/req/uml/profile from iso 19109 - check for valid well known types for all attributes (GM_Surface etc.), builds on iso 19103 Requirement 22 and 25.
     'Parameter: 	the property element that uses a type
     'Requirement class:     /req/uml/profile (and 25 and 22)
