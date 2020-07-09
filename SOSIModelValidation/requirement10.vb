@@ -8,7 +8,7 @@
 
     Sub requirement10(theElement, conn, connEnd)
         If connEnd.Navigable = "Navigable" And connEnd.Cardinality = "" And conn.Type <> "Dependency" Then
-            Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] \ association role [" & connEnd.Role & "] has no multiplicity. [/krav/10]")
+            Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] \ association role [" & connEnd.Role & "] on navigable end has no multiplicity. [/krav/10]")
             '? Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] \ association role [" & connEnd.Name & "] in association [" & conn.Name & "] has no multiplicity. [/krav/10]")
             errorCounter += 1
         End If
