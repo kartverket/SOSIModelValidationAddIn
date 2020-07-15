@@ -1,0 +1,20 @@
+= List of tests
+
+List of tests in standard SOSI Regler for UML-modellering 5.1 to be implemented in version 1.1
+Put an * in the brackets in front of the test name when the test is implemented.
+
+
+== SOSI Regler for UML-modellering 5.1
+* [] /krav/6 - Kent
+* [] /krav/kodenavn - Kent
+* [] /krav/kodebruk - Kent
+* [] /anbefaling/3 - 
+* [] /anbefaling/4 - Magnus
+* [-] /req/uml/association - utsettes til standarden foreligger i forbedret versjon
+* [-] /req/uml/role - utsettes til standarden foreligger i forbedret versjon
+* [-] /req/general/association-role - utsettes til standarden foreligger i forbedret versjon
+* [] /req/general/operation - Magnus
+* [] /krav/SOSI-modellregister/applikasjonsskjema/navneregler - Magnus
+* [] /krav/visualisering - Kent
+* [] /krav/pakkeavhengighet/produktspesifikasjoner - Magnus
+* [] /krav/hoveddiagram - Kent
