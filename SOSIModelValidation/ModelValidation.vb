@@ -485,8 +485,8 @@
                 For Each currentConnector In connectors
 
                     TestFeedback("Connector", currentConnector.Stereotype, currentConnector.Name, "")
-  
-                   
+
+
                     'if the current element is on the connectors client side conduct some tests 
                     '(this condition is needed to make sure only associations where the source end is connected to 
                     'elements within "this" package will be checked. Associations with source end connected to elements
@@ -554,13 +554,16 @@
                         kravDefinisjoner(currentOperation)
                         krav3(currentOperation)
                         kravNavning(currentOperation)
-
+                        reqGeneralOperation(currentOperation)
                     End If
 
                     If ruleSet = "19103" Then
                         requirement3(currentOperation)
                     End If
 
+                    If ruleSet = "19109" Then
+                        reqGeneralOperation(currentOperation)
+                    End If
                     kravFlerspråklighetElement(currentOperation)
 
                 Next
