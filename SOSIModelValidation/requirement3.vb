@@ -22,6 +22,7 @@
     End Sub
 
     Sub requirement3(theElement As EA.Connector)
+        Call checkDefinitionOfAssociation(theElement, "ISO 19103:2015/requirement 3")
         Call checkDefinitionOfAssociationRole(theElement, "ISO 19103:2015/requirement 3")
     End Sub
 
