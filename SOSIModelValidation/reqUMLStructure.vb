@@ -1,6 +1,7 @@
 ﻿Partial Public Class ModelValidation
 
     Sub reqUMLStructure(theClass As EA.Element)
+
         If UCase(theClass.Stereotype) = "INTERFACE" Or theClass.Type = "Interface" Then
             Select Case ruleSet
                 Case "SOSI"

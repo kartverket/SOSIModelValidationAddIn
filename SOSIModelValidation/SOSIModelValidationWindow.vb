@@ -34,7 +34,7 @@
     End Sub
 
     Private Sub ButtonRun_Click(sender As Object, e As EventArgs) Handles ButtonRun.Click
-        OwnerObject.RunValidation()
+        OwnerObject.TryRunValidation()
     End Sub
 
     Private Sub ButtonCopy_Click(sender As Object, e As EventArgs) Handles ButtonCopy.Click
