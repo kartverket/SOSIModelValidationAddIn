@@ -48,6 +48,7 @@
     Dim featureTypeNamesList As New System.Collections.ArrayList
     Dim externalReferencedElementIDList As New System.Collections.ArrayList
     Dim packageDependenciesShownElementIDList As New System.Collections.ArrayList
+    Dim internalClassesWithExternalReferences As New System.Collections.ArrayList
 
     ' Sub ModelValidation
     ' Check that the selected object is a package
@@ -175,6 +176,7 @@
         featureTypeNamesList.Clear()
         externalReferencedElementIDList.Clear()
         packageDependenciesShownElementIDList.Clear()
+        internalClassesWithExternalReferences.Clear()
 
         'set log level
         If validationWindow.RadioButtonW.Checked Then
@@ -277,6 +279,7 @@
             Call findHoveddiagramInPackage(thePackage)
             Call kravDefinisjoner(thePackage)
             Call kravNavning(thePackage)
+            Call kravPakkeavhengighetProduktspesifikasjoner(thePackage)
         End If
 
 

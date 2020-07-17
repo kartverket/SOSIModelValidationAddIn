@@ -92,6 +92,8 @@
                 If Not currentAttribute.ClassifierID = 0 And Not classifierIDList.Contains(currentAttribute.ClassifierID) Then
                     If Not externalReferencedElementIDList.Contains(currentAttribute.ClassifierID) Then
                         externalReferencedElementIDList.Add(currentAttribute.ClassifierID)
+                        'experimental for krav/pakkeavhenighet/produktspesifikasjoner:
+                        internalClassesWithExternalReferences.Add(currentElement.ClassifierID)
                     End If
                 End If
             Next
