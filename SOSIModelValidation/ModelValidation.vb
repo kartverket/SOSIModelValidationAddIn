@@ -9,8 +9,8 @@
     ' Log level, rule set and options from radiobuttons and checkboxes
     Dim logLevel = "Warning"
     Dim ruleSet = "SOSI"
-    Dim conformanceClass = "SOSI51internationalStandard"
-    '    Dim conformanceClass = "SOSI51nationalAdaptions"
+    '   Dim conformanceClass = "SOSI51internationalStandard"
+    Dim conformanceClass = "SOSI51nationalAdaptions"
 
     ' Option to avoid naming checks on certain codelists.
     Dim checkAllCodeNames = True
@@ -396,7 +396,7 @@
                                 Case "SOSI51internationalStandard"
                                     Call krav6(currentElement)
                                 Case "SOSI51nationalAdaptions"
-                                    '        Call kravKodenavn(currentElement)
+                                    Call kravKodenavn(currentElement)
                             End Select
                             Call krav7(currentElement)
                         Case "19109"
