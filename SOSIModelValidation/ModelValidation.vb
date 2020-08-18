@@ -160,7 +160,12 @@
             Output("-----------------------------------")
             Output("Critical Error:  Running SOSI Model Validation on this model resulted in an exception.")
             Output("                 Try running EA repair on the model.")
-            Output("                 If the problem persists, please post an issue on https://github.com/kartverket/SOSIModelValidationAddIn")
+            Output("                 If the problem persists, please post an issue on https://github.com/kartverket/SOSIModelValidationAddIn with the following exception information:")
+            Output("-----------------------------------")
+            Output("Exception message:" + vbCrLf + ex.Message + vbCrLf)
+            Output("Exception source:" + vbCrLf + ex.Source + vbCrLf)
+            Output("Exception stack trace:" + vbCrLf + ex.StackTrace + vbCrLf)
+            Output("Exception target:" + vbCrLf + ex.TargetSite.ToString())
             Output("-----------------------------------")
             Return False
         End Try
@@ -394,7 +399,7 @@
                         Case "SOSI"
                             Select Case conformanceClass
                                 Case "SOSI51internationalStandard"
-                                    Call krav6(currentElement)
+                                    Call requirement6(currentElement)
                                 Case "SOSI51nationalAdaptions"
                                     '        Call kravKodenavn(currentElement)
                             End Select
