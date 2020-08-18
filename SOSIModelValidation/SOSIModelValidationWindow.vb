@@ -29,7 +29,8 @@
         toolTips.SetToolTip(Me.RadioButtonSOSI, "SOSI Generell del - Regler for UML modellering - versjon 5.0")
         toolTips.SetToolTip(Me.RadioButtonISO19103, "ISO 19103:2015 - Geographic information - Conceptual schema language")
         toolTips.SetToolTip(Me.RadioButtonISO19109, "ISO 19109:2015 - Geographic information - Rules for application schema")
-        toolTips.SetToolTip(Me.CheckAllCodeNames, "Unchecking will cause Model Validation to omit naming requirement tests on code lists " + avoidableCodeListsText)
+        toolTips.SetToolTip(Me.RadioButtonCLI, "Code names shall be mnemonic and shall not have whitespace, separation characters or special characters." + vbCrLf + "If the codename is a proper name or well known abbreviation, the codename can start with captial letter or a number.")
+        toolTips.SetToolTip(Me.RadioButtonCLN, "Code names shall be mnemonic and should not have whitespace, separation characters or special characters." + vbCrLf + "If codes have an initial value/exchange alias, it is allowed with documented exceptions to the requirement on whitespace and separation characters" + vbCrLf + "There shall be exchange aliases for all codes in the list, and these shall have noe whitespace, separation characters or special characters.")
 
     End Sub
 
