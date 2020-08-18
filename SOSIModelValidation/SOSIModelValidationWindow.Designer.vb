@@ -29,7 +29,8 @@ Partial Class SOSIModelValidationWindow
         Me.RadioButtonW = New System.Windows.Forms.RadioButton()
         Me.Output = New System.Windows.Forms.TextBox()
         Me.Options = New System.Windows.Forms.GroupBox()
-        Me.CheckAllCodeNames = New System.Windows.Forms.CheckBox()
+        Me.RadioButtonCLN = New System.Windows.Forms.RadioButton()
+        Me.RadioButtonCLI = New System.Windows.Forms.RadioButton()
         Me.ButtonRun = New System.Windows.Forms.Button()
         Me.ButtonCopy = New System.Windows.Forms.Button()
         Me.ButtonClose = New System.Windows.Forms.Button()
@@ -73,6 +74,7 @@ Partial Class SOSIModelValidationWindow
         'RadioButtonE
         '
         Me.RadioButtonE.AutoSize = True
+        Me.RadioButtonE.Checked = True
         Me.RadioButtonE.Location = New System.Drawing.Point(7, 44)
         Me.RadioButtonE.Name = "RadioButtonE"
         Me.RadioButtonE.Size = New System.Drawing.Size(47, 17)
@@ -88,7 +90,6 @@ Partial Class SOSIModelValidationWindow
         Me.RadioButtonW.Name = "RadioButtonW"
         Me.RadioButtonW.Size = New System.Drawing.Size(65, 17)
         Me.RadioButtonW.TabIndex = 0
-        Me.RadioButtonW.TabStop = True
         Me.RadioButtonW.Text = "Warning"
         Me.RadioButtonW.UseVisualStyleBackColor = True
         '
@@ -108,25 +109,36 @@ Partial Class SOSIModelValidationWindow
         '
         'Options
         '
-        Me.Options.Controls.Add(Me.CheckAllCodeNames)
+        Me.Options.Controls.Add(Me.RadioButtonCLN)
+        Me.Options.Controls.Add(Me.RadioButtonCLI)
         Me.Options.Location = New System.Drawing.Point(308, 171)
         Me.Options.Name = "Options"
         Me.Options.Size = New System.Drawing.Size(246, 100)
         Me.Options.TabIndex = 3
         Me.Options.TabStop = False
-        Me.Options.Text = "Options"
+        Me.Options.Text = "Conformance classes"
         '
-        'CheckAllCodeNames
+        'RadioButtonCLN
         '
-        Me.CheckAllCodeNames.AutoSize = True
-        Me.CheckAllCodeNames.Checked = True
-        Me.CheckAllCodeNames.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckAllCodeNames.Location = New System.Drawing.Point(7, 20)
-        Me.CheckAllCodeNames.Name = "CheckAllCodeNames"
-        Me.CheckAllCodeNames.Size = New System.Drawing.Size(222, 17)
-        Me.CheckAllCodeNames.TabIndex = 0
-        Me.CheckAllCodeNames.Text = "Test naming requirements on all code lists"
-        Me.CheckAllCodeNames.UseVisualStyleBackColor = True
+        Me.RadioButtonCLN.AutoSize = True
+        Me.RadioButtonCLN.Location = New System.Drawing.Point(6, 42)
+        Me.RadioButtonCLN.Name = "RadioButtonCLN"
+        Me.RadioButtonCLN.Size = New System.Drawing.Size(172, 17)
+        Me.RadioButtonCLN.TabIndex = 1
+        Me.RadioButtonCLN.Text = "National adaptions for codelists"
+        Me.RadioButtonCLN.UseVisualStyleBackColor = True
+        '
+        'RadioButtonCLI
+        '
+        Me.RadioButtonCLI.AutoSize = True
+        Me.RadioButtonCLI.Checked = True
+        Me.RadioButtonCLI.Location = New System.Drawing.Point(6, 19)
+        Me.RadioButtonCLI.Name = "RadioButtonCLI"
+        Me.RadioButtonCLI.Size = New System.Drawing.Size(191, 17)
+        Me.RadioButtonCLI.TabIndex = 0
+        Me.RadioButtonCLI.TabStop = True
+        Me.RadioButtonCLI.Text = "International standards for codelists"
+        Me.RadioButtonCLI.UseVisualStyleBackColor = True
         '
         'ButtonRun
         '
@@ -306,7 +318,6 @@ Partial Class SOSIModelValidationWindow
     Friend WithEvents RadioButtonW As System.Windows.Forms.RadioButton
     Friend WithEvents Output As System.Windows.Forms.TextBox
     Friend WithEvents Options As System.Windows.Forms.GroupBox
-    Friend WithEvents CheckAllCodeNames As System.Windows.Forms.CheckBox
     Friend WithEvents ButtonRun As System.Windows.Forms.Button
     Friend WithEvents ButtonCopy As System.Windows.Forms.Button
     Friend WithEvents ButtonClose As System.Windows.Forms.Button
@@ -321,4 +332,6 @@ Partial Class SOSIModelValidationWindow
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents RadioButtonCLN As System.Windows.Forms.RadioButton
+    Friend WithEvents RadioButtonCLI As System.Windows.Forms.RadioButton
 End Class
