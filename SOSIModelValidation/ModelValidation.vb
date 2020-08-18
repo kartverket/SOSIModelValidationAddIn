@@ -221,7 +221,7 @@
         'set conformance class (for codelists)
         If validationWindow.RadioButtonCLI.Checked Then
             conformanceClass = "SOSI51internationalStandard"
-        ElseIf validationWindow.RadiobuttonCLN.Checked Then
+        ElseIf validationWindow.RadioButtonCLN.Checked Then
             conformanceClass = "SOSI51nationalAdaptions"
         Else
             'Default value in case no radiobutton is checked

@@ -74,22 +74,22 @@ Partial Class SOSIModelValidationWindow
         'RadioButtonE
         '
         Me.RadioButtonE.AutoSize = True
-        Me.RadioButtonE.Checked = True
         Me.RadioButtonE.Location = New System.Drawing.Point(7, 44)
         Me.RadioButtonE.Name = "RadioButtonE"
         Me.RadioButtonE.Size = New System.Drawing.Size(47, 17)
         Me.RadioButtonE.TabIndex = 1
-        Me.RadioButtonE.TabStop = True
         Me.RadioButtonE.Text = "Error"
         Me.RadioButtonE.UseVisualStyleBackColor = True
         '
         'RadioButtonW
         '
         Me.RadioButtonW.AutoSize = True
+        Me.RadioButtonW.Checked = True
         Me.RadioButtonW.Location = New System.Drawing.Point(7, 20)
         Me.RadioButtonW.Name = "RadioButtonW"
         Me.RadioButtonW.Size = New System.Drawing.Size(65, 17)
         Me.RadioButtonW.TabIndex = 0
+        Me.RadioButtonW.TabStop = True
         Me.RadioButtonW.Text = "Warning"
         Me.RadioButtonW.UseVisualStyleBackColor = True
         '
