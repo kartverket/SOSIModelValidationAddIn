@@ -2,8 +2,8 @@
 
     'Sub name:      requirement6
     'Author: 		Kent Jonsrud
-    'Date: 			2018-10-18, 2019-06-20, 2020-07-17
-    'Purpose: 		'/krav/6 Iso 19103 Requirement 6 - legal names on code list code names
+    'Date: 			2018-10-18, 2019-06-20, 2020-07-17, 2020-08-21
+    'Purpose: 		'Iso 19103 Requirement 6 - legal NonWhitespaceNames on code list code names
     'Parameter: 	an element that has stereotype CodeList or Enumeration, or keyword enumeration (EA-type Enumeration)
     'Requirement class:     requirement6
     'Conformance class:     from iso 19103 part nnn
@@ -16,10 +16,6 @@
         If Not checkAllCodeNames And avoidableCodeLists.Contains(theElement.Name) Then
             Output("Info: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] content was not tested for compliance with /krav/6")
         Else
-            If Not isNCName(theElement.Name) Then
-                Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has illegal name. [/krav/6]")
-                errorCounter += 1
-            End If
             For Each attribute In theElement.Attributes
                 If Not isNWName(attribute.Name) Then
                     Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has illegal code name [" & attribute.Name & "]. [/krav/6]")

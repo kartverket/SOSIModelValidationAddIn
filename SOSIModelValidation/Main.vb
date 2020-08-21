@@ -1,6 +1,6 @@
 ﻿Public Class Main
 
-    Dim Version = "1.1-kodelistekravSOSI51-2020-08-18"
+    Dim Version = "1.1-kodelistekravSOSI51-2020-08-21"
     Dim VersionYear = "2020"
 
     Const menuHeader = "-&SOSI Model Validation"

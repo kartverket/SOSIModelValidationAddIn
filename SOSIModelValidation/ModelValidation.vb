@@ -403,7 +403,7 @@
                         Case "SOSI"
                             Select Case conformanceClass
                                 Case "SOSI51internationalStandard"
-                                    Call requirement6(currentElement)
+                                    Call krav6(currentElement)
                                 Case "SOSI51nationalAdaptions"
                                     Call kravKodenavn(currentElement)
                             End Select
