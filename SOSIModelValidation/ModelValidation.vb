@@ -111,6 +111,11 @@
         Select Case ruleSet
             Case "SOSI"
                 Output("Selected rule set: SOSI Generell del - Regler for UML modellering - versjon 5.0")
+                If conformanceClass = "SOSI51internationalStandard" Then
+                    Output("Conformance class:  International standards used for codelists")
+                ElseIf conformanceClass = "SOSI51nationalAdaptions" Then
+                    Output("Conformance class:  National adaptions used for codelists")
+                End If
             Case "19103"
                 Output("Selected rule set: ISO 19103:2015 - Geographic information - Conceptual schema language")
             Case "19109"
@@ -213,10 +218,14 @@
             ruleSet = "SOSI"
         End If
 
-        If validationWindow.CheckAllCodeNames.Checked Then
-            checkAllCodeNames = True
+        'set conformance class (for codelists)
+        If validationWindow.RadioButtonCLI.Checked Then
+            conformanceClass = "SOSI51internationalStandard"
+        ElseIf validationWindow.RadioButtonCLN.Checked Then
+            conformanceClass = "SOSI51nationalAdaptions"
         Else
-            checkAllCodeNames = False
+            'Default value in case no radiobutton is checked
+            conformanceClass = "SOSI51internationalStandard"
         End If
 
         'start of report: Show header
@@ -394,7 +403,7 @@
                         Case "SOSI"
                             Select Case conformanceClass
                                 Case "SOSI51internationalStandard"
-                                    Call krav6(currentElement)
+                                    Call requirement6(currentElement)
                                 Case "SOSI51nationalAdaptions"
                                     '        Call kravKodenavn(currentElement)
                             End Select
