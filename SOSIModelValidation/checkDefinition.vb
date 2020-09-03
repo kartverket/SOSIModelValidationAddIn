@@ -71,22 +71,17 @@
             targetEndElement = theRepository.GetElementByID(targetEndElementID)
 
             Output("Error: Association [" & theConnector.Name & "] between class [«" & getStereotypeOfClass(sourceEndElement) & "» " & sourceEndElement.Name & "] and class [«" & getStereotypeOfClass(targetEndElement) & "» " & targetEndElement.Name & "] has no definition. [" & reference & "]")
-            errorCounter = errorCounter + 1
+            errorCounter += 1
         End If
     End Sub
     Sub checkDefinitionOfAssociationRole(theConnector As EA.Connector, reference As String)
         'get the necessary connector attributes 
         Dim sourceEndElementID
         sourceEndElementID = theConnector.ClientID 'id of the element on the source end of the connector 
-        Dim sourceEndNavigable
-        sourceEndNavigable = theConnector.ClientEnd.Navigable 'navigability on the source end of the connector 
         Dim sourceEndName
         sourceEndName = theConnector.ClientEnd.Role 'role name on the source end of the connector 
         Dim sourceEndDefinition
         sourceEndDefinition = theConnector.ClientEnd.RoleNote 'role definition on the source end of the connector 
-
-        Dim targetEndNavigable
-        targetEndNavigable = theConnector.SupplierEnd.Navigable 'navigability on the target end of the connector 
         Dim targetEndName
         targetEndName = theConnector.SupplierEnd.Role 'role name on the target end of the connector 
         Dim targetEndDefinition
@@ -100,7 +95,7 @@
             sourceEndElement = theRepository.GetElementByID(sourceEndElementID)
 
             Output("Error: Class [«" & getStereotypeOfClass(sourceEndElement) & "» " & sourceEndElement.Name & "] \ association role [" & sourceEndName & "] has no definition. [" & reference & "]")
-            errorCounter = errorCounter + 1
+            errorCounter += 1
         End If
 
         If Not targetEndName = "" And targetEndDefinition = "" And theConnector.Type <> "Dependency" Then
@@ -108,7 +103,7 @@
             sourceEndElement = theRepository.GetElementByID(sourceEndElementID)
 
             Output("Error: Class [«" & getStereotypeOfClass(sourceEndElement) & "» " & sourceEndElement.Name & "] \ association role [" & targetEndName & "] has no definition. [" & reference & "]")
-            errorCounter = errorCounter + 1
+            errorCounter += 1
         End If
     End Sub
 
@@ -119,7 +114,7 @@
 
         If theOperation.Notes = "" Then
             Output("Error: Class [«" & getStereotypeOfClass(methodParentElement) & "» " & methodParentElement.Name & "] \ operation [" & theOperation.Name & "] has no definition. [" & reference & "]")
-            errorCounter = errorCounter + 1
+            errorCounter += 1
         End If
     End Sub
 
@@ -147,7 +142,7 @@
                 'if the current constraint lacks definition, then return an error
                 If currentConstraint.Notes = "" Then
                     Output("Error: Class [«" & currentElement.Stereotype & "» " & currentElement.Name & "] \ constraint [" & currentConstraint.Name & "] has no definition. [" & reference & "]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
 
@@ -162,7 +157,7 @@
                 parentElementOfAttribute = theRepository.GetElementByID(parentElementID)
                 If currentConstraint.Notes = "" Then
                     Output("Error: Class [" & parentElementOfAttribute.Name & "] \ attribute [" & currentAttribute.Name & "] \ constraint [" & currentConstraint.Name & "] has no definition. [" & reference & "]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
 
@@ -172,7 +167,7 @@
                 'if the current constraint lacks definition, then return an error message
                 If currentConstraint.Notes = "" Then
                     Output("Error: Package [«" & currentPackage.Element.Stereotype & "» " & currentPackage.Name & "] \ constraint [" & currentConstraint.Name & "] has no definition. [" & reference & "]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
 
@@ -193,7 +188,7 @@
                     targetElementOfConnector = theRepository.GetElementByID(targetElementID)
 
                     Output("Error: Constraint [" & currentConstraint.Name & "] on connector [ " & currentConnector.Name & "] between class [" & sourceElementOfConnector.Name & "] and class [" & targetElementOfConnector.Name & "] has no definition. [" & reference & "]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
 

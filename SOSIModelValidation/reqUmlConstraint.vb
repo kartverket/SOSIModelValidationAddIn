@@ -25,13 +25,13 @@
                 'if the current constraint lacks definition, then return an error
                 If currentConstraint.Notes = "" Then
                     Output("Error: Class [«" & currentElement.Stereotype & "» " & currentElement.Name & "] \ constraint [" & currentConstraint.Name & "] has no OCL expression. [/req/uml/constraint]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
                 'if the current constraint lacks a name, then return an error 
                 If currentConstraint.Name = "" Then
                     Output("Error: Class [«" & currentElement.Stereotype & "» " & currentElement.Name & "] has a constraint without a name. [/req/uml/constraint]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
         'if the object is an attribute 
@@ -45,13 +45,13 @@
                 parentElementOfAttribute = theRepository.GetElementByID(parentElementID)
                 If currentConstraint.Notes = "" Then
                     Output("Error: Class [" & parentElementOfAttribute.Name & "] \ attribute [" & currentAttribute.Name & "] \ constraint [" & currentConstraint.Name & "] has no OCL expression. [/req/uml/constraint]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
                 'if the current constraint lacks a name, then return an error 	
                 If currentConstraint.Name = "" Then
                     Output("Error: Attribute [" & currentAttribute.Name & "] has a constraint without a name. [/req/uml/constraint]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
             Case EA.ObjectType.otPackage
@@ -60,13 +60,13 @@
                 'if the current constraint lacks definition, then return an error message
                 If currentConstraint.Notes = "" Then
                     Output("Error: Package [«" & currentPackage.Element.Stereotype & "» " & currentPackage.Name & "] \ constraint [" & currentConstraint.Name & "] has no OCL expression. [/req/uml/constraint]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
                 'if the current constraint lacks a name, then return an error meessage		
                 If currentConstraint.Name = "" Then
                     Output("Error: Package [«" & currentPackage.Element.Stereotype & "» " & currentPackage.Name & "] has a constraint without a name. [/req/uml/constraint]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
             Case EA.ObjectType.otConnector
@@ -86,13 +86,13 @@
                     targetElementOfConnector = theRepository.GetElementByID(targetElementID)
 
                     Output("Error: Constraint [" & currentConstraint.Name & "] owned by connector [ " & currentConnector.Name & "] between class [" & sourceElementOfConnector.Name & "] and class [" & targetElementOfConnector.Name & "] has no OCL expression. [/req/uml/constraint]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
                 'if the current constraint lacks a name, then return an error message		
                 If currentConstraint.Name = "" Then
                     Output("Error: Connector [" & currentConnector.Name & "] has a constraint without a name. [/req/uml/constraint]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
 
                 End If
         End Select

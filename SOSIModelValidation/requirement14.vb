@@ -26,7 +26,7 @@
 
                 If UCase(elementOnOppositeSide.Stereotype) <> UCase(currentElement.Stereotype) Then
                     Output("Error: Class [" & elementOnOppositeSide.Name & "] has a stereotype that is not the same as the stereotype of [" & currentElement.Name & "]. A class can only inherit from a class with the same stereotype. [/krav/14]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
             End If
         Next

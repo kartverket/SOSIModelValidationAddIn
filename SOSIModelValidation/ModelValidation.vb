@@ -79,8 +79,8 @@
                     Dim avoidableCodeListsText As String = ""
                     Dim avoidableCodeList As String
                     For Each avoidableCodeList In avoidableCodeLists
-                        If Not avoidableCodeListsText = "" Then avoidableCodeListsText = avoidableCodeListsText + ", "
-                        avoidableCodeListsText = avoidableCodeListsText + avoidableCodeList
+                        If Not avoidableCodeListsText = "" Then avoidableCodeListsText += ", "
+                        avoidableCodeListsText += avoidableCodeList
                     Next
                     validationWindow.setAvoidableCodeListsText(avoidableCodeListsText)
                     validationWindow.Show()
@@ -263,6 +263,8 @@
             Call reqUMLIntegration(thePackage)
             Call requirement17(thePackage.Element)
             Call requirement21(thePackage.Element)
+            Call kravFlerspråklighetpakke(thePackage)
+            Call kravTaggedValueSpråk(thePackage)
 
             ' Tests that should be done recursivly on subpackages should called in FindInvalidElementsInPackage
             Call FindInvalidElementsInPackage(thePackage)
@@ -404,6 +406,7 @@
 
                     Call kravEksternKodeliste(currentElement)
 
+
                     Select Case ruleSet
                         Case "SOSI"
                             Select Case conformanceClass
@@ -413,6 +416,7 @@
                                     Call kravKodenavn(currentElement)
                             End Select
                             Call krav7(currentElement)
+                            Call anbefaling3(currentElement)
                         Case "19109"
                             Call requirement6(currentElement)
                             Call requirement7(currentElement)
@@ -429,6 +433,7 @@
                         Select Case ruleSet
                             Case "SOSI"
                                 reqUMLProfileNorsk(currentElement, currentAttribute)
+                                requirement22(currentElement, currentAttribute)
                             Case "19109"
                                 reqUMLProfile(currentElement, currentAttribute)
                             Case "19103"

@@ -47,7 +47,7 @@
             If temporaryFeatureTypeArray.Count > 1 Then
                 Output("Error: Found nonunique names for the following classes. [" + reference + "]")
                 'counting one error per name conflict (not one error per class with nonunique name)
-                errorCounter = errorCounter + 1
+                errorCounter += 1
                 For Each tempStoredFeatureType In temporaryFeatureTypeArray
                     Dim theFeatureTypePackage As EA.Package
                     theFeatureTypePackage = theRepository.GetPackageByID(tempStoredFeatureType.PackageID)
