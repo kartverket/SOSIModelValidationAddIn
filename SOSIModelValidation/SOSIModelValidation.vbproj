@@ -74,6 +74,7 @@
     <Compile Include="About.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="anbefaling3.vb" />
     <Compile Include="checkName.vb" />
     <Compile Include="checkUniqueFeatureTypeNames.vb" />
     <Compile Include="checkPackageForHoveddiagram.vb" />
