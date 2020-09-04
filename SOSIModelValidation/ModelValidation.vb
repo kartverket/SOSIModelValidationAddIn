@@ -41,6 +41,13 @@
     Dim CoreTypes As New System.Collections.ArrayList
     'reqUmlProfileLoad()
 
+    'For kravVisualisering:
+    Dim diagramList As New System.Collections.SortedList
+    Dim diaoList As New System.Collections.SortedList
+    Dim diaeList As New System.Collections.SortedList
+    Dim dialList As New System.Collections.SortedList
+    Dim diacList As New System.Collections.SortedList
+
     ' Lists of model structures used by several subs and functions
     Dim packageIDList As New System.Collections.ArrayList
     Dim classifierIDList As New System.Collections.ArrayList
@@ -260,6 +267,7 @@
             End Select
 
             Call reqUMLProfileLoad()
+            Call gatherDiagamsInPackage(thePackage)
             Call reqUMLIntegration(thePackage)
             Call requirement17(thePackage.Element)
             Call requirement21(thePackage.Element)
@@ -308,6 +316,7 @@
             Call findHoveddiagramInPackage(thePackage)
             Call kravDefinisjoner(thePackage)
             Call kravNavning(thePackage)
+            ' Call kravVisualisering(thePackage) TBD
         End If
 
 
@@ -381,12 +390,15 @@
                     Call krav3(currentElement)
                     Call krav19(currentElement)
                     Call kravNavning(currentElement)
+                    ' Call krav18???(currentElement)
+                    Call kravVisualisering(currentElement)
                 End If
 
                 '19103 ruleset (also implicitly included when 19109 is selected)
                 If ruleSet = "19103" Or ruleSet = "19109" Then
                     Call requirement3(currentElement)
                     Call requirement19(currentElement)
+                    Call krav18(currentElement)
                 End If
 
                 '19109 ruleset
@@ -412,6 +424,7 @@
                             Select Case conformanceClass
                                 Case "SOSI51internationalStandard"
                                     Call krav6(currentElement)
+                                    recommendation1(currentElement)
                                 Case "SOSI51nationalAdaptions"
                                     Call kravKodenavn(currentElement)
                             End Select
@@ -425,7 +438,6 @@
                             Call requirement6(currentElement)
                             Call requirement7(currentElement)
                     End Select
-                    recommendation1(currentElement)
                 Else
                     ' Call element subs for classes that are not codelists or enumerations
 
@@ -437,8 +449,13 @@
                             Case "19109"
                                 reqUMLProfile(currentElement, currentAttribute)
                             Case "19103"
-                                requirement25(currentElement, currentAttribute)
-                                requirement22(currentElement, currentAttribute)
+                                ' prepared for future selection of iso conformance classes
+                                If conformanceClass = "ISO19103CoreTypes" Then
+                                    requirement22(currentElement, currentAttribute)
+                                Else
+                                    requirement25(currentElement, currentAttribute)
+                                End If
+
                         End Select
                         Call requirement16(currentAttribute)
                     Next
@@ -448,7 +465,7 @@
                 If UCase(currentElement.Stereotype) = "FEATURETYPE" Then
 
                     ' Call element subs for feature types
-
+                    ' Call kravHoveddiagram(currentElement)
                     Call reqGeneralFeature(currentElement, currentElement)
                     Call kravFlerspråklighetElement(currentElement)
                 End If
