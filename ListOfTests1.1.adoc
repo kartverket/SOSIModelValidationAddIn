@@ -5,9 +5,9 @@ Put an * in the brackets in front of the test name when the test is implemented.
 
 
 == SOSI Regler for UML-modellering 5.1
-* [] /krav/6 - Kent
-* [] /krav/kodenavn - Kent
-* [] /krav/kodebruk - Kent
+* [*] /krav/6 - Kent
+* [*] /krav/kodenavn - Kent
+* [*] /krav/kodebruk - Kent
 * [*] /anbefaling/3 - Tore
 * [] /anbefaling/4 - Magnus
 * [-] /req/uml/association - utsettes til standarden foreligger i forbedret versjon
