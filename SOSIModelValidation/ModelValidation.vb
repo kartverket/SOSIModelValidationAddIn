@@ -417,6 +417,7 @@
                             End Select
                             Call krav7(currentElement)
                             Call anbefaling3(currentElement)
+
                         Case "19109"
                             Call requirement6(currentElement)
                             Call requirement7(currentElement)
@@ -433,11 +434,11 @@
                         Select Case ruleSet
                             Case "SOSI"
                                 reqUMLProfileNorsk(currentElement, currentAttribute)
-                                requirement22(currentElement, currentAttribute)
                             Case "19109"
                                 reqUMLProfile(currentElement, currentAttribute)
                             Case "19103"
                                 requirement25(currentElement, currentAttribute)
+                                requirement22(currentElement, currentAttribute)
                         End Select
                         Call requirement16(currentAttribute)
                     Next
