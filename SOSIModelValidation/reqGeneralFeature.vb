@@ -20,7 +20,7 @@
 
                         If UCase(reqGeneralFeatureSuperClass.Name) = "GM_OBJECT" Or UCase(reqGeneralFeatureSuperClass.Name) = "TM_OBJECT" And UCase(currentElement.Stereotype) = "FEATURETYPE" And UCase(reqGeneralFeatureSuperClass.Stereotype) = "FEATURETYPE" Then
                             Output("Error: Class [" & reqGeneralFeatureStartClass.Name & "] inherits from a class named [" & reqGeneralFeatureSuperClass.Name & "]. [req/general/feature]")
-                            errorCounter = errorCounter + 1
+                            errorCounter += 1
                         Else Call reqGeneralFeature(reqGeneralFeatureSuperClass, reqGeneralFeatureStartClass)
                         End If
                     End If

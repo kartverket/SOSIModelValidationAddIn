@@ -24,13 +24,13 @@
 
             'if the package got less than one diagram with a name starting with "Hoveddiagram", then return an error 
             If UCase(Mid((currentDiagram.Name), 1, 12)) = "HOVEDDIAGRAM" And Len(currentDiagram.Name) = 12 Then
-                numberOfHoveddiagram = numberOfHoveddiagram + 1
+                numberOfHoveddiagram += 1
 
             End If
 
             'count diagrams named 'Hovediagram'
             If UCase(Mid((currentDiagram.Name), 1, 12)) = "HOVEDDIAGRAM" And Len(currentDiagram.Name) > 12 Then
-                numberOfHoveddiagramWithAdditionalInformationInTheName = numberOfHoveddiagramWithAdditionalInformationInTheName + 1
+                numberOfHoveddiagramWithAdditionalInformationInTheName += 1
 
             End If
         Next
