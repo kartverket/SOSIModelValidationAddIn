@@ -28,7 +28,7 @@
         End Select
     End Function
 
-    ' Return true if project is  open
+    ' Return true if project is open
     Function IsProjectOpen(Repository As EA.Repository)
         Try
             Dim c As EA.Collection = Repository.Models

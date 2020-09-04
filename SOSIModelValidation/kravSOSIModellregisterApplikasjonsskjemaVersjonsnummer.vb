@@ -34,12 +34,11 @@
             If InStr(thePackage.Name, "-") Then
                 'if the string is numeric or it has dots, set the valueOk true 
                 If InStr(stringContent, ".") Or IsNumeric(stringContent) Then
-                    versionNumberInPackageName = True
                     Dim i, tegn
                     For i = 1 To Len(stringContent)
                         tegn = Mid(stringContent, i, 1)
                         If tegn = "." Then
-                            dotCounter = dotCounter + 1
+                            dotCounter += 1
                         End If
                     Next
                     'count number of dots. If it's more than 2 return an error. 

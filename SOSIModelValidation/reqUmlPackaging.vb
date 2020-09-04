@@ -22,8 +22,6 @@
                 'check if the element has a tagged value with the provided name
                 Dim taggedValueVersionMissing
                 taggedValueVersionMissing = True
-                Dim taggedValueVersionCase
-                taggedValueVersionCase = False
 
                 Dim currentExistingTaggedValue As EA.TaggedValue
                 Dim taggedValuesCounter
