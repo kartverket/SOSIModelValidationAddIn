@@ -1,5 +1,11 @@
 ﻿Public Class ModelValidation
     ' Version and year
+
+    Class Errorinfo
+        Public objectGUID As String
+        Public text As String
+    End Class
+
     Dim versionNumber As String
     Dim versionYear As String
     ' Counters
@@ -51,6 +57,10 @@
     Dim externalReferencedElementIDList As New System.Collections.ArrayList
     Dim packageDependenciesShownElementIDList As New System.Collections.ArrayList
 
+
+    Public errorList As New List(Of Errorinfo)
+    Public warningList As New List(Of Errorinfo)
+
     ' Sub ModelValidation
     ' Check that the selected object is a package
     ' Start the model validation window
@@ -90,6 +100,37 @@
             Case Else
                 System.Windows.Forms.MessageBox.Show("Please select a package in the project browser.")
         End Select
+    End Sub
+
+
+    Private Sub AddError(objectGUID As String, ErrorText As String)
+        'IMPORTANT:  When adding an error, use following objectGUID:
+        'Package:  package.Element.ElementGUID
+        'Element:  element.ElementGUID
+        'Attribute:  attribute.AttributeGUID
+        'Operation:  operation.MethodGUID
+        'Connector:  connector.ConnectorGUID
+        Dim errorEntry As New Errorinfo
+        errorEntry.objectGUID = objectGUID
+        errorEntry.text = ErrorText
+        Output(ErrorText)
+        errorList.Add(errorEntry)
+        errorCounter += 1
+    End Sub
+
+    Private Sub AddWarning(objectGUID As String, ErrorText As String)
+        'IMPORTANT:  When adding a warning, use following objectGUID:
+        'Package:  package.Element.ElementGUID
+        'Element:  element.ElementGUID
+        'Attribute:  attribute.AttributeGUID
+        'Operation:  operation.MethodGUID
+        'Connector:  connector.ConnectorGUID
+        Dim errorEntry As New Errorinfo
+        errorEntry.objectGUID = objectGUID
+        errorEntry.text = ErrorText
+        Output(ErrorText)
+        warningList.Add(errorEntry)
+        warningCounter += 1
     End Sub
 
     Private Sub Output(outputText As String)
@@ -232,6 +273,8 @@
             'Default value in case no radiobutton is checked
             conformanceClass = "SOSI51internationalStandard"
         End If
+
+        InitTreeView(thePackage)
 
         'start of report: Show header
         ReportHeader()

@@ -27,7 +27,6 @@ Partial Class SOSIModelValidationWindow
         Me.LogLevel = New System.Windows.Forms.GroupBox()
         Me.RadioButtonE = New System.Windows.Forms.RadioButton()
         Me.RadioButtonW = New System.Windows.Forms.RadioButton()
-        Me.Output = New System.Windows.Forms.TextBox()
         Me.Options = New System.Windows.Forms.GroupBox()
         Me.RadioButtonCLN = New System.Windows.Forms.RadioButton()
         Me.RadioButtonCLI = New System.Windows.Forms.RadioButton()
@@ -45,10 +44,19 @@ Partial Class SOSIModelValidationWindow
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
+        Me.Output = New System.Windows.Forms.RichTextBox()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.TreeView = New System.Windows.Forms.TreeView()
+        Me.ErrorSummary = New System.Windows.Forms.RichTextBox()
         Me.LogLevel.SuspendLayout()
         Me.Options.SuspendLayout()
         Me.RuleSet.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        Me.TabControl1.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -92,20 +100,6 @@ Partial Class SOSIModelValidationWindow
         Me.RadioButtonW.TabStop = True
         Me.RadioButtonW.Text = "Warning"
         Me.RadioButtonW.UseVisualStyleBackColor = True
-        '
-        'Output
-        '
-        Me.Output.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Output.BackColor = System.Drawing.SystemColors.Window
-        Me.Output.Location = New System.Drawing.Point(12, 306)
-        Me.Output.Multiline = True
-        Me.Output.Name = "Output"
-        Me.Output.ReadOnly = True
-        Me.Output.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.Output.Size = New System.Drawing.Size(784, 349)
-        Me.Output.TabIndex = 2
         '
         'Options
         '
@@ -213,12 +207,10 @@ Partial Class SOSIModelValidationWindow
         'RadioButtonSOSI
         '
         Me.RadioButtonSOSI.AutoSize = True
-        Me.RadioButtonSOSI.Checked = True
         Me.RadioButtonSOSI.Location = New System.Drawing.Point(6, 19)
         Me.RadioButtonSOSI.Name = "RadioButtonSOSI"
         Me.RadioButtonSOSI.Size = New System.Drawing.Size(68, 17)
         Me.RadioButtonSOSI.TabIndex = 0
-        Me.RadioButtonSOSI.TabStop = True
         Me.RadioButtonSOSI.Text = "SOSI 5.0"
         Me.RadioButtonSOSI.UseVisualStyleBackColor = True
         '
@@ -279,11 +271,71 @@ Partial Class SOSIModelValidationWindow
         Me.Label6.TabIndex = 11
         Me.Label6.Text = resources.GetString("Label6.Text")
         '
+        'Output
+        '
+        Me.Output.BackColor = System.Drawing.SystemColors.Window
+        Me.Output.Location = New System.Drawing.Point(-1, 0)
+        Me.Output.Name = "Output"
+        Me.Output.ReadOnly = True
+        Me.Output.Size = New System.Drawing.Size(781, 327)
+        Me.Output.TabIndex = 12
+        Me.Output.Text = ""
+        '
+        'TabControl1
+        '
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Location = New System.Drawing.Point(12, 306)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.Size = New System.Drawing.Size(784, 349)
+        Me.TabControl1.TabIndex = 13
+        '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.Output)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(776, 323)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "Validation Output"
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.ErrorSummary)
+        Me.TabPage2.Controls.Add(Me.TreeView)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(776, 323)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "Tree View"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'TreeView
+        '
+        Me.TreeView.Location = New System.Drawing.Point(0, 0)
+        Me.TreeView.Name = "TreeView"
+        Me.TreeView.Size = New System.Drawing.Size(372, 327)
+        Me.TreeView.TabIndex = 0
+        '
+        'ErrorSummary
+        '
+        Me.ErrorSummary.Location = New System.Drawing.Point(378, 0)
+        Me.ErrorSummary.Name = "ErrorSummary"
+        Me.ErrorSummary.ReadOnly = True
+        Me.ErrorSummary.Size = New System.Drawing.Size(402, 323)
+        Me.ErrorSummary.TabIndex = 1
+        Me.ErrorSummary.Text = ""
+        '
         'SOSIModelValidationWindow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(808, 667)
+        Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.GroupBox1)
@@ -293,7 +345,6 @@ Partial Class SOSIModelValidationWindow
         Me.Controls.Add(Me.ButtonCopy)
         Me.Controls.Add(Me.ButtonRun)
         Me.Controls.Add(Me.Options)
-        Me.Controls.Add(Me.Output)
         Me.Controls.Add(Me.LogLevel)
         Me.Controls.Add(Me.Label1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -307,6 +358,9 @@ Partial Class SOSIModelValidationWindow
         Me.RuleSet.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.TabControl1.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage2.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -316,7 +370,6 @@ Partial Class SOSIModelValidationWindow
     Friend WithEvents LogLevel As System.Windows.Forms.GroupBox
     Friend WithEvents RadioButtonE As System.Windows.Forms.RadioButton
     Friend WithEvents RadioButtonW As System.Windows.Forms.RadioButton
-    Friend WithEvents Output As System.Windows.Forms.TextBox
     Friend WithEvents Options As System.Windows.Forms.GroupBox
     Friend WithEvents ButtonRun As System.Windows.Forms.Button
     Friend WithEvents ButtonCopy As System.Windows.Forms.Button
@@ -334,4 +387,10 @@ Partial Class SOSIModelValidationWindow
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents RadioButtonCLN As System.Windows.Forms.RadioButton
     Friend WithEvents RadioButtonCLI As System.Windows.Forms.RadioButton
+    Friend WithEvents Output As System.Windows.Forms.RichTextBox
+    Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
+    Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
+    Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
+    Friend WithEvents TreeView As System.Windows.Forms.TreeView
+    Friend WithEvents ErrorSummary As System.Windows.Forms.RichTextBox
 End Class

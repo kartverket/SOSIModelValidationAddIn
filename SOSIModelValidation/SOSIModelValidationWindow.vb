@@ -12,13 +12,12 @@
     End Sub
 
     Private Sub SOSIModelValidationWindow_Load(sender As Object, e As System.EventArgs) Handles MyBase.Load
-        Dim toolTips As New System.Windows.Forms.ToolTip()
-
-        toolTips.AutoPopDelay = 5000
-        toolTips.InitialDelay = 1000
-        toolTips.ReshowDelay = 500
-
-        toolTips.ShowAlways = True
+        Dim toolTips As New System.Windows.Forms.ToolTip With {
+        .AutoPopDelay = 5000,
+        .InitialDelay = 1000,
+        .ReshowDelay = 500,
+        .ShowAlways = True
+        }
 
         toolTips.SetToolTip(Me.ButtonClear, "Clear report window")
         toolTips.SetToolTip(Me.ButtonClose, "Close SOSI Model Validation")
@@ -52,5 +51,33 @@
         Close()
     End Sub
 
+    Private Sub Output_Link_Click(sender As Object, e As System.Windows.Forms.LinkClickedEventArgs) Handles Output.LinkClicked
+        System.Diagnostics.Process.Start(e.LinkText)
+    End Sub
+
+    Private Sub TreeView_AfterSelect(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TreeView.AfterSelect
+        ' after selecting a tree node
+        ' - clear error summary
+        ' - list errors and warnings for selected node
+        Dim selectedNode As System.Windows.Forms.TreeNode
+        Dim errorEntry As ModelValidation.Errorinfo
+        selectedNode = TreeView.SelectedNode
+        ErrorSummary.Clear()
+        ErrorSummary.SelectionColor = System.Drawing.Color.Black
+        ErrorSummary.SelectedText = selectedNode.Text + vbCrLf + selectedNode.Name + vbCrLf
+        For Each errorEntry In OwnerObject.errorList
+            If errorEntry.objectGUID = selectedNode.Name Then
+                ErrorSummary.SelectionColor = System.Drawing.Color.DarkRed
+                ErrorSummary.SelectedText = errorEntry.text + vbCrLf + vbCrLf
+            End If
+        Next
+        ErrorSummary.SelectionColor = System.Drawing.Color.DarkOrange
+        For Each errorEntry In OwnerObject.warningList
+            If errorEntry.objectGUID = selectedNode.Name Then
+                ErrorSummary.SelectionColor = System.Drawing.Color.DarkOrange
+                ErrorSummary.SelectedText = errorEntry.text + vbCrLf + vbCrLf
+            End If
+        Next
+    End Sub
 
 End Class

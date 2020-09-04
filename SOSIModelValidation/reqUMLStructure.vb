@@ -5,11 +5,10 @@
         If UCase(theClass.Stereotype) = "INTERFACE" Or theClass.Type = "Interface" Then
             Select Case ruleSet
                 Case "SOSI"
-                    Output("Error:  Class [«" & theClass.Stereotype & "» " & theClass.Name & "].  Interface stereotype for classes is not allowed in ApplicationSchema packages. [/req/uml/structure]")
+                    AddError(theClass.ElementGUID, "Error:  Class [«" & theClass.Stereotype & "» " & theClass.Name & "].  Interface stereotype for classes is not allowed in ApplicationSchema packages. [/req/uml/structure]")
                 Case "19109"
-                    Output("Error:  Class [«" & theClass.Stereotype & "» " & theClass.Name & "].  Interface stereotype for classes is not allowed in ApplicationSchema packages. [ISO19109:2015 /req/uml/structure]")
+                    AddError(theClass.ElementGUID, "Error:  Class [«" & theClass.Stereotype & "» " & theClass.Name & "].  Interface stereotype for classes is not allowed in ApplicationSchema packages. [ISO19109:2015 /req/uml/structure]")
             End Select
-            errorCounter += 1
         End If
 
         If theClass.Abstract = "1" Then
@@ -32,11 +31,10 @@
             If Not (hasSpecializations And specInSameApplicationSchema) Then
                 Select Case ruleSet
                     Case "SOSI"
-                        Output("Error: Class [«" & theClass.Stereotype & "» " & theClass.Name & "]. Abstract class does not have any instantiable specializations in the ApplicationSchema. [/req/uml/structure]")
+                        AddError(theClass.ElementGUID, "Error: Class [«" & theClass.Stereotype & "» " & theClass.Name & "]. Abstract class does not have any instantiable specializations in the ApplicationSchema. [/req/uml/structure]")
                     Case "19109"
-                        Output("Error: Class [«" & theClass.Stereotype & "» " & theClass.Name & "]. Abstract class does not have any instantiable specializations in the ApplicationSchema. [ISO19109:2015 /req/uml/structure]")
+                        AddError(theClass.ElementGUID, "Error: Class [«" & theClass.Stereotype & "» " & theClass.Name & "]. Abstract class does not have any instantiable specializations in the ApplicationSchema. [ISO19109:2015 /req/uml/structure]")
                 End Select
-                errorCounter += 1
             End If
         End If
 
