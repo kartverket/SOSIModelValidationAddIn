@@ -17,6 +17,10 @@
         Call kravVisualiseringOnPackage(theThing)
     End Sub
     Sub kravVisualiseringOnElement(theElement)
+        'Alle klasser, egenskaper, assosiasjoner, assosiasjonsroller, operasjoner og restriksjoner 
+        'i et applikasjonsskjema skal vises i minst ett av de følgende diagrammene:
+        '- hoveddiagram
+        '- oversiktsdiagram
         Dim theDiagram As EA.Diagram
         Dim dname, message, f
         Dim fullyShown = False
@@ -68,6 +72,16 @@
     End Sub
 
     Sub kravVisualiseringOnPackage(thePackage)
-        'TBD
+        'Avhengigheter mellom pakker skal vises i minst ett: 
+        '    - pakkeavhengighetsdiagram
+        'Dersom en realiserer pakker eller klasser i andre standarder skal dette vises i form av: 
+        '   - pakkerealiseringsdiagram
+        '  - realiseringsdiagram
+
+        'Finn pakkeavhengighetsrelasjon, test om denne vises i et diagram
+
+        'Finn pakkerealiseringsrelasjon, test om denne vises i et diagram
+        'Finn klasserealiseringsrelasjon, test om denne vises i et diagram
+        '
     End Sub
 End Class

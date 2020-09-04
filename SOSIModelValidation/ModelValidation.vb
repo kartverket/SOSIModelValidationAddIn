@@ -396,7 +396,7 @@
                 If ruleSet = "19103" Or ruleSet = "19109" Then
                     Call requirement3(currentElement)
                     Call requirement19(currentElement)
-                    ' Call requirement18(currentElement)
+                    Call krav18(currentElement)
                 End If
 
                 '19109 ruleset
@@ -421,6 +421,7 @@
                             Select Case conformanceClass
                                 Case "SOSI51internationalStandard"
                                     Call krav6(currentElement)
+                                    recommendation1(currentElement)
                                 Case "SOSI51nationalAdaptions"
                                     Call kravKodenavn(currentElement)
                             End Select
@@ -432,7 +433,6 @@
                             Call requirement6(currentElement)
                             Call requirement7(currentElement)
                     End Select
-                    recommendation1(currentElement)
                 Else
                     ' Call element subs for classes that are not codelists or enumerations
 

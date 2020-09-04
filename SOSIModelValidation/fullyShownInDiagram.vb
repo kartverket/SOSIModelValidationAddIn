@@ -49,7 +49,7 @@
             End If
 
         Else
-            message = message & " -- class:" & theElement.Name & " is not shown in diagram " & theDiagram.name & "--"
+            message = message & " -- class:" & theElement.Name & " is not shown in diagram " & theDiagram.name & " -- "
         End If
     End Function
     Function showingAttributes(theElement, theDiagram, ByRef message)
@@ -150,13 +150,13 @@
             For Each diagramLink In diagram.DiagramLinks
                 ' list of connectors in diagrams in this package
                 If diagramLink.InstanceID = 0 Then
-                    Output("Debug: builds dialList [«" & diagramLink.InstanceID & "] [" & diagram.DiagramID & "]")
+                    Output("Debug: possible inconsistencies caused by pending changes to diagram, diagramLink.InstanceID [«" & diagramLink.InstanceID & "] diagram.DiagramID [" & diagram.DiagramID & "]")
                 Else
                     dialList.Add(diagramLink.InstanceID, diagram.DiagramID)
                 End If
                 ' list of connectors in diagrams in this package
                 If diagramLink.InstanceID = 0 Then
-                    Output("Debug: builds diacList [«" & diagramLink.InstanceID & "] [" & diagramLink.ConnectorID & "] [" & diagram.DiagramID & "]")
+                    Output("Debug: builds diacList [«" & diagramLink.InstanceID & "] connectorid [" & diagramLink.ConnectorID & "] diagramid [" & diagram.DiagramID & "]")
                 Else
                     diacList.Add(diagramLink.InstanceID, diagramLink.ConnectorID)
                 End If

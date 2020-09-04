@@ -79,6 +79,7 @@
     <Compile Include="checkPackageForHoveddiagram.vb" />
     <Compile Include="findHoveddiagramInPackage.vb" />
     <Compile Include="fullyShownInDiagram.vb" />
+    <Compile Include="krav18.vb" />
     <Compile Include="krav6.vb" />
     <Compile Include="kravKodenavn.vb" />
     <Compile Include="kravVisualisering.vb" />
