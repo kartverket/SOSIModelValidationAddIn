@@ -30,17 +30,4 @@
 
     End Sub
 
-    Function isLCName(streng)
-        Dim tegn, u
-        u = True
-        tegn = Mid(streng, 1, 1)
-        If tegn = "1" Or tegn = "2" Or tegn = "3" Or tegn = "4" Or tegn = "5" Or tegn = "6" Or tegn = "7" Or tegn = "8" Or tegn = "9" Or tegn = "0" Then
-            u = False
-        End If
-        If tegn = UCase(tegn) Then
-            u = False
-        End If
-        'end if
-        isLCName = u
-    End Function
 End Class
