@@ -219,7 +219,7 @@ Partial Class SOSIModelValidationWindow
         Me.RadioButtonSOSI.Size = New System.Drawing.Size(68, 17)
         Me.RadioButtonSOSI.TabIndex = 0
         Me.RadioButtonSOSI.TabStop = True
-        Me.RadioButtonSOSI.Text = "SOSI 5.0"
+        Me.RadioButtonSOSI.Text = "SOSI 5.1"
         Me.RadioButtonSOSI.UseVisualStyleBackColor = True
         '
         'GroupBox1
