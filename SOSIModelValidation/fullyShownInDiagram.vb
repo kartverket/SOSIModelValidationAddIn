@@ -3,6 +3,10 @@
     'Function name:         fullyShownInDiagram
     'Author: 		        Kent Jonsrud
     'Date: 			        2020-09-02
+    'Date:                  2021-03-06 fixed big bug clearing lists in a recursive routine
+    'Date:                  2021-06-03 relaxed testing of association visibility for this version 
+    'Date:                  TBD details on constraints
+    'Date:                  TBD details on association ends
     'Purpose: 		        basic functions for testing if a class is shown fully in a diagram
     'Parameter: 	        an element, a diagram, returns a message and a true/false
     'Requirement class:     n/a
@@ -13,7 +17,9 @@
         Dim conn As EA.Connector
         Dim supertype As EA.Element
         fullyShownInDiagram = True
-
+        '    Output("Debuggg0a  theElement.Name : " & theElement.Name)
+        '    Output("Debuggg0a  theDiagram.ExtendedStyle: " & theDiagram.ExtendedStyle)
+        '    Output("Debuggg0a  theDiagram.StyleEX: " & theDiagram.StyleEX)
         If elementShownInDiagram(theElement, theDiagram) Then
             For Each conn In theElement.Connectors
                 If conn.Type = "Generalization" Then
@@ -51,14 +57,19 @@
         Else
             message = message & " -- class:" & theElement.Name & " is not shown in diagram " & theDiagram.name & " -- "
         End If
+        '   Output("Debuggg theElement.Name - messsage: " & theElement.Name & " - " & message)
     End Function
     Function showingAttributes(theElement, theDiagram, ByRef message)
         showingAttributes = True
-        If theElement.Attributes.Count <> 0 And InStr(1, theDiagram.ExtendedStyle, "HideAtts=1") <> 0 Then
-            message = message & " diagram has turned off attribute visibility"
+        If theElement.Attributes.Count <> 0 And InStr(1, theDiagram.ExtendedStyle, "HideAtts=1") <> 0 And Not elementAttrShownInDiagram(theElement, theDiagram) Then
+            message = message & " class and diagram has turned off attribute visibility"
             showingAttributes = False
         Else
             'custom attribute visibility?
+            '       If Not elementAttrShownInDiagram(theElement, theDiagram) Then
+            '           message = message & " class has turned off attribute visibility"
+            '           showingAttributes = False
+            '       End If
             ' TBD
         End If
 
@@ -66,14 +77,21 @@
     Function showingRoles(theElement, theDiagram, ByRef message)
         showingRoles = True
 
-        If theElement.Connectors.Count <> 0 And InStr(1, theDiagram.ExtendedStyle, "HideRel=1") <> 0 Then
-            message = message & " diagram has turned off relationship visibility"
-            showingRoles = False
-        Else
-            ' find connectors and see whether the roles (oposite of the class) are shown in this diagram
-            ' TBD
+        If theElement.Connectors.Count <> 0 Then
+            If InStr(1, theDiagram.ExtendedStyle, "HideRel=1") <> 0 Then
+                message = message & " diagram has turned off relationship visibility"
+                showingRoles = False
+            Else
+                For Each connector In theElement.Connectors
+                    If connectorShownInDiagram(connector, theDiagram) Then
+                    Else
+                        message = message & " association between role [" & connector.ClientEnd.Role & "] and role [" & connector.SupplierEnd.Role & "] has turned off some of its visibility"
+                        showingRoles = False
+                        Exit Function
+                    End If
+                Next
+            End If
         End If
-
     End Function
     Function showingOperations(theElement, theDiagram, ByRef message)
         showingOperations = True
@@ -90,8 +108,8 @@
     Function showingConstraints(theElement, theDiagram, ByRef message)
         showingConstraints = True
 
-        If theElement.Constraints.Count <> 0 And InStr(1, theDiagram.ExtendedStyle, "ShowCons=0") <> 0 Then
-            message = message + " diagram has turned off constraint compartment visibility"
+        If theElement.Constraints.Count <> 0 And InStr(1, theDiagram.ExtendedStyle, "ShowCons=0") <> 0 And Not elementConstraintsShownInDiagram(theElement, theDiagram) Then
+            message = message + " class and diagram has turned off constraint visibility"
             showingConstraints = False
         Else
             'custom Constraints visibility?
@@ -114,49 +132,124 @@
             End If
         Next
     End Function
+    Function elementAttrShownInDiagram(theElement, theDiagram)
+        Dim j, eID, dID, duid
+        elementAttrShownInDiagram = False
+        For j = 0 To diaoList.Count - 1
+            dID = diaoList.GetByIndex(j)
+            If dID = theDiagram.DiagramID Then
+                'the diagram object is owned by the current diagram
+                eID = diaeList.GetByIndex(j)
+                If eID = theElement.ElementID Then
+                    'the element is shown by this diagram object, but are its attributes shown?
+                    Dim diaobj As EA.DiagramObject
+                    For Each diaobj In theDiagram.DiagramObjects
+                        '        Output("Debuggg1 diaobj.InstanceID + diaoList.GetKey(j):" & diaobj.InstanceID & "  " & diaoList.GetKey(j))
+                        If diaobj.InstanceID = diaoList.GetKey(j) Then
+                            'Output("Debuggg2  diaobj.Style: " & diaobj.Style)
+                            duid = Mid(diaobj.Style, InStr(1, diaobj.Style, "DUID=") + 5, 8)  ' TBD: should be read not 8 chars but until next ;
+                            '    Output("Debuggg3  duid: " & duid)
+                            If InStr(1, theDiagram.StyleEX, duid & "=Att=1:") <> 0 Then
+                                elementAttrShownInDiagram = True
+                            End If
+                        End If
+                    Next
+                End If
+            End If
+        Next
+    End Function
     Function connectorShownInDiagram(theConnector, theDiagram)
         Dim j, cID, dID
-        connectorShownInDiagram = False
-        For j = 0 To diaoList.Count - 1
+        'connectorShownInDiagram = False
+        'FIXME
+        connectorShownInDiagram = True
+        '   Output("DebugggC theConnector.StyleEX: " & theConnector.StyleEX)
+        '   Output("DebugggL diaolList.Count - diacList.Count: " & dialList.Count & " - " & diacList.Count)
+        For j = 0 To dialList.Count - 1
             dID = dialList.GetByIndex(j)
             If dID = theDiagram.DiagramID Then
                 'the diagram list is owned by the current diagram
                 cID = diacList.GetByIndex(j)
                 If cID = theConnector.ConnectorID Then
                     'the connector is shown by this diagram link
-                    connectorShownInDiagram = True
+                    '    Output("DebugggC theDiagram.Name - theConnector.ConnectorID:" & theDiagram.Name & " - " & theConnector.ConnectorID)
+                    Dim dialink As EA.DiagramLink
+                    For Each dialink In theDiagram.DiagramLinks
+                        If dialink.InstanceID = diacList.GetKey(j) Then
+                            '                Output("Debuggg2C  dialink.Style: " & dialink.Style)
+                            '                Output("Debuggg2C  dialink.HiddenLabels: " & dialink.HiddenLabels)
+                            '                Output("Debuggg2C  dialink.IsHidden: " & dialink.IsHidden)
+                            If Not dialink.IsHidden And Not dialink.HiddenLabels Then
+                                connectorShownInDiagram = True
+                            End If
+                        End If
+                    Next
+
+                    '   Output("DebugggD theDiagram.Name - theConnector.ConnectorID:" & theDiagram.Name & " - " & theConnector.ConnectorID)
+                    'connectorShownInDiagram = True
                 End If
             End If
         Next
     End Function
-    Sub gatherDiagamsInPackage(thePackage)
-
-        Dim diagram As EA.Diagram
-        Dim diagramObject As EA.DiagramObject
-        Dim diagramLink As EA.DiagramLink
+    Function elementConstraintsShownInDiagram(theElement, theDiagram)
+        Dim j, eID, dID
+        elementConstraintsShownInDiagram = False
+        For j = 0 To diaoList.Count - 1
+            dID = diaoList.GetByIndex(j)
+            If dID = theDiagram.DiagramID Then
+                'the diagram object is owned by the current diagram
+                eID = diaeList.GetByIndex(j)
+                If eID = theElement.ElementID Then
+                    'the element is shown by this diagram object, but are its attributes shown?
+                    Dim diaobj As EA.DiagramObject
+                    For Each diaobj In theDiagram.DiagramObjects
+                        '        Output("Debuggg1 diaobj.InstanceID + diaoList.GetKey(j):" & diaobj.InstanceID & "  " & diaoList.GetKey(j))
+                        If diaobj.InstanceID = diaoList.GetKey(j) Then
+                            '    Output("Debuggg4C  diaobj.Style: " & diaobj.Style)
+                            If InStr(1, diaobj.Style, "Constraint=1") <> 0 Then
+                                elementConstraintsShownInDiagram = True
+                            End If
+                        End If
+                    Next
+                End If
+            End If
+        Next
+    End Function
+    Sub gatherDiagamsInPackageClear()
         diagramList.Clear()
         diaoList.Clear()
         diaeList.Clear()
         dialList.Clear()
         diacList.Clear()
+
+    End Sub
+
+    Sub gatherDiagamsInPackage(thePackage)
+
+        Dim diagram As EA.Diagram
+        Dim diagramObject As EA.DiagramObject
+        Dim diagramLink As EA.DiagramLink
+
         For Each diagram In thePackage.diagrams
             ' list of diagrams in this package
             diagramList.Add(diagram.DiagramID, diagram.Name)
+            '            Output("Debuggg - diagram.Name - diagram.DiagramID - diaoList.Count: " & diagram.Name & " - " & diagram.DiagramID & " - " & diaoList.Count)
             For Each diagramObject In diagram.DiagramObjects
                 ' list of elements in diagrams in this package
                 diaoList.Add(diagramObject.InstanceID, diagram.DiagramID)
                 diaeList.Add(diagramObject.InstanceID, diagramObject.ElementID)
+                '               Output("Debuggg   diagramObject.InstanceID, diagramObject.ElementID: " & diagramObject.InstanceID & " - " & diagramObject.ElementID)
             Next
             For Each diagramLink In diagram.DiagramLinks
                 ' list of connectors in diagrams in this package
                 If diagramLink.InstanceID = 0 Then
-                    Output("Debug: possible inconsistencies caused by pending changes to diagram, diagramLink.InstanceID [«" & diagramLink.InstanceID & "] diagram.DiagramID [" & diagram.DiagramID & "]")
+                    '     Output("Debug: possible inconsistencies caused by pending changes to diagram, diagramLink.InstanceID [«" & diagramLink.InstanceID & "] diagram.DiagramID [" & diagram.DiagramID & "]")
                 Else
                     dialList.Add(diagramLink.InstanceID, diagram.DiagramID)
                 End If
                 ' list of connectors in diagrams in this package
                 If diagramLink.InstanceID = 0 Then
-                    Output("Debug: builds diacList [«" & diagramLink.InstanceID & "] connectorid [" & diagramLink.ConnectorID & "] diagramid [" & diagram.DiagramID & "]")
+                    '   Output("Debug: builds diacList [«" & diagramLink.InstanceID & "] connectorid [" & diagramLink.ConnectorID & "] diagramid [" & diagram.DiagramID & "]")
                 Else
                     diacList.Add(diagramLink.InstanceID, diagramLink.ConnectorID)
                 End If
@@ -169,4 +262,6 @@
         Next
 
     End Sub
+
+
 End Class

@@ -36,25 +36,29 @@
         For i = 0 To diagramList.Count - 1
             dname = diagramList.GetByIndex(i)
             theDiagram = theRepository.GetDiagramByID(diagramList.GetKey(i))
+            '    Output("Debuggg - theDiagram.Name - diaoList.Count: " & theDiagram.Name & " - " & diaoList.Count)
 
             For j = 0 To diaoList.Count - 1
                 'If diaoList.ContainsKey(diagramList.GetKey(i)) Then
+                '    Output("Debuggg   j - diaoList.GetByIndex(j) - diagramList.GetKey(i): " & j & " - " & diaoList.GetByIndex(j) & " - " & diagramList.GetKey(i))
                 If diaoList.GetByIndex(j) = diagramList.GetKey(i) Then
                     'the diagram object is owned by the current diagram
+                    '   Output("Debuggg   theElement.Name - diaeList.GetByIndex(j) - theElement.ElementID: " & theElement.Name & " - " & diaeList.GetByIndex(j) & " - " & theElement.ElementID)
                     If diaeList.GetByIndex(j) = theElement.ElementID Then
                         'the element is shown by this diagram object
                         message = ""
-                        If UCase(Mid(dname, 1, 12)) = "HOVEDDIAGRAM" Or UCase(Mid(dname, 1, 16)) = "OVERSIKTSDIAGRAM" Then
+                        '    Output("Debuggg   theDiagram.Name - theDiagram.ExtendedStyle: " & theDiagram.Name & " - " & theDiagram.ExtendedStyle)
+                        '                    If UCase(Mid(dname, 1, 12)) = "HOVEDDIAGRAM" Or UCase(Mid(dname, 1, 16)) = "OVERSIKTSDIAGRAM" Then
 
-                            f = fullyShownInDiagram(theElement, theDiagram, testNonNavigable, testRestrictions, message)
+                        f = fullyShownInDiagram(theElement, theDiagram, testNonNavigable, testRestrictions, message)
                             If f Then
                                 fullyShown = True
                             Else
                                 DiagramResponses.Add("Diagram " & dname & " is incomplete because" & message)
                             End If
-                        Else
-                            DiagramResponses.Add("Diagram " & dname & " is not named as Hoveddiagram or Oversiktsdiagram " & message)
-                        End If
+                        '                   Else
+                        '                   DiagramResponses.Add("Diagram " & dname & " is not named as Hoveddiagram or Oversiktsdiagram " & message)
+                        '               End If
                     End If
                 End If
             Next

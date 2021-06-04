@@ -90,7 +90,7 @@
             ' Add externally defined types for attributes to list
             For Each currentAttribute In currentElement.Attributes
                 If Not currentAttribute.ClassifierID = 0 And Not classifierIDList.Contains(currentAttribute.ClassifierID) Then
-                    If Not externalReferencedElementIDList.Contains(currentAttribute.ClassifierID) Then
+                    If Not externalReferencedElementIDList.Contains(currentAttribute.ClassifierID) And Not isWellKnownType(currentAttribute.Type) Then
                         externalReferencedElementIDList.Add(currentAttribute.ClassifierID)
                     End If
                 End If

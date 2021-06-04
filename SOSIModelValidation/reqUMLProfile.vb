@@ -71,7 +71,26 @@
 
     End Sub
 
+    Function isWellKnownType(typename)
+        'NB needs to be initialized, will not run independently
+        isWellKnownType = False
+        If CoreTypes.IndexOf(typename, 0) <> -1 Then
+            isWellKnownType = True
+        Else
+            If ExtensionTypes.IndexOf(typename, 0) <> -1 Then
+                isWellKnownType = True
+            Else
+                If ProfileTypes.IndexOf(typename, 0) <> -1 Then
+                    isWellKnownType = True
+                Else
+                    If NationalTypes.IndexOf(typename, 0) <> -1 Then
+                        isWellKnownType = True
+                    End If
+                End If
+            End If
+        End If
 
+    End Function
 
     Sub reqUMLProfileLoad()
 
