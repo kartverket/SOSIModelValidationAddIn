@@ -5,6 +5,7 @@
     'Sub name: 		PopulatePackageIDList
     'Author: 		Åsmund Tjora
     'Date: 			20170223
+    'Date:          2021-06-04 added exception for all well known types, Kent Jonsrud
     'Purpose: 		Populate the packageIDList variable. 
     '               The list shall contain all packageIDs of root package and its subpackages
     'Parameters:	rootPackage  The package to be added to the list and investigated for subpackages

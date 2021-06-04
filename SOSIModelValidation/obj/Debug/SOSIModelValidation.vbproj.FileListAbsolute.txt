@@ -77,4 +77,3 @@ E:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelVali
 E:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.dll
 E:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.xml
 E:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.pdb
-E:\s\GitHub\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbproj.AssemblyReference.cache

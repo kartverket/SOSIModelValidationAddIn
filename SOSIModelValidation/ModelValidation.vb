@@ -430,7 +430,9 @@
                                     Call kravKodenavn(currentElement)
                             End Select
                             Call krav7(currentElement)
-                            Call anbefaling3(currentElement)
+                            If logLevel = "Warning" Then
+                                Call anbefaling3(currentElement)
+                            End If
 
                         Case "19109"
                             Call requirement6(currentElement)

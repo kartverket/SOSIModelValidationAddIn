@@ -17,9 +17,6 @@
         Dim conn As EA.Connector
         Dim supertype As EA.Element
         fullyShownInDiagram = True
-        '    Output("Debuggg0a  theElement.Name : " & theElement.Name)
-        '    Output("Debuggg0a  theDiagram.ExtendedStyle: " & theDiagram.ExtendedStyle)
-        '    Output("Debuggg0a  theDiagram.StyleEX: " & theDiagram.StyleEX)
         If elementShownInDiagram(theElement, theDiagram) Then
             For Each conn In theElement.Connectors
                 If conn.Type = "Generalization" Then
@@ -57,7 +54,6 @@
         Else
             message = message & " -- class:" & theElement.Name & " is not shown in diagram " & theDiagram.name & " -- "
         End If
-        '   Output("Debuggg theElement.Name - messsage: " & theElement.Name & " - " & message)
     End Function
     Function showingAttributes(theElement, theDiagram, ByRef message)
         showingAttributes = True
@@ -144,11 +140,8 @@
                     'the element is shown by this diagram object, but are its attributes shown?
                     Dim diaobj As EA.DiagramObject
                     For Each diaobj In theDiagram.DiagramObjects
-                        '        Output("Debuggg1 diaobj.InstanceID + diaoList.GetKey(j):" & diaobj.InstanceID & "  " & diaoList.GetKey(j))
                         If diaobj.InstanceID = diaoList.GetKey(j) Then
-                            'Output("Debuggg2  diaobj.Style: " & diaobj.Style)
                             duid = Mid(diaobj.Style, InStr(1, diaobj.Style, "DUID=") + 5, 8)  ' TBD: should be read not 8 chars but until next ;
-                            '    Output("Debuggg3  duid: " & duid)
                             If InStr(1, theDiagram.StyleEX, duid & "=Att=1:") <> 0 Then
                                 elementAttrShownInDiagram = True
                             End If
@@ -163,8 +156,6 @@
         'connectorShownInDiagram = False
         'FIXME
         connectorShownInDiagram = True
-        '   Output("DebugggC theConnector.StyleEX: " & theConnector.StyleEX)
-        '   Output("DebugggL diaolList.Count - diacList.Count: " & dialList.Count & " - " & diacList.Count)
         For j = 0 To dialList.Count - 1
             dID = dialList.GetByIndex(j)
             If dID = theDiagram.DiagramID Then
@@ -172,20 +163,15 @@
                 cID = diacList.GetByIndex(j)
                 If cID = theConnector.ConnectorID Then
                     'the connector is shown by this diagram link
-                    '    Output("DebugggC theDiagram.Name - theConnector.ConnectorID:" & theDiagram.Name & " - " & theConnector.ConnectorID)
                     Dim dialink As EA.DiagramLink
                     For Each dialink In theDiagram.DiagramLinks
                         If dialink.InstanceID = diacList.GetKey(j) Then
-                            '                Output("Debuggg2C  dialink.Style: " & dialink.Style)
-                            '                Output("Debuggg2C  dialink.HiddenLabels: " & dialink.HiddenLabels)
-                            '                Output("Debuggg2C  dialink.IsHidden: " & dialink.IsHidden)
                             If Not dialink.IsHidden And Not dialink.HiddenLabels Then
                                 connectorShownInDiagram = True
                             End If
                         End If
                     Next
 
-                    '   Output("DebugggD theDiagram.Name - theConnector.ConnectorID:" & theDiagram.Name & " - " & theConnector.ConnectorID)
                     'connectorShownInDiagram = True
                 End If
             End If
@@ -203,9 +189,7 @@
                     'the element is shown by this diagram object, but are its attributes shown?
                     Dim diaobj As EA.DiagramObject
                     For Each diaobj In theDiagram.DiagramObjects
-                        '        Output("Debuggg1 diaobj.InstanceID + diaoList.GetKey(j):" & diaobj.InstanceID & "  " & diaoList.GetKey(j))
                         If diaobj.InstanceID = diaoList.GetKey(j) Then
-                            '    Output("Debuggg4C  diaobj.Style: " & diaobj.Style)
                             If InStr(1, diaobj.Style, "Constraint=1") <> 0 Then
                                 elementConstraintsShownInDiagram = True
                             End If
@@ -233,23 +217,19 @@
         For Each diagram In thePackage.diagrams
             ' list of diagrams in this package
             diagramList.Add(diagram.DiagramID, diagram.Name)
-            '            Output("Debuggg - diagram.Name - diagram.DiagramID - diaoList.Count: " & diagram.Name & " - " & diagram.DiagramID & " - " & diaoList.Count)
             For Each diagramObject In diagram.DiagramObjects
                 ' list of elements in diagrams in this package
                 diaoList.Add(diagramObject.InstanceID, diagram.DiagramID)
                 diaeList.Add(diagramObject.InstanceID, diagramObject.ElementID)
-                '               Output("Debuggg   diagramObject.InstanceID, diagramObject.ElementID: " & diagramObject.InstanceID & " - " & diagramObject.ElementID)
             Next
             For Each diagramLink In diagram.DiagramLinks
                 ' list of connectors in diagrams in this package
                 If diagramLink.InstanceID = 0 Then
-                    '     Output("Debug: possible inconsistencies caused by pending changes to diagram, diagramLink.InstanceID [«" & diagramLink.InstanceID & "] diagram.DiagramID [" & diagram.DiagramID & "]")
                 Else
                     dialList.Add(diagramLink.InstanceID, diagram.DiagramID)
                 End If
                 ' list of connectors in diagrams in this package
                 If diagramLink.InstanceID = 0 Then
-                    '   Output("Debug: builds diacList [«" & diagramLink.InstanceID & "] connectorid [" & diagramLink.ConnectorID & "] diagramid [" & diagram.DiagramID & "]")
                 Else
                     diacList.Add(diagramLink.InstanceID, diagramLink.ConnectorID)
                 End If

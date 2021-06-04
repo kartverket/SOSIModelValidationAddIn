@@ -1,6 +1,6 @@
 ﻿Public Class Main
 
-    Dim Version = "1.1-visualisering-2020-09-02/2021-06-03 Relaxed dependencies version"
+    Dim Version = "1.1-visualisering-2020-09-02/2021-06-04 Relaxed dependencies version"
     Dim VersionYear = "2021"
 
     Const menuHeader = "-&SOSI Model Validation"

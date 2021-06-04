@@ -75,10 +75,8 @@
         Next
         For Each connector In theElement.Connectors
             If connector.Type <> "Generalization" And connector.Type <> "Realisation" Then
-                'Output("Debug:  Class [" & theElement.Name & "] [" & theElement.ElementID & "] Client [" & connector.ClientEnd.Role & "] [" & connector.ClientID & "] Supplier [" & connector.SupplierEnd.Role & "] [" & connector.SupplierID & "]")
 
                 If connector.ClientEnd.Role <> "" And connector.SupplierID = theElement.ElementID And theRepository.GetElementByID(connector.ClientID).Type = "Class" Then
-                    'Output("Debug:  Class [" & theElement.Name & "] [" & theElement.ElementID & "] ClientEndRole [" & connector.ClientEnd.Role & "]  Client end type  [" & theRepository.GetElementByID(connector.ClientID).Type & "]")
                     If PropertyNames.IndexOf(UCase(connector.ClientEnd.Role), 0) <> -1 Then
                         Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has non-unique role property names [" & connector.ClientEnd.Role & "]. [/krav/16]")
                         errorCounter += 1
@@ -87,7 +85,6 @@
                     End If
                 End If
                 If connector.SupplierEnd.Role <> "" And connector.ClientID = theElement.ElementID And theRepository.GetElementByID(connector.SupplierID).Type = "Class" Then
-                    'Output("Debug:  Class [" & theElement.Name & "] [" & theElement.ElementID & "] SupplierEndRole [" & connector.SupplierEnd.Role & "]  Supplier end type  [" & theRepository.GetElementByID(connector.SupplierID).Type & "]")
                     If PropertyNames.IndexOf(UCase(connector.SupplierEnd.Role), 0) <> -1 Then
                         Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has non-unique role property names [" & connector.SupplierEnd.Role & "]. [/krav/16]")
                         errorCounter += 1
