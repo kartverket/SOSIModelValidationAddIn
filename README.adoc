@@ -1,46 +1,21 @@
-= SOSIModelValidationAddIn
+= SOSI Model Validation Add-In
 
-This is an Add-In for Enterprise Architect that validates UML models according to the requirements and recommendations in
-https://kartverket.no/globalassets/standard/sosi-standarden-del-1-og-2/sosi-standard-del-1/5.0/regler_for_uml-modellering_5.0.pdf[the norwegian standard "SOSI Generell del - Regler for UML modellering versjon 5.0"] +
+SOSI Model Validation Add-In is a tool for Enterprise Architect that validates UML models according to requirements and recommendations in the norwegian standard "SOSI Generell del - Regler for UML modellering". Please refer to https://github.com/kartverket/SOSIModelValidationAddIn/releases[the release page] for the implemented version of the standard.
 
-= Implemented requirements and recommendations in version 1.0
+Please note: Some of the requirements and recommendations in the standard will only be tested partially by this tool.
 
-== Requirements (URI as in the standard document)
-* /krav/3
-* /krav/6
-* /krav/7
-* /krav/10
-* /krav/11
-* /krav/12
-* /krav/14
-* /krav/15
-* /krav/16
-* /krav/17
-* /krav/19
-* /krav/21
-* /krav/22
-* /krav/25
-* /req/uml/constraint
-* /req/uml/packaging
-* /req/uml/structure
-* /req/uml/profile/req/uml
-* /req/uml/feature
-* /req/uml/integration
-* /req/general/feature
-* /krav/definisjoner
-* /krav/eksternKodeliste
-* /krav/enkelArv
-* /krav/flerspråklighet/element
-* /krav/flerspråklighet/pakke
-* /krav/hoveddiagram/detaljering/navning
-* /krav/hoveddiagram/navning
-* /krav/oversiktsdiagram
-* /krav/navning
-* /krav/SOSI-modellregister/applikasjonsskjema/status
-* /krav/SOSI-modellregister/applikasjonsskjema/versjonsnummer
-* /krav/SOSI-modellregister/applikasjonsskjema/standard/pakkenavn/utkast
-* /krav/taggedValueSpråk
+= Installation
 
-== Recommendations (URI as in the standard document)
-* /anbefaling/1
-* /anbefaling/styleGuide
+An installable msi file for Windows is provided on https://github.com/kartverket/SOSIModelValidationAddIn/releases[the release page].
+
+Guidance on manual install may come later.
+
+= License
+
+The source code in this repository is available under the https://www.gnu.org/licenses/gpl-3.0.en.html[GNU General Public License 3.0]
+
+= Contact information
+
+Norwegian Mapping Authority - Standardization secretariat
+
+Email: standardiseringssekretariatet@kartverket.no
