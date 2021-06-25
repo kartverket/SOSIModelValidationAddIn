@@ -79,7 +79,7 @@
                 startPackageID = thePackage.PackageID
 
                 If Not thePackage.IsModel Then
-                    validationWindow.Label1.Text() = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear
+                    validationWindow.Label1.Text() = "SOSI Model Validation" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear
                     validationWindow.Label5.Text() = "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
                     TestFeedbackClear()
                     'generate text list for tool tip on avoidable code lists 
