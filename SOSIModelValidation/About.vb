@@ -22,4 +22,8 @@
     Private Sub LinkLabel3_LinkClicked(sender As Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
         System.Diagnostics.Process.Start("mailto:standardiseringssekretariatet@kartverket.no")
     End Sub
+
+    Private Sub LinkLabel4_LinkClicked(sender As Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel4.LinkClicked
+        System.Diagnostics.Process.Start("https://www.gnu.org/licenses/gpl-3.0.en.html")
+    End Sub
 End Class
