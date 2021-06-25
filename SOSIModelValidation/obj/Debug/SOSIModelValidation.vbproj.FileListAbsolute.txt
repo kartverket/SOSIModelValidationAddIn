@@ -51,7 +51,6 @@ C:\Magnus\GitHub_local\SOSIModelValidationAddIn\SOSIModelValidation\bin\Debug\SO
 C:\Magnus\GitHub_local\SOSIModelValidationAddIn\SOSIModelValidation\bin\Debug\SOSIModelValidation.pdb
 C:\Magnus\GitHub_local\SOSIModelValidationAddIn\SOSIModelValidation\bin\Debug\SOSIModelValidation.xml
 C:\Magnus\GitHub_local\SOSIModelValidationAddIn\SOSIModelValidation\bin\Debug\SOSIModelValidation.tlb
-C:\Magnus\GitHub_local\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbprojAssemblyReference.cache
 C:\Magnus\GitHub_local\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.vbproj.ResolveComReference.cache
 C:\Magnus\GitHub_local\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.About.resources
 C:\Magnus\GitHub_local\SOSIModelValidationAddIn\SOSIModelValidation\obj\Debug\SOSIModelValidation.Resources.resources

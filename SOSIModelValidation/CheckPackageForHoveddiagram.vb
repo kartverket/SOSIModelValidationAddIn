@@ -3,7 +3,7 @@
     ' Author: Sara Henriksen
     ' Date: 03.08.16
     ' Purpose: Check if an application-schema has less than one diagram named "Hoveddiagram", if so, return an error
-    ' /krav/hoveddiagram/navning
+    ' /krav/hoveddiagram/navning abc
     'sub procedure to check if the given package got one or more diagrams with a name starting with "Hoveddiagram", if not, returns an error 
     '@param[in]: package (EA.package) The package containing diagrams potentially with one or more names without "Hoveddiagram".
 
