@@ -84,7 +84,7 @@
             Output("Error:  The dependency structure originating in [«" & thePackageElement.StereoType & "» " & thePackageElement.name & "] contains dependency loops [" & ruleString & "]")
             Output("          See the list above for the packages that are part of a loop.")
             Output("          Ignore this error for dependencies between packages outside the control of the current project.")
-            errorCounter = errorCounter + 1
+            errorCounter += 1
         End If
     End Sub
 

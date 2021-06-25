@@ -9,6 +9,8 @@
     ' Log level, rule set and options from radiobuttons and checkboxes
     Dim logLevel = "Warning"
     Dim ruleSet = "SOSI"
+    '   Dim conformanceClass = "SOSI51internationalStandard"
+    Dim conformanceClass = "SOSI51nationalAdaptions"
 
     ' Option to avoid naming checks on certain codelists.
     Dim checkAllCodeNames = True
@@ -38,6 +40,13 @@
     Dim ExtensionTypes As New System.Collections.ArrayList
     Dim CoreTypes As New System.Collections.ArrayList
     'reqUmlProfileLoad()
+
+    'For kravVisualisering:
+    Dim diagramList As New System.Collections.SortedList
+    Dim diaoList As New System.Collections.SortedList
+    Dim diaeList As New System.Collections.SortedList
+    Dim dialList As New System.Collections.SortedList
+    Dim diacList As New System.Collections.SortedList
 
     ' Lists of model structures used by several subs and functions
     Dim packageIDList As New System.Collections.ArrayList
@@ -70,15 +79,15 @@
                 startPackageID = thePackage.PackageID
 
                 If Not thePackage.IsModel Then
-                    validationWindow.Label1.Text() = "SOSI Model Validation add-in" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear
+                    validationWindow.Label1.Text() = "SOSI Model Validation" + vbCrLf + "version " + versionNumber + vbCrLf + "Kartverket " + versionYear
                     validationWindow.Label5.Text() = "Selected package: «" + thePackage.Element.Stereotype + "» " + thePackage.Element.Name
                     TestFeedbackClear()
                     'generate text list for tool tip on avoidable code lists 
                     Dim avoidableCodeListsText As String = ""
                     Dim avoidableCodeList As String
                     For Each avoidableCodeList In avoidableCodeLists
-                        If Not avoidableCodeListsText = "" Then avoidableCodeListsText = avoidableCodeListsText + ", "
-                        avoidableCodeListsText = avoidableCodeListsText + avoidableCodeList
+                        If Not avoidableCodeListsText = "" Then avoidableCodeListsText += ", "
+                        avoidableCodeListsText += avoidableCodeList
                     Next
                     validationWindow.setAvoidableCodeListsText(avoidableCodeListsText)
                     validationWindow.Show()
@@ -109,6 +118,11 @@
         Select Case ruleSet
             Case "SOSI"
                 Output("Selected rule set: SOSI Generell del - Regler for UML modellering - versjon 5.0")
+                If conformanceClass = "SOSI51internationalStandard" Then
+                    Output("Conformance class:  International standards used for codelists")
+                ElseIf conformanceClass = "SOSI51nationalAdaptions" Then
+                    Output("Conformance class:  National adaptions used for codelists")
+                End If
             Case "19103"
                 Output("Selected rule set: ISO 19103:2015 - Geographic information - Conceptual schema language")
             Case "19109"
@@ -128,7 +142,7 @@
         If omittedCounter > 0 Then
             Output("Number of omitted tests:" & omittedCounter)
         End If
-        Output("Time used: " & FormatNumber(elapsedTime, 2))
+        Output("Time used: " & FormatNumber(elapsedTime, 2) & " seconds")
         Output("-----------------------------------")
     End Sub
 
@@ -150,6 +164,24 @@
         validationWindow.Refresh()
     End Sub
 
+    Public Function TryRunValidation()
+        Try
+            RunValidation()
+            Return True
+        Catch ex As Exception
+            Output("-----------------------------------")
+            Output("Critical Error:  Running SOSI Model Validation on this model resulted in an exception.")
+            Output("                 Try running EA repair on the model.")
+            Output("                 If the problem persists, please post an issue on https://github.com/kartverket/SOSIModelValidationAddIn with the following exception information:")
+            Output("-----------------------------------")
+            Output("Exception message:" + vbCrLf + ex.Message + vbCrLf)
+            Output("Exception source:" + vbCrLf + ex.Source + vbCrLf)
+            Output("Exception stack trace:" + vbCrLf + ex.StackTrace + vbCrLf)
+            Output("Exception target:" + vbCrLf + ex.TargetSite.ToString())
+            Output("-----------------------------------")
+            Return False
+        End Try
+    End Function
     Public Sub RunValidation()
         'Initialization of variables common to several tests should be done from this sub.
         'Tests that are run only on the start package should be called from this sub.
@@ -198,10 +230,14 @@
             ruleSet = "SOSI"
         End If
 
-        If validationWindow.CheckAllCodeNames.Checked Then
-            checkAllCodeNames = True
+        'set conformance class (for codelists)
+        If validationWindow.RadioButtonCLI.Checked Then
+            conformanceClass = "SOSI51internationalStandard"
+        ElseIf validationWindow.RadioButtonCLN.Checked Then
+            conformanceClass = "SOSI51nationalAdaptions"
         Else
-            checkAllCodeNames = False
+            'Default value in case no radiobutton is checked
+            conformanceClass = "SOSI51internationalStandard"
         End If
 
         'start of report: Show header
@@ -231,9 +267,12 @@
             End Select
 
             Call reqUMLProfileLoad()
+            Call gatherDiagamsInPackage(thePackage)
             Call reqUMLIntegration(thePackage)
             Call requirement17(thePackage.Element)
             Call requirement21(thePackage.Element)
+            Call kravFlerspråklighetpakke(thePackage)
+            Call kravTaggedValueSpråk(thePackage)
 
             ' Tests that should be done recursivly on subpackages should called in FindInvalidElementsInPackage
             Call FindInvalidElementsInPackage(thePackage)
@@ -277,6 +316,7 @@
             Call findHoveddiagramInPackage(thePackage)
             Call kravDefinisjoner(thePackage)
             Call kravNavning(thePackage)
+            ' Call kravVisualisering(thePackage) TBD
         End If
 
 
@@ -350,12 +390,15 @@
                     Call krav3(currentElement)
                     Call krav19(currentElement)
                     Call kravNavning(currentElement)
+                    ' Call krav18???(currentElement)
+                    Call kravVisualisering(currentElement)
                 End If
 
                 '19103 ruleset (also implicitly included when 19109 is selected)
                 If ruleSet = "19103" Or ruleSet = "19109" Then
                     Call requirement3(currentElement)
                     Call requirement19(currentElement)
+                    Call krav18(currentElement)
                 End If
 
                 '19109 ruleset
@@ -375,10 +418,19 @@
 
                     Call kravEksternKodeliste(currentElement)
 
+
                     Select Case ruleSet
                         Case "SOSI"
-                            Call krav6(currentElement)
+                            Select Case conformanceClass
+                                Case "SOSI51internationalStandard"
+                                    Call krav6(currentElement)
+                                    recommendation1(currentElement)
+                                Case "SOSI51nationalAdaptions"
+                                    Call kravKodenavn(currentElement)
+                            End Select
                             Call krav7(currentElement)
+                            Call anbefaling3(currentElement)
+
                         Case "19109"
                             Call requirement6(currentElement)
                             Call requirement7(currentElement)
@@ -386,7 +438,6 @@
                             Call requirement6(currentElement)
                             Call requirement7(currentElement)
                     End Select
-                    recommendation1(currentElement)
                 Else
                     ' Call element subs for classes that are not codelists or enumerations
 
@@ -398,7 +449,13 @@
                             Case "19109"
                                 reqUMLProfile(currentElement, currentAttribute)
                             Case "19103"
-                                requirement25(currentElement, currentAttribute)
+                                ' prepared for future selection of iso conformance classes
+                                If conformanceClass = "ISO19103CoreTypes" Then
+                                    requirement22(currentElement, currentAttribute)
+                                Else
+                                    requirement25(currentElement, currentAttribute)
+                                End If
+
                         End Select
                         Call requirement16(currentAttribute)
                     Next
@@ -408,7 +465,7 @@
                 If UCase(currentElement.Stereotype) = "FEATURETYPE" Then
 
                     ' Call element subs for feature types
-
+                    ' Call kravHoveddiagram(currentElement)
                     Call reqGeneralFeature(currentElement, currentElement)
                     Call kravFlerspråklighetElement(currentElement)
                 End If
@@ -465,8 +522,8 @@
                 For Each currentConnector In connectors
 
                     TestFeedback("Connector", currentConnector.Stereotype, currentConnector.Name, "")
-  
-                   
+
+
                     'if the current element is on the connectors client side conduct some tests 
                     '(this condition is needed to make sure only associations where the source end is connected to 
                     'elements within "this" package will be checked. Associations with source end connected to elements
@@ -534,13 +591,16 @@
                         kravDefinisjoner(currentOperation)
                         krav3(currentOperation)
                         kravNavning(currentOperation)
-
+                        reqGeneralOperation(currentOperation)
                     End If
 
                     If ruleSet = "19103" Then
                         requirement3(currentOperation)
                     End If
 
+                    If ruleSet = "19109" Then
+                        reqGeneralOperation(currentOperation)
+                    End If
                     kravFlerspråklighetElement(currentOperation)
 
                 Next

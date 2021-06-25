@@ -2,7 +2,7 @@
 
     'Sub name:      reqUMLProfile
     'Author: 		Kent Jonsrud
-    'Date: 			2018-09-20, 10-18
+    'Date: 			2018-09-20, 10-18, 2020-07-02
     'Purpose: 		/req/uml/profile from iso 19109 - check for valid well known types for all attributes (GM_Surface etc.), builds on iso 19103 Requirement 22 and 25.
     'Parameter: 	the property element that uses a type
     'Requirement class:     /req/uml/profile (and 25 and 22)
@@ -11,12 +11,12 @@
     Sub reqUMLProfileNorsk(theElement, attr)
 
         If attr.ClassifierID = 0 Then
-            'Attribute not connected to a datatype class, check if the attribute has a iso TC 211 well known type
+            'Attribute not connected to a datatype class, check if the attribute has a iso TC 211 well known type or a SOSI well known type
             If NationalTypes.IndexOf(attr.Type, 0) = -1 Then
                 If ProfileTypes.IndexOf(attr.Type, 0) = -1 Then
                     If ExtensionTypes.IndexOf(attr.Type, 0) = -1 Then
                         If CoreTypes.IndexOf(attr.Type, 0) = -1 Then
-                            Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown type for attribute [" & attr.Name & " : " & attr.Type & "].  [norsk /req/uml/profile]")
+                            Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown type for attribute [" & attr.Name & " : " & attr.Type & "].  [/req/uml/profile]")
                             errorCounter += 1
                         End If
                     End If
@@ -146,6 +146,8 @@
         ExtensionTypes.Add("Acceleration")
         ExtensionTypes.Add("AngularAcceleration")
 
+        'ProfileTypes are listed in iso 19109:2015
+
         'well known and often used spatial types from iso 19107:2003
         ProfileTypes.Add("DirectPosition")
         ProfileTypes.Add("GM_Object")
@@ -226,6 +228,7 @@
         'ProfileTypes.Add("CI_Citation")
         'ProfileTypes.Add("CI_Date")
 
+        'NationalTypes are listed in the SOSI standard Regler for UML-modellering 5.1:2020
 
         'other lesser known Norwegian legacy geometry types
         NationalTypes.Add("Punkt")

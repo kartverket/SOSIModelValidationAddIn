@@ -74,10 +74,17 @@
     <Compile Include="About.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="anbefaling3.vb" />
     <Compile Include="checkName.vb" />
     <Compile Include="checkUniqueFeatureTypeNames.vb" />
     <Compile Include="checkPackageForHoveddiagram.vb" />
     <Compile Include="findHoveddiagramInPackage.vb" />
+    <Compile Include="fullyShownInDiagram.vb" />
+    <Compile Include="krav18.vb" />
+    <Compile Include="krav6.vb" />
+    <Compile Include="kravKodenavn.vb" />
+    <Compile Include="kravVisualisering.vb" />
+    <Compile Include="reqGeneralOperation.vb" />
     <Compile Include="kravHoveddiagramDetaljeringNavning.vb" />
     <Compile Include="kravHoveddiagramNavning.vb" />
     <Compile Include="kravNavning.vb" />
@@ -158,6 +165,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

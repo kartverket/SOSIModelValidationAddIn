@@ -14,7 +14,6 @@
         Dim elements As EA.Collection
 
         'Package Dependency Loop Check
-        currentElement = thePackage.Element
         'Note:  Dependency loops will not cause script to hang
         'retVal=retVal or dependencyLoop(currentElement)
 

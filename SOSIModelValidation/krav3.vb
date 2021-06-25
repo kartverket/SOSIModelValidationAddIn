@@ -5,7 +5,7 @@
     'Ruleset:       SOSI
     'Purpose: 		Check if the provided argument for input parameter theElement fulfills the requirements in [krav/3]:
     '				Find elements (classes, attributes, navigable association roles, operations) without definition (notes/rolenotes) 
-    '               Here only the redirection to subs in the checkDefinition file happens where the logic is implemented.
+    '               Here, only the redirection to subs in the checkDefinition file happens where the logic is implemented.
 
     'Calls: 		checkDefinition* in file checkDefinition.vb
 

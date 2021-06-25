@@ -56,20 +56,32 @@
         End If
 
     End Sub
+    Sub checkDefinitionOfAssociation(theConnector As EA.Connector, reference As String)
+        Dim sourceEndElementID
+        Dim targetEndElementID
+        Dim sourceEndElement As EA.Element
+        Dim targetEndElement As EA.Element
 
+
+        If theConnector.Notes = "" Then
+            sourceEndElementID = theConnector.ClientID 'id of the element on the source end of the connector 
+            targetEndElementID = theConnector.SupplierID 'id of the element on the supplier end of the connector 
+            'get the element on the source end of the connector 
+            sourceEndElement = theRepository.GetElementByID(sourceEndElementID)
+            targetEndElement = theRepository.GetElementByID(targetEndElementID)
+
+            Output("Error: Association [" & theConnector.Name & "] between class [«" & getStereotypeOfClass(sourceEndElement) & "» " & sourceEndElement.Name & "] and class [«" & getStereotypeOfClass(targetEndElement) & "» " & targetEndElement.Name & "] has no definition. [" & reference & "]")
+            errorCounter += 1
+        End If
+    End Sub
     Sub checkDefinitionOfAssociationRole(theConnector As EA.Connector, reference As String)
         'get the necessary connector attributes 
         Dim sourceEndElementID
         sourceEndElementID = theConnector.ClientID 'id of the element on the source end of the connector 
-        Dim sourceEndNavigable
-        sourceEndNavigable = theConnector.ClientEnd.Navigable 'navigability on the source end of the connector 
         Dim sourceEndName
         sourceEndName = theConnector.ClientEnd.Role 'role name on the source end of the connector 
         Dim sourceEndDefinition
         sourceEndDefinition = theConnector.ClientEnd.RoleNote 'role definition on the source end of the connector 
-
-        Dim targetEndNavigable
-        targetEndNavigable = theConnector.SupplierEnd.Navigable 'navigability on the target end of the connector 
         Dim targetEndName
         targetEndName = theConnector.SupplierEnd.Role 'role name on the target end of the connector 
         Dim targetEndDefinition
@@ -83,7 +95,7 @@
             sourceEndElement = theRepository.GetElementByID(sourceEndElementID)
 
             Output("Error: Class [«" & getStereotypeOfClass(sourceEndElement) & "» " & sourceEndElement.Name & "] \ association role [" & sourceEndName & "] has no definition. [" & reference & "]")
-            errorCounter = errorCounter + 1
+            errorCounter += 1
         End If
 
         If Not targetEndName = "" And targetEndDefinition = "" And theConnector.Type <> "Dependency" Then
@@ -91,7 +103,7 @@
             sourceEndElement = theRepository.GetElementByID(sourceEndElementID)
 
             Output("Error: Class [«" & getStereotypeOfClass(sourceEndElement) & "» " & sourceEndElement.Name & "] \ association role [" & targetEndName & "] has no definition. [" & reference & "]")
-            errorCounter = errorCounter + 1
+            errorCounter += 1
         End If
     End Sub
 
@@ -102,7 +114,7 @@
 
         If theOperation.Notes = "" Then
             Output("Error: Class [«" & getStereotypeOfClass(methodParentElement) & "» " & methodParentElement.Name & "] \ operation [" & theOperation.Name & "] has no definition. [" & reference & "]")
-            errorCounter = errorCounter + 1
+            errorCounter += 1
         End If
     End Sub
 
@@ -130,7 +142,7 @@
                 'if the current constraint lacks definition, then return an error
                 If currentConstraint.Notes = "" Then
                     Output("Error: Class [«" & currentElement.Stereotype & "» " & currentElement.Name & "] \ constraint [" & currentConstraint.Name & "] has no definition. [" & reference & "]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
 
@@ -145,7 +157,7 @@
                 parentElementOfAttribute = theRepository.GetElementByID(parentElementID)
                 If currentConstraint.Notes = "" Then
                     Output("Error: Class [" & parentElementOfAttribute.Name & "] \ attribute [" & currentAttribute.Name & "] \ constraint [" & currentConstraint.Name & "] has no definition. [" & reference & "]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
 
@@ -155,7 +167,7 @@
                 'if the current constraint lacks definition, then return an error message
                 If currentConstraint.Notes = "" Then
                     Output("Error: Package [«" & currentPackage.Element.Stereotype & "» " & currentPackage.Name & "] \ constraint [" & currentConstraint.Name & "] has no definition. [" & reference & "]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
 
@@ -176,7 +188,7 @@
                     targetElementOfConnector = theRepository.GetElementByID(targetElementID)
 
                     Output("Error: Constraint [" & currentConstraint.Name & "] on connector [ " & currentConnector.Name & "] between class [" & sourceElementOfConnector.Name & "] and class [" & targetElementOfConnector.Name & "] has no definition. [" & reference & "]")
-                    errorCounter = errorCounter + 1
+                    errorCounter += 1
                 End If
 
 
@@ -191,12 +203,14 @@
     Function getStereotypeOfClass(theClass)
         Dim visibleStereotype As String
         visibleStereotype = ""
-        If (UCase(theClass.Stereotype) = UCase("featuretype")) Or (UCase(theClass.Stereotype) = UCase("codelist")) Or (UCase(theClass.Stereotype) = UCase("datatype")) Or (UCase(theClass.Stereotype) = UCase("enumeration")) Then
+        If (UCase(theClass.StereotypeEX) = UCase("featuretype")) Or (UCase(theClass.StereotypeEX) = UCase("codelist")) Or (UCase(theClass.StereotypeEX) = UCase("datatype")) Or (UCase(theClass.StereotypeEX) = UCase("enumeration")) Or (UCase(theClass.StereotypeEX) = UCase("union")) Then
             'param theClass is Classifier subtype Class with different stereotypes
-            visibleStereotype = theClass.Stereotype
+            visibleStereotype = theClass.StereotypeEX
         ElseIf (UCase(theClass.Type) = UCase("enumeration")) Or (UCase(theClass.Type) = UCase("datatype")) Then
             'param theClass is Classifier subtype DataType or Enumeration
             visibleStereotype = theClass.Type
+        ElseIf Not theClass.Stereotype = "" Then
+            visibleStereotype = theClass.Stereotype
         End If
         getStereotypeOfClass = visibleStereotype
     End Function

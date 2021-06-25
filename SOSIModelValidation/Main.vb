@@ -1,7 +1,7 @@
 ﻿Public Class Main
 
-    Dim Version = "0.90"
-    Dim VersionYear = "2019"
+    Dim Version = "1.1.0"
+    Dim VersionYear = "2021"
 
     Const menuHeader = "-&SOSI Model Validation"
     Const menuValidate = "&Run SOSI Model Validation"
@@ -28,7 +28,7 @@
         End Select
     End Function
 
-    ' Return true if project is  open
+    ' Return true if project is open
     Function IsProjectOpen(Repository As EA.Repository)
         Try
             Dim c As EA.Collection = Repository.Models
