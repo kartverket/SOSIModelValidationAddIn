@@ -269,9 +269,9 @@
             Call reqUMLProfileLoad()
             Call gatherDiagamsInPackageClear()
             Call gatherDiagamsInPackage(thePackage)
-            '    Call reqUMLIntegration(thePackage)
-            '   Call requirement17(thePackage.Element)
-            '    Call requirement21(thePackage.Element)
+            Call reqUMLIntegration(thePackage)
+            Call requirement17(thePackage.Element)
+            Call requirement21(thePackage.Element)
             Call kravFlerspråklighetpakke(thePackage)
             Call kravTaggedValueSpråk(thePackage)
 
