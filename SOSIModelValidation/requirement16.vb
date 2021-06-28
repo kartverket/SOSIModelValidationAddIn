@@ -3,6 +3,7 @@
     'Sub name:      requirement16
     'Author: 		Kent Jonsrud
     'Date: 			2018-10-17, 2019-03-12, 2019-06-19
+    'Date:          2021-03-06 test only role names for classes
     'Purpose: 		'/krav/15 Iso 19103 Requirement 16 - legal non-whitespaced (NC)Name case-insesnitively unique within its namespace
     'Parameter: 	the element that has a name, and is a namespace for names
     'Requirement class:     requirement16
@@ -74,9 +75,8 @@
         Next
         For Each connector In theElement.Connectors
             If connector.Type <> "Generalization" And connector.Type <> "Realisation" Then
-                'Output("Debug:  Class [" & theElement.Name & "] [" & theElement.ElementID & "] Client [" & connector.ClientEnd.Role & "] [" & connector.ClientID & "] Supplier [" & connector.SupplierEnd.Role & "] [" & connector.SupplierID & "]")
 
-                If connector.ClientEnd.Role <> "" And connector.SupplierID = theElement.ElementID Then
+                If connector.ClientEnd.Role <> "" And connector.SupplierID = theElement.ElementID And theRepository.GetElementByID(connector.ClientID).Type = "Class" Then
                     If PropertyNames.IndexOf(UCase(connector.ClientEnd.Role), 0) <> -1 Then
                         Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has non-unique role property names [" & connector.ClientEnd.Role & "]. [/krav/16]")
                         errorCounter += 1
@@ -84,7 +84,7 @@
                         PropertyNames.Add(UCase(connector.ClientEnd.Role))
                     End If
                 End If
-                If connector.SupplierEnd.Role <> "" And connector.ClientID = theElement.ElementID Then
+                If connector.SupplierEnd.Role <> "" And connector.ClientID = theElement.ElementID And theRepository.GetElementByID(connector.SupplierID).Type = "Class" Then
                     If PropertyNames.IndexOf(UCase(connector.SupplierEnd.Role), 0) <> -1 Then
                         Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has non-unique role property names [" & connector.SupplierEnd.Role & "]. [/krav/16]")
                         errorCounter += 1

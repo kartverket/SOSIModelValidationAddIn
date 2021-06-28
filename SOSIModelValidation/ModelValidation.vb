@@ -117,7 +117,7 @@
         Output("Selected log level: " + logLevel)
         Select Case ruleSet
             Case "SOSI"
-                Output("Selected rule set: SOSI Generell del - Regler for UML modellering - versjon 5.0")
+                Output("Selected rule set: SOSI Generell del - Regler for UML modellering - versjon 5.1")
                 If conformanceClass = "SOSI51internationalStandard" Then
                     Output("Conformance class:  International standards used for codelists")
                 ElseIf conformanceClass = "SOSI51nationalAdaptions" Then
@@ -267,6 +267,7 @@
             End Select
 
             Call reqUMLProfileLoad()
+            Call gatherDiagamsInPackageClear()
             Call gatherDiagamsInPackage(thePackage)
             Call reqUMLIntegration(thePackage)
             Call requirement17(thePackage.Element)
@@ -429,7 +430,9 @@
                                     Call kravKodenavn(currentElement)
                             End Select
                             Call krav7(currentElement)
-                            Call anbefaling3(currentElement)
+                            If logLevel = "Warning" Then
+                                Call anbefaling3(currentElement)
+                            End If
 
                         Case "19109"
                             Call requirement6(currentElement)
