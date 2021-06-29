@@ -80,7 +80,6 @@
 
     Sub requirement15onAttr(theElement, attr)
         If attr.Stereotype <> "" And LCase(attr.Stereotype) <> "estimated" And LCase(attr.Stereotype) <> "propertytype" Then
-            'INSPIRE:	if attr.Stereotype <> "" and LCase(attr.Stereotype) <> "estimated" and LCase(attr.Stereotype) <> "propertytype" and LCase(attr.Stereotype) <> "voidable" and LCase(attr.Stereotype) <> "lifecycleinfo" then
             If logLevel = "Warning" Then
                 Output("Warning: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown stereotype. «" & attr.Stereotype & "» on attribute [" & attr.Name & "]. [/krav/15]")
                 warningCounter += 1
@@ -101,12 +100,10 @@
             roleName = conn.ClientEnd.Role
             badStereotype = conn.ClientEnd.Stereotype
         End If
-        '(ignoring all association roles without name!)
-        If roleName <> "" Then
+        If rolename <> "" Then
             If badStereotype <> "" And LCase(badStereotype) <> "estimated" And LCase(badStereotype) <> "propertytype" Then
-                'INSPIRE:		if badStereotype <> "" and LCase(badStereotype) <> "estimated" and LCase(badStereotype) <> "propertytype" and LCase(badStereotype) <> "voidable" then
                 If logLevel = "Warning" Then
-                    Output("Warning: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown stereotype «" & badStereotype & "» on role name [" & roleName & "]. [/krav/15]")
+                    Output("Warning: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has unknown stereotype «" & badStereotype & "» on role name [" & rolename & "]. [/krav/15]")
                     warningCounter += 1
                 End If
             End If
@@ -115,9 +112,9 @@
         If conn.Stereotype <> "" Then
             If LCase(conn.Stereotype) = "topo" And ruleSet = "SOSI" Then
                 If rolename <> "" Then
-                    Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has found illegal stereotype «" & conn.Stereotype & "» on association named [" & conn.Name & "] by role [" & rolename & "]. Recommended to use the script <endreTopoAssosiasjonTilRestriksjon>. [/krav/15]")
+                    Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has found illegal stereotype «" & conn.Stereotype & "» on association named [" & conn.Name & "] by role [" & rolename & "]. [/krav/15]")
                 Else
-                    Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has found illegal stereotype «" & conn.Stereotype & "» on association named [" & conn.Name & "]. Recommended to use the script <endreTopoAssosiasjonTilRestriksjon>. [/krav/15]")
+                    Output("Error: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] has found illegal stereotype «" & conn.Stereotype & "» on association named [" & conn.Name & "]. [/krav/15]")
                 End If
                 errorCounter += 1
             Else
@@ -138,10 +135,8 @@
 
         badStereotype = connEnd.Stereotype
 
-        '(ignoring all association roles without name!)
         If connEnd.Role <> "" Then
             If badStereotype <> "" And LCase(badStereotype) <> "estimated" And LCase(badStereotype) <> "propertytype" Then
-                'INSPIRE:		if badStereotype <> "" and LCase(badStereotype) <> "estimated" and LCase(badStereotype) <> "propertytype" and LCase(badStereotype) <> "voidable" then
                 If logLevel = "Warning" Then
                     Output("Warning: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] as unknown stereotype «" & badStereotype & "» on role name [" & connEnd.Role & "]. [/krav/15]")
                     warningCounter += 1

@@ -1,5 +1,13 @@
 ﻿Partial Public Class ModelValidation
 
+    'Sub name:      kravFlerspråklighetEelement
+    'Author: 		Kent Jonsrud (?)
+    'Date: 			2019?
+    'Date: 			2021-06-29 not report on empty tagged values
+    'Purpose: 		/krav/flerspråklighet/element
+
+
+
     Sub kravFlerspråklighetElement(theElement As EA.Element)
         Call testMultilingualElement(theElement, "description")
         Call testMultilingualElement(theElement, "designation")
@@ -29,7 +37,7 @@
         Dim currentTaggedValue As EA.TaggedValue
         If Not theElement Is Nothing And Len(taggedValueName) > 0 Then
             For Each currentTaggedValue In theElement.TaggedValues
-                If currentTaggedValue.Name = taggedValueName Then
+                If currentTaggedValue.Name = taggedValueName And Len(currentTaggedValue.Value) > 0 Then
                     If Not (InStr(currentTaggedValue.Value, """@") >= 2 And InStr(currentTaggedValue.Value, """") = 1) Then
                         currentElement = theElement
                         If ruleSet = "SOSI" Then
@@ -50,7 +58,7 @@
         Dim currentTaggedValue As EA.AttributeTag
         If Not theAttribute Is Nothing And Len(taggedValueName) > 0 Then
             For Each currentTaggedValue In theAttribute.TaggedValues
-                If currentTaggedValue.Name = taggedValueName Then
+                If currentTaggedValue.Name = taggedValueName And Len(currentTaggedValue.Value) > 0 Then
                     If Not (InStr(currentTaggedValue.Value, """@") >= 2 And InStr(currentTaggedValue.Value, """") = 1) Then
                         currentElement = theRepository.GetElementByID(theAttribute.ParentID)
                         If ruleSet = "SOSI" Then
@@ -71,7 +79,7 @@
         Dim currentTaggedValue As EA.MethodTag
         If Not theOperation Is Nothing And Len(taggedValueName) > 0 Then
             For Each currentTaggedValue In theOperation.TaggedValues
-                If currentTaggedValue.Name = taggedValueName Then
+                If currentTaggedValue.Name = taggedValueName And Len(currentTaggedValue.Value) > 0 Then
                     If Not (InStr(currentTaggedValue.Value, """@") >= 2 And InStr(currentTaggedValue.Value, """") = 1) Then
                         currentElement = theRepository.GetElementByID(theOperation.ParentID)
                         If ruleSet = "SOSI" Then
@@ -91,7 +99,7 @@
         Dim currentTaggedValue As EA.RoleTag
         If Not theConnectorEnd Is Nothing And Len(taggedValueName) > 0 Then
             For Each currentTaggedValue In theConnectorEnd.TaggedValues
-                If currentTaggedValue.Tag = taggedValueName Then
+                If currentTaggedValue.Tag = taggedValueName And Len(currentTaggedValue.Value) > 0 Then
                     If Not (InStr(currentTaggedValue.Value, """@") >= 2 And InStr(currentTaggedValue.Value, """") = 1) Then
                         If ruleSet = "SOSI" Then
                             Output("Error: Role [" + theConnectorEnd.Role + "] tag [" + currentTaggedValue.Tag + "] has a value [" + currentTaggedValue.Value + "] with wrong structure.  Expected structure: ""{Name}""@{language}. [/krav/flerspråklighet/element]")
