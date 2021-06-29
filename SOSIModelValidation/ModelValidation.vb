@@ -252,6 +252,7 @@
         Else
 
             ' populate lists that will be used in the validation checks
+            Call reqUMLProfileLoad()
             Call PopulatePackageIDList(thePackage)
             Call PopulateClassifierLists(thePackage)
             Call PopulatePackageDependenciesElementIDList(thePackage.Element)
@@ -266,7 +267,6 @@
                     End If
             End Select
 
-            Call reqUMLProfileLoad()
             Call gatherDiagamsInPackageClear()
             Call gatherDiagamsInPackage(thePackage)
             Call reqUMLIntegration(thePackage)

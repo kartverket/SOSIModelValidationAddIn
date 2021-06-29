@@ -5,7 +5,6 @@
     'Sub name: 		PopulatePackageIDList
     'Author: 		Åsmund Tjora
     'Date: 			20170223
-    'Date:          2021-06-04 added exception for all well known types, Kent Jonsrud
     'Purpose: 		Populate the packageIDList variable. 
     '               The list shall contain all packageIDs of root package and its subpackages
     'Parameters:	rootPackage  The package to be added to the list and investigated for subpackages
@@ -26,7 +25,6 @@
     'Sub name: 		PopulateClassifierIDList
     'Author: 		Åsmund Tjora, Magnus Karge
     'Date: 			20170228
-
     'Purpose: 		To populate the following list variables: classifierIDList, featureTypeNamesList, featureTypeElementIDsList
     'Parameters:	package  The package to be examined for existing classifiers
 
@@ -77,6 +75,7 @@
     'Sub name:  PopulateExternalReferencedElementIDList
     'Author:    Magnus Karge (original script version), Åsmund Tjora (current version)
     'Date:      20170228 (original script version), 20190123 (current version)
+    'Date:      2021-06-04 added exception for all well known types, Kent Jonsrud
     'Purpose:   Populate the externalReferencedElementIDList
     '           The list shall contain all elementIDs of elements in external packages
 
@@ -111,6 +110,7 @@
         For Each currentPackage In thePackage.Packages
             PopulateExternalReferencedElementIDList(currentPackage)
         Next
+
     End Sub
 
     'Sub name:  PopulatePackageDependenciesShownIDList
