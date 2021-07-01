@@ -396,7 +396,7 @@
                     'TBD: may be adjusted according to precise wording in the standard
                     Dim listOfStereotypes As String
                     listOfStereotypes = currentElement.StereotypeEx
-                    If Not (UCase(listOfStereotypes).Contains("ENUMERATION") Or UCase(listOfStereotypes).Contains("CODELIST")) Then
+                    If Not (UCase(listOfStereotypes).Contains("ENUMERATION") Or UCase(listOfStereotypes).Contains("CODELIST") Or currentElement.Type = "Enumeration") Then
                         Call kravVisualisering(currentElement)
                     End If
                 End If
