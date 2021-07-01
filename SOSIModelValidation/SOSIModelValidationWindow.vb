@@ -26,7 +26,7 @@
         toolTips.SetToolTip(Me.ButtonRun, "Run SOSI Model Validation on selected package")
         toolTips.SetToolTip(Me.RadioButtonE, "Show Errors only")
         toolTips.SetToolTip(Me.RadioButtonW, "Show Errors and Warnings")
-        toolTips.SetToolTip(Me.RadioButtonSOSI, "SOSI Generell del - Regler for UML modellering - versjon 5.0")
+        toolTips.SetToolTip(Me.RadioButtonSOSI, "SOSI Generell del - Regler for UML modellering - versjon 5.1")
         toolTips.SetToolTip(Me.RadioButtonISO19103, "ISO 19103:2015 - Geographic information - Conceptual schema language")
         toolTips.SetToolTip(Me.RadioButtonISO19109, "ISO 19109:2015 - Geographic information - Rules for application schema")
         toolTips.SetToolTip(Me.RadioButtonCLI, "Code names shall be mnemonic and shall not have whitespace, separation characters or special characters." + vbCrLf + "If the codename is a proper name or well known abbreviation, the codename can start with captial letter or a number.")
