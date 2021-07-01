@@ -20,7 +20,7 @@
         For Each currentTaggedValue In thePackage.Element.TaggedValues
             If currentTaggedValue.Name = "SOSI_modellstatus" Then
                 modellstatusExists = True
-                If currentTaggedValue.Value = "utkast" Then utkastInTag = True
+                If currentTaggedValue.Value = "utkast" Or currentTaggedValue.Value = "utkastOgSkjult" Then utkastInTag = True
                 modellstatusTag = currentTaggedValue.Value
             End If
         Next
@@ -31,10 +31,10 @@
         If utkastInName Then
             If modellstatusExists Then
                 If modellstatusTag = "" Then
-                    Output("Error: Package [«" & thePackage.Element.Stereotype & "» " & thePackage.Element.Name & "] has Utkast as part of the name, but the tag [SOSI_modellstatus] has no value. Expected value [utkast]. [/krav/SOSI-modellregister/applikasjonsskjema/standard/pakkenavn/utkast]")
+                    Output("Error: Package [«" & thePackage.Element.Stereotype & "» " & thePackage.Element.Name & "] has Utkast as part of the name, but the tag [SOSI_modellstatus] has no value. Expected value [utkast] or [utkastOgSkjult]. [/krav/SOSI-modellregister/applikasjonsskjema/standard/pakkenavn/utkast]")
                     errorCounter += 1
                 ElseIf Not utkastInTag Then
-                    Output("Error: Package [«" & thePackage.Element.Stereotype & "» " & thePackage.Element.Name & "] has Utkast as part of the name, but the tag [SOSI_modellstatus] has the value [" & modellstatusTag & "]. Expected value [utkast]. [/krav/SOSI-modellregister/applikasjonsskjema/standard/pakkenavn/utkast]")
+                    Output("Error: Package [«" & thePackage.Element.Stereotype & "» " & thePackage.Element.Name & "] has Utkast as part of the name, but the tag [SOSI_modellstatus] has the value [" & modellstatusTag & "]. Expected value [utkast] or [utkastOgSkjult]. [/krav/SOSI-modellregister/applikasjonsskjema/standard/pakkenavn/utkast]")
                     errorCounter += 1
                 End If
             Else
@@ -43,7 +43,7 @@
             End If
         Else
             If utkastInTag Then
-                Output("Error: Package [«" & thePackage.Element.Stereotype & "» " & thePackage.Element.Name & "] has [SOSI_modellstatus] tag with utkast value, but Utkast is not part of the package name. [/krav/SOSI-modellregister/applikasjonsskjema/standard/pakkenavn/utkast]")
+                Output("Error: Package [«" & thePackage.Element.Stereotype & "» " & thePackage.Element.Name & "] has [SOSI_modellstatus] tag with [" + modellstatusTag + "] value, but Utkast is not part of the package name. [/krav/SOSI-modellregister/applikasjonsskjema/standard/pakkenavn/utkast]")
                 errorCounter += 1
             End If
         End If
