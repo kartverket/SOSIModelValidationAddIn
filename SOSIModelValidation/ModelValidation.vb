@@ -392,9 +392,14 @@
                     Call krav19(currentElement)
                     Call kravNavning(currentElement)
                     ' Call krav18???(currentElement)
-                    Call kravVisualisering(currentElement)
+                    'call kravVisualisering only when stereotype is not Enumeration or CodeList due to too much "noise" in terms of many errors 
+                    'TBD: may be adjusted according to precise wording in the standard
+                    Dim listOfStereotypes As String
+                    listOfStereotypes = currentElement.StereotypeEx
+                    If Not (UCase(listOfStereotypes).Contains("ENUMERATION") Or UCase(listOfStereotypes).Contains("CODELIST") Or currentElement.Type = "Enumeration") Then
+                        Call kravVisualisering(currentElement)
+                    End If
                 End If
-
                 '19103 ruleset (also implicitly included when 19109 is selected)
                 If ruleSet = "19103" Or ruleSet = "19109" Then
                     Call requirement3(currentElement)

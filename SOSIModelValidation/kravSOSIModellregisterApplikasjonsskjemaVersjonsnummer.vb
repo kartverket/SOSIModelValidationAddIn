@@ -2,17 +2,33 @@
 
     '------------------------------------------------------------START-------------------------------------------------------------------------------------------
     ' Script Name: kravSOSIModellregisterApplikasjonskjemaVersjonsnummer
-    ' Author: Sara Henriksen, Åsmund Tjora, Tore Johnsen
+    ' Author: Sara Henriksen, Åsmund Tjora, Tore Johnsen, Magnus Karge
     ' Purpose: check if the package name ends with a version number. The version number could be a date or a serial number. Returns an error if the version 
     ' number contains anything other than 0-2 dots or numbers. 
     ' Packages under development should have the text "Utkast" as the final element, after the version number. 
     ' Date: 25.08.16 (original version) 10.01.17 (Updated version)
     '       19.10.2018 - moved from script to AddIn
+    '       29.06.2021 (Magnus Karge) - adjusted to v5.1 of reference standard (Regler for UML-modellering) and improved error message including following changes
+    '                       1. runs the test only if SOSI_modellstatus = gyldig (new element in standard)
+    '                       2. adjusted error message in order to provide support for writing a correct package name with version number
     ' Conformity class: SOSI-modellregister
 
 
     Sub kravSOSIModellregisterApplikasjonskjemaVersjonsnummer(thePackage)
-        If UCase(thePackage.Element.Stereotype) = "APPLICATIONSCHEMA" Then
+
+        'get SOSI_modellstatus
+        Dim theElement
+        theElement = thePackage.Element
+        Dim sosiModellstatus = ""
+        Dim currentExistingTaggedValue As EA.TaggedValue
+
+        For Each currentExistingTaggedValue In theElement.TaggedValues
+            If currentExistingTaggedValue.Name = "SOSI_modellstatus" Then
+                sosiModellstatus = currentExistingTaggedValue.Value
+            End If
+        Next
+
+        If UCase(thePackage.Element.Stereotype) = "APPLICATIONSCHEMA" And sosiModellstatus = "gyldig" Then
             'find the last part of the package name, after "-" 
             Dim startContent, endContent, stringContent, cleanContent
 
@@ -68,7 +84,7 @@
             End If
 
             If versionNumberInPackageName = False Then
-                Output("Error: Package [" & thePackage.Name & "] does not have a name ending with a version number. [/krav/SOSI-modellregister/applikasjonsskjema/versjonsnummer]")
+                Output("Error: Package [" & thePackage.Name & "] does either not have a name ending with a valid version number or the name does not match the required format: <name>-<version number>. [/krav/SOSI-modellregister/applikasjonsskjema/versjonsnummer]")
                 errorCounter += 1
             End If
         End If
