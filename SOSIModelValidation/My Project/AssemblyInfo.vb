@@ -11,14 +11,14 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("SOSIModelValidation")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("Statens kartverk")> 
-<Assembly: AssemblyProduct("SOSIModelValidation")> 
-<Assembly: AssemblyCopyright("Copyright © Statens kartverk 2018")> 
+<Assembly: AssemblyProduct("SOSIModelValidation")>
+<Assembly: AssemblyCopyright("Copyright © Statens kartverk 2021")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(True)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("5293c8b3-fb2b-44f3-8ca1-24cc24bff5d1")> 
+<Assembly: Guid("5293c8b3-fb2b-44f3-8ca1-24cc24bff5d1")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("1.1.0.0")>
+<Assembly: AssemblyFileVersion("1.1.0.0")>
