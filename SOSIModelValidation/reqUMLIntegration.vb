@@ -62,12 +62,26 @@
         Dim packageElementID
         Dim investigatedPackage
         For Each packageElementID In packageDependenciesElementIDList
+            'test start
+            'check if there is an elemente with the given ID
+            Output("DEBUG: Start looking for given packageElementID: " & packageElementID)
+            Dim elementsReferenceList As EA.Reference
+            elementsReferenceList = theRepository.GetReferenceList("Element")
+            Output("DEBUG: Found elements reference list with " & elementsReferenceList.Count & " " & elementsReferenceList.Type & "s")
+            Dim tempElement As String
+            For counter As Short = 0 To elementsReferenceList.Count
+                tempElement = elementsReferenceList.GetAt(counter)
+                Output("DEBUG: Found an item at index " & counter & ": " & tempElement)
+            Next
+
+            'test end
+
             investigatedPackage = theRepository.GetElementByID(packageElementID)
-            If Not UCase(investigatedPackage.Stereotype) = "APPLICATIONSCHEMA" Then
-                Output("Warning:  Dependency to package [«" & investigatedPackage.Stereotype & "» " & investigatedPackage.Name & "] found.  Dependencies shall only be to ApplicationSchema packages or Standard schemas. Ignore this warning if [«" & investigatedPackage.Stereotype & "» " & investigatedPackage.Name & "] is a standard schema [" & ruleString & "]")
-                warningCounter += 1
-            End If
-        Next
+                If Not UCase(investigatedPackage.Stereotype) = "APPLICATIONSCHEMA" Then
+                    Output("Warning:  Dependency to package [«" & investigatedPackage.Stereotype & "» " & investigatedPackage.Name & "] found.  Dependencies shall only be to ApplicationSchema packages or Standard schemas. Ignore this warning if [«" & investigatedPackage.Stereotype & "» " & investigatedPackage.Name & "] is a standard schema [" & ruleString & "]")
+                    warningCounter += 1
+                End If
+            Next
     End Sub
 
     'Function name: dependencyLoop
@@ -136,87 +150,108 @@
         Dim packageToReference As EA.Package
 
         For Each externalReferencedElementID In externalReferencedElementIDList
-            currentExternalElement = theRepository.GetElementByID(externalReferencedElementID)
-            Dim parentPackageID
-            parentPackageID = currentExternalElement.PackageID
-            Dim tempPackageIDsOfApplicationSchemaPackageInHierarchy As New System.Collections.ArrayList
-            Dim tempPackageIDsOfReferencedPackageInHierarchy As New System.Collections.ArrayList
-            Dim tempPackageIDOfPotentialReferencedPackage = parentPackageID
-            Dim parentPackageIsApplicationSchema = False
-            Dim parentPackage As EA.Package
+            'test start
+            'check if there is an elemente with the given ID
+            Output("DEBUG: Start looking for given externalReferencedElementID: " & externalReferencedElementID)
+            Dim tempElementSet As EA.Collection
+            tempElementSet = theRepository.GetElementSet(externalReferencedElementID, 1)
 
-            ' If parentPackage exists and is not the model root:
-            ' Find if the package is an application schema
-            ' Find if the package is referenced
-            ' Find if the package is in a subpackage of an application schema
-            ' Find if the package is in a subpackage of a referenced package
-            ' If there is an application schema package in the hierarchy, the dependency should be to this package
+            Output("DEBUG: Elements found with externalReferencedElementID '" & externalReferencedElementID & ": " & tempElementSet.Count - 1)
+            If (tempElementSet.Count - 1) > 0 Then
+                Dim tempElement As EA.Element
+                tempElement = tempElementSet.GetAt(0)
+                Output("DEBUG: Element found: " & tempElement.Name)
+            Else
+                Output("DEBUG: no element found - exception's coming soon")
+            End If
 
-            If Not (parentPackageID = 0) Then
-                parentPackage = theRepository.GetPackageByID(parentPackageID)
-                If Not parentPackage.IsModel Then
-                    If UCase(parentPackage.Element.Stereotype) = "APPLICATIONSCHEMA" Then
-                        parentPackageIsApplicationSchema = True
-                        tempPackageIDsOfApplicationSchemaPackageInHierarchy.Add(parentPackageID)
-                    End If
+            'test end
 
-                    If packageDependenciesElementIDList.Contains(parentPackage.Element.ElementID) Then
-                        tempPackageIDsOfReferencedPackageInHierarchy.Add(parentPackageID)
-                    End If
-                End If
+            'new test
+            If (tempElementSet.Count - 1) > 0 Then
+                currentExternalElement = theRepository.GetElementByID(externalReferencedElementID)
+                Dim parentPackageID
+                parentPackageID = currentExternalElement.PackageID
+                Dim tempPackageIDsOfApplicationSchemaPackageInHierarchy As New System.Collections.ArrayList
+                Dim tempPackageIDsOfReferencedPackageInHierarchy As New System.Collections.ArrayList
+                Dim tempPackageIDOfPotentialReferencedPackage = parentPackageID
+                Dim parentPackageIsApplicationSchema = False
+                Dim parentPackage As EA.Package
 
-                Do While ((Not parentPackageID = 0) And (Not parentPackage.IsModel))
-                    parentPackageID = parentPackage.ParentID
+                ' If parentPackage exists and is not the model root:
+                ' Find if the package is an application schema
+                ' Find if the package is referenced
+                ' Find if the package is in a subpackage of an application schema
+                ' Find if the package is in a subpackage of a referenced package
+                ' If there is an application schema package in the hierarchy, the dependency should be to this package
+
+                If Not (parentPackageID = 0) Then
                     parentPackage = theRepository.GetPackageByID(parentPackageID)
                     If Not parentPackage.IsModel Then
                         If UCase(parentPackage.Element.Stereotype) = "APPLICATIONSCHEMA" Then
                             parentPackageIsApplicationSchema = True
                             tempPackageIDsOfApplicationSchemaPackageInHierarchy.Add(parentPackageID)
-                            tempPackageIDOfPotentialReferencedPackage = parentPackageID
                         End If
+
                         If packageDependenciesElementIDList.Contains(parentPackage.Element.ElementID) Then
                             tempPackageIDsOfReferencedPackageInHierarchy.Add(parentPackageID)
                         End If
                     End If
-                Loop
 
-            End If
+                    Do While ((Not parentPackageID = 0) And (Not parentPackage.IsModel))
+                        parentPackageID = parentPackage.ParentID
+                        parentPackage = theRepository.GetPackageByID(parentPackageID)
+                        If Not parentPackage.IsModel Then
+                            If UCase(parentPackage.Element.Stereotype) = "APPLICATIONSCHEMA" Then
+                                parentPackageIsApplicationSchema = True
+                                tempPackageIDsOfApplicationSchemaPackageInHierarchy.Add(parentPackageID)
+                                tempPackageIDOfPotentialReferencedPackage = parentPackageID
+                            End If
+                            If packageDependenciesElementIDList.Contains(parentPackage.Element.ElementID) Then
+                                tempPackageIDsOfReferencedPackageInHierarchy.Add(parentPackageID)
+                            End If
+                        End If
+                    Loop
 
-            If tempPackageIDsOfApplicationSchemaPackageInHierarchy.Count = 0 And tempPackageIDsOfReferencedPackageInHierarchy.Count = 0 Then
-                packageToReference = theRepository.GetPackageByID(tempPackageIDOfPotentialReferencedPackage)
-                Output("Error: Missing dependency for package [«" & packageToReference.Element.Stereotype & "» " & packageToReference.Name & "] (or any of its subpackages) containing external referenced class [«" & currentExternalElement.Stereotype & "» " & currentExternalElement.Name & "] [" & ruleString & "]")
-                errorCounter += 1
-            ElseIf tempPackageIDsOfApplicationSchemaPackageInHierarchy.Count > 0 Then
-                packageToReference = theRepository.GetPackageByID(tempPackageIDsOfApplicationSchemaPackageInHierarchy(0))
-                If tempPackageIDsOfReferencedPackageInHierarchy.Count = 0 Then
-                    Output("Error: Missing dependency for package [«" & packageToReference.Element.Stereotype & "» " & packageToReference.Name & "] containing external referenced class [«" & currentExternalElement.Stereotype & "» " & currentExternalElement.Name & "] [" & ruleString & "]")
+                End If
+
+                If tempPackageIDsOfApplicationSchemaPackageInHierarchy.Count = 0 And tempPackageIDsOfReferencedPackageInHierarchy.Count = 0 Then
+                    packageToReference = theRepository.GetPackageByID(tempPackageIDOfPotentialReferencedPackage)
+                    Output("Error: Missing dependency for package [«" & packageToReference.Element.Stereotype & "» " & packageToReference.Name & "] (or any of its subpackages) containing external referenced class [«" & currentExternalElement.Stereotype & "» " & currentExternalElement.Name & "] [" & ruleString & "]")
                     errorCounter += 1
-                Else
-                    If Not tempPackageIDsOfReferencedPackageInHierarchy.Contains(packageToReference.PackageID) Then
+                ElseIf tempPackageIDsOfApplicationSchemaPackageInHierarchy.Count > 0 Then
+                    packageToReference = theRepository.GetPackageByID(tempPackageIDsOfApplicationSchemaPackageInHierarchy(0))
+                    If tempPackageIDsOfReferencedPackageInHierarchy.Count = 0 Then
                         Output("Error: Missing dependency for package [«" & packageToReference.Element.Stereotype & "» " & packageToReference.Name & "] containing external referenced class [«" & currentExternalElement.Stereotype & "» " & currentExternalElement.Name & "] [" & ruleString & "]")
                         errorCounter += 1
-                        Output("       Please exchange dependency to the following package(s) with dependency to the «" & packageToReference.Element.Stereotype & "» " & packageToReference.Name & " package:")
-                        For Each packageIDOfReferencedPackage In tempPackageIDsOfReferencedPackageInHierarchy
-                            Dim referencedPackage As EA.Package
-                            referencedPackage = theRepository.GetPackageByID(packageIDOfReferencedPackage)
-                            Output("       «" & referencedPackage.Element.Stereotype & "» " & referencedPackage.Name)
-                        Next
-                    ElseIf tempPackageIDsOfReferencedPackageInHierarchy.Count > 1 Then
-                        Output("Error: Redundant dependencies for package [«" & packageToReference.Element.Stereotype & "» " & packageToReference.Name & "] containing external referenced class [«" & currentExternalElement.Stereotype & "» " & currentExternalElement.Name & "] [" & ruleString & "]")
-                        errorCounter += 1
-                        Output("       Please remove dependencies to the following package(s):")
-                        For Each packageIDOfReferencedPackage In tempPackageIDsOfReferencedPackageInHierarchy
-                            If Not packageToReference.PackageID = packageIDOfReferencedPackage Then
+                    Else
+                        If Not tempPackageIDsOfReferencedPackageInHierarchy.Contains(packageToReference.PackageID) Then
+                            Output("Error: Missing dependency for package [«" & packageToReference.Element.Stereotype & "» " & packageToReference.Name & "] containing external referenced class [«" & currentExternalElement.Stereotype & "» " & currentExternalElement.Name & "] [" & ruleString & "]")
+                            errorCounter += 1
+                            Output("       Please exchange dependency to the following package(s) with dependency to the «" & packageToReference.Element.Stereotype & "» " & packageToReference.Name & " package:")
+                            For Each packageIDOfReferencedPackage In tempPackageIDsOfReferencedPackageInHierarchy
                                 Dim referencedPackage As EA.Package
                                 referencedPackage = theRepository.GetPackageByID(packageIDOfReferencedPackage)
                                 Output("       «" & referencedPackage.Element.Stereotype & "» " & referencedPackage.Name)
-                            End If
-                        Next
+                            Next
+                        ElseIf tempPackageIDsOfReferencedPackageInHierarchy.Count > 1 Then
+                            Output("Error: Redundant dependencies for package [«" & packageToReference.Element.Stereotype & "» " & packageToReference.Name & "] containing external referenced class [«" & currentExternalElement.Stereotype & "» " & currentExternalElement.Name & "] [" & ruleString & "]")
+                            errorCounter += 1
+                            Output("       Please remove dependencies to the following package(s):")
+                            For Each packageIDOfReferencedPackage In tempPackageIDsOfReferencedPackageInHierarchy
+                                If Not packageToReference.PackageID = packageIDOfReferencedPackage Then
+                                    Dim referencedPackage As EA.Package
+                                    referencedPackage = theRepository.GetPackageByID(packageIDOfReferencedPackage)
+                                    Output("       «" & referencedPackage.Element.Stereotype & "» " & referencedPackage.Name)
+                                End If
+                            Next
 
+                        End If
                     End If
                 End If
+            Else
+                Output("Cancel reqUMLIntegrationPackagesToBeReferenced for external referenced element with ID: " & externalReferencedElementID)
             End If
-
 
 
         Next
