@@ -2,6 +2,7 @@
     'Sub name:      anbefaling3
     'Author: 		Tore Johnsen
     'Date: 			20200831
+    'Date: 			2021-11-14 warnings on classes with keyword enumeration will be shown with stereotype «enumeration». Kent Jonsrud
     'Purpose: 	    Check for codes with same name, and definition.
 
 
@@ -15,6 +16,7 @@
         Dim counterNotes
         Dim duplicatedCodesString
         Dim duplicatedNotesString
+        Dim stereo
 
         For Each mainAtt In theElement.Attributes
             duplicatedCodesString = ""
@@ -41,14 +43,15 @@
 				End If
 
             Next
-
+            stereo = theElement.Stereotype
+            If stereo = "" And theElement.Type = "Enumeration" Then stereo = "enumeration"
             If counterName Then
-                Output("Waning: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] - attribute: [" & mainAtt.Name & "] has the same codename as" & duplicatedCodesString & ". [/anbefaling/3]")
+                Output("Waning: Class [«" & stereo & "» " & theElement.Name & "] - attribute: [" & mainAtt.Name & "] has the same codename as" & duplicatedCodesString & ". [/anbefaling/3]")
                 warningCounter += 1
             End If
 
             If counterNotes Then
-                Output("Waning: Class [«" & theElement.Stereotype & "» " & theElement.Name & "] - attribute: [" & mainAtt.Name & "] has the same definition as" & duplicatedNotesString & ". [/anbefaling/3]")
+                Output("Waning: Class [«" & stereo & "» " & theElement.Name & "] - attribute: [" & mainAtt.Name & "] has the same definition as" & duplicatedNotesString & ". [/anbefaling/3]")
                 warningCounter += 1
             End If
 

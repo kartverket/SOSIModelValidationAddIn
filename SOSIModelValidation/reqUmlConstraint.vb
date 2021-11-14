@@ -44,7 +44,7 @@
                 Dim parentElementOfAttribute As EA.Element
                 parentElementOfAttribute = theRepository.GetElementByID(parentElementID)
                 If currentConstraint.Notes = "" Then
-                    Output("Error: Class [" & parentElementOfAttribute.Name & "] \ attribute [" & currentAttribute.Name & "] \ constraint [" & currentConstraint.Name & "] has no OCL expression. [/req/uml/constraint]")
+                    Output("Error: Class [«" & parentElementOfAttribute.Stereotype & "» " & parentElementOfAttribute.Name & "] \ attribute [" & currentAttribute.Name & "] \ constraint [" & currentConstraint.Name & "] has no OCL expression. [/req/uml/constraint]")
                     errorCounter += 1
                 End If
 
