@@ -116,6 +116,7 @@
     'Sub name:  PopulatePackageDependenciesShownIDList
     'Author:    Åsmund Tjora
     'Date:      20190312
+    'Date:      2021-11-14 added handling of critical fail with broken link, Kent Jonsrud
     'Purpose:   Populate the packageDependenciesShownIDList variable
     '           The list shall contain all IDs of package dependencies shown in the model's package diagrams
     '           Give warning if package diagram contains hidden links
@@ -139,18 +140,23 @@
             linkList = diagram.DiagramLinks
 
             For Each diagramLink In linkList
-                modelLink = theRepository.GetConnectorByID(diagramLink.ConnectorID)
-                If modelLink.Type = "Package" Or modelLink.Type = "Usage" Or modelLink.Type = "Dependency" Then
-                    If modelLink.ClientID = thePackageElementID Then
-                        packageDependenciesShownElementIDList.Add(modelLink.SupplierID)
-                        If diagramLink.IsHidden And logLevel = "Warning" Then
-                            supplier = theRepository.GetElementByID(modelLink.SupplierID)
-                            client = theRepository.GetElementByID(modelLink.ClientID)
-                            Output("Warning: Diagram [" & diagram.Name & "] contains hidden dependency link between elements " & supplier.Name & " and " & client.Name & ".")
-                            warningCounter += 1
+                If Not isConnector(diagramLink.ConnectorID) Then
+                    Output("CRITICAL ERROR: Diagram [" & diagram.Name & "] contains a broken internal link to a connector : [" & diagramLink.ConnectorID & "] Try to run Get Latest with Force Reload.")
+                Else
+                    modelLink = theRepository.GetConnectorByID(diagramLink.ConnectorID)
+                    If modelLink.Type = "Package" Or modelLink.Type = "Usage" Or modelLink.Type = "Dependency" Then
+                        If modelLink.ClientID = thePackageElementID Then
+                            packageDependenciesShownElementIDList.Add(modelLink.SupplierID)
+                            If diagramLink.IsHidden And logLevel = "Warning" Then
+                                supplier = theRepository.GetElementByID(modelLink.SupplierID)
+                                client = theRepository.GetElementByID(modelLink.ClientID)
+                                Output("Warning: Diagram [" & diagram.Name & "] contains hidden dependency link between elements " & supplier.Name & " and " & client.Name & ".")
+                                warningCounter += 1
+                            End If
                         End If
                     End If
                 End If
+
             Next
         Next
     End Sub
@@ -171,6 +177,42 @@
             PopulatePackageDiagramIDList(subPackage, packageDiagramIDList)
         Next
     End Sub
+
+    '------------------------------------------------------------START-------------------------------------------------------------------------------------------
+    ' Func Name: isElement
+    ' Author: Kent Jonsrud
+    ' Date: 2021-07-13
+    ' Purpose: tester om det finnes et element med denne ID-en.
+
+    Function isElement(ID)
+        isElement = False
+        If Mid(theRepository.SQLQuery("select count(*) from t_object where Object_ID = " & ID & ";"), 113, 1) <> 0 Then
+            isElement = True
+        End If
+    End Function
+    '-------------------------------------------------------------END--------------------------------------------------------------------------------------------
+
+
+    '-------------------------------------------------------------START--------------------------------------------------------------------------------------------
+
+    ' Func Name: isConnector
+    ' Author: Kent Jonsrud
+    ' Date: 2021-11-11
+    ' Purpose: tester om det finnes en connector med denne ID-en.
+
+    Function isConnector(ID)
+        isConnector = False
+        '	Session.Output(Mid(Repository.SQLQuery("select count(*) from t_connector;") , 113, 1))
+        '	Session.Output(Repository.SQLQuery("select count(*) from t_object where Object_ID = " & ID & ";"), 113, 1) )
+
+        If Mid(theRepository.SQLQuery("select count(*) from t_connector where Connector_ID = " & ID & ";"), 113, 1) <> 0 Then
+            isConnector = True
+        End If
+    End Function
+
+    '-------------------------------------------------------------END--------------------------------------------------------------------------------------------
+
+
 
 End Class
 
